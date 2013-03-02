@@ -3,6 +3,7 @@
 
 import MySQLdb as mysqldb
 import logging
+import sys
 
 logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
 # Uncomment for disable logging
@@ -22,12 +23,14 @@ class Carrega:
 		self.db = db
 	
 	def get_connection(self):
-		conn = mysqldb.connect(self.host, self.user, self.passwd, self.db)
-		if conn:
-			logging.debug("Connected to db");
-			return conn
-		else:
-			logging.debug("Error connecting to db")
+		try:
+			conn = mysqldb.connect(self.host, self.user, self.passwd, self.db)
+			if conn:
+				logging.debug("Connected to db");
+				return conn
+		except mysqldb.Error, e:
+				logging.debug("ERROR %d: %s", e.args[0], e.args[1])
+				sys.exit(-1)
 
 	def get_cursor(self, conn):
 		cursor = conn.cursor()
@@ -35,22 +38,23 @@ class Carrega:
 			logging.debug("Cursor got OK")
 			return cursor
 		else:
-			conn.close()
-			logging.debug("Error getting cursor. Disconnecting")
+			if conn:
+				conn.close()
+				logging.debug("ERROR getting cursor. Disconnecting")
 
 	def exec_sql(self, conn, cursor, sql):
 		try:
 			cursor.execute(sql)
 			conn.commit()
 			logging.debug("SQL executed OK")
-		except:
-			logging.debug("Error executing SQL")
+		except mysqldb.Error, e:
+			logging.debug("ERROR executing SQL")
 			conn.rollback()
-			conn.close()
 
 	def disconnect(self, conn):
-		conn.close()
-		logging.debug("Connection closed")
+		if conn:
+			conn.close()
+			logging.debug("Connection closed")
 
 
 def main():
@@ -58,7 +62,7 @@ def main():
 	conn = c.get_connection()
 	cursor = c.get_cursor(conn)
 	# sql test
-	sql = "INSERT INTO links VALUES (NULL, 'algo2')"
+	sql = "INSERT INTO links VALUES (NULL, 'algo')"
 	c.exec_sql(conn, cursor, sql)
 	c.disconnect(conn)
 
