@@ -6,16 +6,8 @@ import logging
 import sys
 
 logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG)
-# Uncomment for disable logging
-#logging.disable(logging.DEBUG)
 
-# constants
-HOST='localhost'
-USER='root'
-PASS=''
-DB='test'
-
-class Carrega:
+class MySQL:
 	def __init__(self, host, user, passwd, db):
 		self.host = host
 		self.user = user
@@ -55,16 +47,3 @@ class Carrega:
 		if conn:
 			conn.close()
 			logging.debug("Connection closed")
-
-
-def main():
-	c = Carrega(HOST, USER, PASS, DB)
-	conn = c.get_connection()
-	cursor = c.get_cursor(conn)
-	# sql test
-	sql = "INSERT INTO links VALUES (NULL, 'algo')"
-	c.exec_sql(conn, cursor, sql)
-	c.disconnect(conn)
-
-if __name__ == "__main__":
-	main()
