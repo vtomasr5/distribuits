@@ -19,12 +19,12 @@ DB='test'
 
 def main():
 	m = MySQL(HOST, USER, PASS, DB)
-	conn = c.get_connection()
-	cursor = c.get_cursor(conn)
+	conn = m.get_connection()
+	cursor = m.get_cursor(conn)
 	# sql test
 	sql = "INSERT INTO links VALUES (NULL, 'algo')"
-	c.exec_sql(conn, cursor, sql)
-	c.disconnect(conn)
+	m.exec_sql(conn, cursor, sql)
+	m.disconnect(conn)
 
 if __name__ == "__main__":
 	main()
