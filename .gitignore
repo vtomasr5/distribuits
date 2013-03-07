@@ -1,4 +1,8 @@
 *.py[cod]
+<<<<<<< HEAD
+=======
+.DS_Store
+>>>>>>> f47b00c6af9865c61aa4743ec1d6780a40951f54
 
 # C extensions
 *.so
