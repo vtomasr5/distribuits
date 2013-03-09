@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from meneame.obtenerNoticias import ObtenerNoticias
 
+PAGINA = 1
+
 o = ObtenerNoticias()
-for i in range(1,5):
-    res = o.get(i)
-    #falta pasar de unicode a utf-8
-    print "------------------------------------------------------------------------------------------------------------->"+ str(i)
-    for index,item in enumerate(res):
-        print "------------------------------------------------------------------"
-        print "#"+ str(index)
-        print item
-        print "------------------------------------------------------------------"
-        
-    print "<-------------------------------------------------------------------------------------------------------------" 
+res = o.get(PAGINA)
+#falta pasar de unicode a utf-8
+for index,item in enumerate(res):
+    print "------------------------------------------------------------------"
+    print "#"+ str(index)
+    print item
+    print "------------------------------------------------------------------" 
