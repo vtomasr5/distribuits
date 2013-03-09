@@ -59,9 +59,14 @@ class ObtenerNoticias:
 
     def _make_noticias(self, contenido ):
         list = []
+        min=0
         max = len(contenido['descripciones'])
         
-        for i in range(0,max):
+        if (max > 20):
+            max=20
+            contenido['descripciones'].pop(0)
+        
+        for i in range(min,max):
             list.append({ 'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
                  'meneos': contenido['meneos'][i],
