@@ -80,30 +80,50 @@ class ObtenerNoticias(object):
             start_link = html.find('<a href="', start)
             end_link = html.find('"', start_link+9)
             link = html[start_link+9:end_link]
-            menurl = MENEAME_URL[7:]
-            links.append(menurl+link+'/')
+            links.append(MENEAME_URL+link+'/')
             html = html[start+1:]
         return links
 
+    def _obtener_pagina_siguiente(self, html, pags):
+        h = html
+        start_link = h.find('title="ir a página "')
+        if start_link == -1:
+            return -1
+        end_link = h.find('">', start_link+1)
+        h = h[start_link+20:end_link]
+        if h in pags:
+            return -1
+        else:
+            return h
+
     def _obtener_comentarios(self):
-        comentaris = []
+        comentaris = [] # all comments from all reports
+        comentari = [] # comments from one report
+        pag_idas = [1]
         links = self._obtener_links_noticias(self._html)
         for link in links:
-            for i in range(1,5):
-                if self._existeix_url(link+str(i)):
-                    html_noticia = self._obtener_contenido_url(link)
-                    while True:
-                        start_link = html_noticia.find('id="cid-')
-                        if start_link == -1:
-                            break
-                        end_link = html_noticia.find('</div>', start_link+1)
-                        html_comentari = html_noticia[start_link:end_link]
+            # for i in range(1,6):
+                # if self._existeix_url(link+str(i)):
+            html_noticia = self._obtener_contenido_url(link)
+            while True:
+                start_link = html_noticia.find('id="cid-')
+                if start_link == -1:
+                    break
+                end_link = html_noticia.find('</div>', start_link+1)
+                html_comentari = html_noticia[start_link:end_link]
 
-                        start_link2 = html_comentari.find('</a>')
-                        end_link2 = html_comentari.find('</div>', start_link2+1)
-                        
-                        comentaris.append(html_comentari[start_link2+16:end_link2])
-                        html_noticia = html_noticia[end_link+1:]
+                start_link2 = html_comentari.find('</a>')
+                end_link2 = html_comentari.find('</div>', start_link2+1)
+                
+                comentari.append(html_comentari[start_link2+16:end_link2])
+                pag = self._obtener_pagina_siguiente(html_noticia, pag_idas)
+                if pag == -1:
+                    break # no more pages
+                else:
+                    pag_idas.append(int(pag))
+                    link = link+'/'+pag_idas[-1]
+                html_noticia = html_noticia[end_link+1:]
+            comentaris.append(len(comentari))
         return comentaris
 
     def _make_noticias(self, contenido):
