@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # coding: utf8
 
-import MySQLdb as mysqldb
-import logging
-import sys
-from mysql import MySQL
-from carrega import Carrega
+import meneame.mysql.mysql as MySQL
 
 # Uncomment for disable logging
 #logging.disable(logging.DEBUG)
