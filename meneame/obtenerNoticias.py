@@ -161,7 +161,7 @@ class ObtenerNoticias(object):
         l = []
         min=0
         #max = len(contenido['descripciones'])
-    max = len(contenido['fechas'])
+        max = len(contenido['fechas'])
         
         if (max > 20):
             max=20
@@ -169,7 +169,7 @@ class ObtenerNoticias(object):
 
         
         for i in range(min,max):
-        f = self._tratar_fecha(contenido['fechas'][i])
+            f = self._tratar_fecha(contenido['fechas'][i])
             l.append({ 'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
                  'meneos': contenido['meneos'][i],
@@ -185,40 +185,40 @@ class ObtenerNoticias(object):
         return l
 
     def _coger_fecha(self,fecha):
-    a =""
-    p = []
-    num = "false"
-    for i in range(0,len(fecha)):
-        n = ord(fecha[i])
-        if (n>47 and n<58):
-            num = "true"
-            a = a + fecha[i]
-        elif (num=="true"):
-            p.append(a)
-            a = ""
-            num = "false"
-    if (len(p)==3):
-        data = datetime.datetime.today() - timedelta(days=int(p[0]))
-        data = data - timedelta(hours=int(p[1]))
-        data = data - timedelta(minutes=int(p[2]))
-    elif (len(p)==2):
-        data = datetime.datetime.today() - timedelta(hours=int(p[0]))
-        data = data - timedelta(minutes=int(p[1]))
-    elif (len(p)==1):
-        data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
-    else:
-        #17-02-2013 21:35 
-        data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
-    return data
+        a =""
+        p = []
+        num = "false"
+        for i in range(0,len(fecha)):
+            n = ord(fecha[i])
+            if (n>47 and n<58):
+                num = "true"
+                a = a + fecha[i]
+            elif (num=="true"):
+                p.append(a)
+                a = ""
+                num = "false"
+        if (len(p)==3):
+            data = datetime.datetime.today() - timedelta(days=int(p[0]))
+            data = data - timedelta(hours=int(p[1]))
+            data = data - timedelta(minutes=int(p[2]))
+        elif (len(p)==2):
+            data = datetime.datetime.today() - timedelta(hours=int(p[0]))
+            data = data - timedelta(minutes=int(p[1]))
+        elif (len(p)==1):
+            data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
+        else:
+            #17-02-2013 21:35 
+            data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
+        return data
 
 
     def _tratar_fecha(self,fechas):
-    fechaEnvio = re.split("publicado ",fechas)
-    fechaPublicado = fechaEnvio[1]
-    fechaEnvio = fechaEnvio[0]
-    return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
-    
-    
+        fechaEnvio = re.split("publicado ",fechas)
+        fechaPublicado = fechaEnvio[1]
+        fechaEnvio = fechaEnvio[0]
+        return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
+        
+        
     def get(self, pagina=1):
         self._html = self._obtener_contenido(pagina)
         contenido = {}

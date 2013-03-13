@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from obtenerNoticias import ObtenerNoticias
+from meneame.obtenerNoticias import ObtenerNoticias
 import sys
 import re
 
