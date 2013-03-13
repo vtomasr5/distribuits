@@ -1,6 +1,4 @@
 # python noticiasSQL.py <Pagina_inicial> <Pagina_final> published
-
-
 # -*- coding: utf-8 -*-
 from meneame.obtenerNoticias import ObtenerNoticias
 import sys
