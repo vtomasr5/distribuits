@@ -1,30 +1,47 @@
 # -*- coding: utf-8 -*-
-from urllib2 import urlopen, URLError
+from urllib2 import urlopen, URLError, HTTPError
 import re
 import httplib
 from properties import MENEAME_URL
 import datetime
 from datetime import time, timedelta
-
+import sys
+import threading
+from utils import retry
 
 class ObtenerNoticias(object):
     
     def __init__(self):
         self._html = None
+        self.estado = False
         
     def _obtener_contenido(self, pagina):
         try:
-            doc = urlopen(MENEAME_URL+'/?page='+str(pagina))
-            return doc.read()
+            html = urlopen(MENEAME_URL+'/?page='+str(pagina)).read()
+            if html.__len__() > 0:
+                self.estado = True
+            return html
         except:
             return None    
 
-    def _obtener_contenido_url(self, url):
+    @retry(HTTPError, tries=4, delay=10, backoff=2)
+    def _obtener_contenido_links(self, url, list):
         try:
             html = urlopen(url).read()
+            list.append({'url':url,'contenido':html})
             return html
         except:
             return None
+
+    def fetch_parallel(self, urls):
+        list = []
+        threads = [threading.Thread(target=self._obtener_contenido_links, args = (url,list)) for url in urls]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        return list
+
 
     def _existeix_url(self, url):
         try:
@@ -132,10 +149,16 @@ class ObtenerNoticias(object):
         comentari = [] # comments from one report
         pag_idas = [1]
         links = self._obtener_links_noticias(self._html)
-        for link in links:
+        res = self.fetch_parallel(links)
+        # print len(links)
+        # print len(res)
+        # sys.exit();
+        #for link in links:
+        for link in res:
             # for i in range(1,6):
                 # if self._existeix_url(link+str(i)):
-            html_noticia = self._obtener_contenido_url(link)
+            html_noticia = link['contenido']
+            #html_noticia = self._obtener_contenido_links(link)
             while True:
                 start_link = html_noticia.find('id="cid-')
                 if start_link == -1:
