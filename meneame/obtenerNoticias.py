@@ -70,7 +70,29 @@ class ObtenerNoticias(object):
         regexpr2 = 'history">(.*?)</a>'
          
         return self._obtener_items(regexpr1,regexpr2)
+        
+    def _obtener_tag1(self):
+        regexpr1 = r'title="meta: .*?">'
+        regexpr2 = 'title="meta: (.*?)">'
+        return self._obtener_items(regexpr1,regexpr2)
+        
 
+    def _obtener_tag2(self):
+        regexpr1 = r'title="categoría:.*?">'
+        regexpr2 = 'title="categoría:(.*?)">'
+        return self._obtener_items(regexpr1,regexpr2)
+        
+    def _make_tags(self,tag1,tag2):
+    	l = []
+    	for i in range(0,len(tag1)):
+    		tags = []
+    		tags.append(tag1[i])
+    		tags.append(tag2[i])
+    		l.append(tags)
+    		
+    	return l
+    	
+        
     def _obtener_links_noticias(self, html):
         links = []
         while True:
@@ -158,7 +180,8 @@ class ObtenerNoticias(object):
                  'descripcion': contenido['descripciones'][i],
                  'autor': contenido['autores'][i],
                  'link_noticia': contenido['links_noticias'][i],
-                 'comentario': contenido['comentarios'][i]
+                 'comentario': contenido['comentarios'][i],
+                 'tags': contenido['tags'][i]
                 })
             # fi  = contenido['comentarios'][i]
             # l.insert(i, j)
@@ -178,5 +201,8 @@ class ObtenerNoticias(object):
         contenido['autores'] = self._obtener_autores()
         contenido['links_noticias'] = self._obtener_links_noticias(self._html)
         contenido['comentarios'] = self._obtener_comentarios()
+        contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
+        
+       
         
         return self._make_noticias(contenido)

@@ -3,7 +3,7 @@ from obtenerNoticias import ObtenerNoticias
 import sys
 
 def limpia(antigua):
-  antigua = antigua.replace('á','a');
+  	antigua = antigua.replace('á','a');
 	antigua = antigua.replace('é','e');
 	antigua = antigua.replace('í','i');
 	antigua = antigua.replace('ó','o');
@@ -37,7 +37,7 @@ for i in reversed(range(1,max+1)):
 		b = b + item['meneos'] + ","
 		b = b + "(Select user_id from users where user_login ='"+ item['autor'] +"'),"
 		#falten es tags, es pos un xk sinos no va be
-		b = b + "'hola',"
+		b = b + "'" + limpia(item['tags'][0]) + "-" +  limpia(item['tags'][1]) + "',"
 		b = b + "'" + status +"'"
 		b = b + ");" "\n\n"
 
