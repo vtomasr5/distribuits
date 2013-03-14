@@ -1,29 +1,9 @@
 # python noticiasSql.py <pag_inicial> <pag_final> published
 # -*- coding: utf-8 -*-
-from obtenerNoticias import ObtenerNoticias
+from meneame.obtenerNoticias import ObtenerNoticias
+from meneame.utils import limpia, limpia1
 import sys
 import re
-
-def limpia(antigua):
-  	antigua = antigua.replace('á','a');
-	antigua = antigua.replace('é','e');
-	antigua = antigua.replace('í','i');
-	antigua = antigua.replace('ó','o');
-	antigua = antigua.replace('ú','u');
-	antigua = antigua.replace('ñ','n');
-	antigua = antigua.replace("'",'*');
-	return antigua
-
-def limpia1(antigua):
-  	antigua = antigua.replace('(','');
-  	antigua = antigua.replace('*',' ');
-	antigua = antigua.replace(')','');
-	antigua = antigua.replace('í','i');
-	antigua = antigua.replace('ó','o');
-	antigua = antigua.replace('ú','u');
-	antigua = antigua.replace('ñ','n');
-	antigua = antigua.replace("'",'*');
-	return antigua
 
 o = ObtenerNoticias()
 #'discard','queued','published'

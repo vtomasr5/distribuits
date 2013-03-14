@@ -1,5 +1,7 @@
+# python comentariosSQL.py <pag_inicial> published
 # -*- coding: utf-8 -*-
-from obtenerNoticias import ObtenerNoticias
+from meneame.obtenerNoticias import ObtenerNoticias
+from meneame.utils import limpia, limpia1
 import sys
 
 def limpia(antigua):

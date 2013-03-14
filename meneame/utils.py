@@ -41,3 +41,25 @@ def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
         return f_retry  # true decorator
 
     return deco_retry
+
+
+def limpia(antigua):
+    antigua = antigua.replace('á','a');
+    antigua = antigua.replace('é','e');
+    antigua = antigua.replace('í','i');
+    antigua = antigua.replace('ó','o');
+    antigua = antigua.replace('ú','u');
+    antigua = antigua.replace('ñ','n');
+    antigua = antigua.replace("'",'*');
+    return antigua
+
+def limpia1(antigua):
+    antigua = antigua.replace('(','');
+    antigua = antigua.replace('*',' ');
+    antigua = antigua.replace(')','');
+    antigua = antigua.replace('í','i');
+    antigua = antigua.replace('ó','o');
+    antigua = antigua.replace('ú','u');
+    antigua = antigua.replace('ñ','n');
+    antigua = antigua.replace("'",'*');
+    return antigua
