@@ -201,8 +201,5 @@ class ObtenerNoticias(object):
         contenido['autores'] = self._obtener_autores()
         contenido['links_noticias'] = self._obtener_links_noticias(self._html)
         contenido['comentarios'] = self._obtener_comentarios()
-        contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
-        
-       
-        
+        contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2()) 
         return self._make_noticias(contenido)
