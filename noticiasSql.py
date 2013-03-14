@@ -1,3 +1,4 @@
+# python noticiasSql.py <pag_inicial> <pag_final> published
 # -*- coding: utf-8 -*-
 from obtenerNoticias import ObtenerNoticias
 import sys
