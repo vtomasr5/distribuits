@@ -1,0 +1,421 @@
+------------------------------------------------------------------
+#0
+{'autor': 'WARMASTER', 'link_noticia': 'http://www.meneame.net/story/artolaguardiasivi/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 18, 25, 24, 708238), 'link': 'http://habitacion701.blogspot.com.es/2013/03/artolaguardiasivi.html', 'tags': ['ocio', 'curiosidades'], 'descripcion': '&quot;Hoy es uno de esos d\xc3\xadas en los que te levantas tranquilamente por estar de vacaciones, te vistes un poco, te quitas las lega\xc3\xb1as, te metes en el coche, vas a hacer unos recados...y te para la Guardia Civil...&quot;', 'titulo': 'Artolaguardiasiv\xc3\xad!', 'fechaEnvio': datetime.datetime(2013, 3, 13, 16, 35, 24, 708162), 'meneos': '56', 'comentario': 1}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#1
+{'autor': 'sacreew', 'link_noticia': 'http://www.meneame.net/story/rajoy-mis-politicas-aun-no-tienen-efectos-vida-real-pero-hay/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 18, 5, 24, 708331), 'link': 'http://www.estrelladigital.es/espana/Rajoy-cambiara-politica-economica_0_1357664301.html', 'tags': ['actualidad', 'pol\xc3\xadtica'], 'descripcion': 'Rubalcaba exige al Gobierno que rectifique y el presidente le responde que no puede seguir una l\xc3\xadnea como la de Zapatero porque &quot;es la que ha tra\xc3\xaddo hasta aqu\xc3\xad&quot; al pa\xc3\xads.', 'titulo': 'Rajoy: &quot;Mis pol\xc3\xadticas a\xc3\xban no tienen efectos en la vida real, pero hay que perseverar&quot;', 'fechaEnvio': datetime.datetime(2013, 3, 13, 11, 0, 24, 708293), 'meneos': '148', 'comentario': 2}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#2
+{'autor': 'IgnatiusJReilly', 'link_noticia': 'http://www.meneame.net/story/planeta-pide-penas-carcel-usuarios-compartan-internet-contenido/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 17, 25, 24, 708426), 'link': 'http://noticias.lainformacion.com/arte-cultura-y-espectaculos/artes-general/planeta-pide-penas-de-carcel-para-los-usuarios-que-compartan-en-internet-contenido-cultural-pirata_RKmtuXeBdaX0PPSephekH6', 'tags': ['tecnolog\xc3\xada', 'internet'], 'descripcion': '\xe2\x80\x9cEs necesario tambi\xc3\xa9n una reforma en materia penal, que persiga con penas de c\xc3\xa1rcel no solo a los autores materiales del robo de material protegido, sino tambi\xc3\xa9n a los que ponen a disposici\xc3\xb3n el material robado en la red a trav\xc3\xa9s de las p\xc3\xa1ginas web de enlaces\xe2\x80\x9d, dijo Crehuelas en la inauguraci\xc3\xb3n de la jornada Cultura en Red, organizada por Planeta, Bertelsmann y NBC Universal, en Madrid.', 'titulo': 'Planeta pide \xe2\x80\x9cpenas de c\xc3\xa1rcel\xe2\x80\x9d para los usuarios que compartan en internet contenido cultural pirata', 'fechaEnvio': datetime.datetime(2013, 3, 12, 15, 5, 24, 708384), 'meneos': '285', 'comentario': 3}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#3
+{'autor': 'bonobo', 'link_noticia': 'http://www.meneame.net/story/john-allen-paulos-matematicas-usan-veces-confundir/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 16, 55, 24, 708515), 'link': 'http://noticias.lainformacion.com/ciencia-y-tecnologia/matematicas/john-allen-paulos-las-matematicas-se-usan-a-veces-para-confundir_Wb10as9xNFXC56d2vKlk06/', 'tags': ['cultura', 'divulgaci\xc3\xb3n'], 'descripcion': 'Cuando John Allen Paulos lee el peri\xc3\xb3dico encuentra todo tipo de trampas l\xc3\xb3gicas y estad\xc3\xadsticas. Este profesor de Matem\xc3\xa1ticas en la Temple University de Filadelfia se hizo popular hace una d\xc3\xa9cada tras la publicaci\xc3\xb3n de &quot;El hombre anum\xc3\xa9rico&quot;, uno de los mayores \xc3\xa9xitos en la historia de la divulgaci\xc3\xb3n matem\xc3\xa1tica, y desde entonces ha publicado otros t\xc3\xadtulos en los que analiza desde el periodismo hasta las contradicciones de la religi\xc3\xb3n.', 'titulo': 'John Allen Paulos: \xe2\x80\x9cLas Matem\xc3\xa1ticas se usan a veces para confundir\xe2\x80\x9d', 'fechaEnvio': datetime.datetime(2013, 3, 13, 16, 28, 24, 708477), 'meneos': '142', 'comentario': 4}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#4
+{'autor': 'torbe_1964', 'link_noticia': 'http://www.meneame.net/story/grecia-retiran-inmunidad-diputado-neofascista-abofetear-diputada/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 16, 35, 24, 708603), 'link': 'http://www.bbc.co.uk/mundo/ultimas_noticias/2013/03/130313_ultnot_grecia_neonazi_amanecer_dorado_rg.shtml', 'tags': ['actualidad', 'sucesos'], 'descripcion': 'El Parlamento griego le retir\xc3\xb3 este mi\xc3\xa9rcoles la inmunidad parlamentaria al diputado y portavoz del partido de ultraderecha Amanecer Dorado, Ilias Kasidiaris, para que sea juzgado por haber agredido a dos mujeres congresistas de la izquierda en junio pasado. En un programa televisado en directo, el pol\xc3\xadtico le arroj\xc3\xb3 un vaso de agua en la cara de Rena Duru, diputada de la principal formaci\xc3\xb3n de la oposici\xc3\xb3n, y luego se enfrent\xc3\xb3 a Liana Kanelli, parlamentaria del Partido Comunista, a la que abofete\xc3\xb3 varias veces', 'titulo': 'Grecia: retiran inmunidad a diputado neofascista por abofetear a diputada comunista', 'fechaEnvio': datetime.datetime(2013, 3, 13, 15, 43, 24, 708567), 'meneos': '348', 'comentario': 5}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#5
+{'autor': 'HansiHarris', 'link_noticia': 'http://www.meneame.net/story/clive-burr-ex-componente-iron-maiden-ha-fallecido-eng/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 16, 10, 24, 708692), 'link': 'http://www.ironmaiden.com/former-iron-maiden-drummer-clive-burr-passes-away.html', 'tags': ['cultura', 'm\xc3\xbasica'], 'descripcion': 'El bater\xc3\xada de los primeros albums de Iron Maiden falleci\xc3\xb3 hace unas horas. Sufr\xc3\xada desde hace a\xc3\xb1os esclerosis multiple.', 'titulo': 'Clive Burr ex componente de Iron Maiden ha fallecido [ENG]', 'fechaEnvio': datetime.datetime(2013, 3, 13, 15, 36, 24, 708653), 'meneos': '277', 'comentario': 6}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#6
+{'autor': 'disconubes', 'link_noticia': 'http://www.meneame.net/story/enric-sala-hay-basura-humana-paraisos-mas-remotos-tierra/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 15, 55, 24, 708788), 'link': 'http://noticias.lainformacion.com/ciencia-y-tecnologia/ciencias-marinas/enric-sala-hay-basura-humana-en-los-paraisos-mas-remotos-de-la-tierra_dEOU5SAo6k4WWbfO1Wvet4/', 'tags': ['cultura', 'divulgaci\xc3\xb3n'], 'descripcion': 'En los \xc3\xbaltimos cinco a\xc3\xb1os, el explorador espa\xc3\xb1ol Enric Sala ha visitado algunos de los ecosistemas m\xc3\xa1s remotos del planeta, inexplorados hasta ahora por el ser humano. Su intenci\xc3\xb3n es mostrar al mundo la necesidad de conservar estos \xc3\xbaltimos para\xc3\xadsos que representan el estado en el que estaban nuestros mares antes de la contaminaci\xc3\xb3n masiva. Sala nos atiende en la National Geographic store de Madrid, donde ofreci\xc3\xb3 una charla este lunes con motivo del 125 aniversario de la sociedad geogr\xc3\xa1fica.', 'titulo': 'Enric Sala: \xe2\x80\x9cHay basura humana en los para\xc3\xadsos m\xc3\xa1s remotos de la Tierra\xe2\x80\x9d', 'fechaEnvio': datetime.datetime(2013, 3, 12, 15, 1, 24, 708746), 'meneos': '220', 'comentario': 7}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#7
+{'autor': 'tollendo', 'link_noticia': 'http://www.meneame.net/story/ejecutados-arabia-saudi-siete-jovenes-condenados-atraco/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 15, 5, 24, 708878), 'link': 'http://internacional.elpais.com/internacional/2013/03/13/actualidad/1363157383_657647.html', 'tags': ['actualidad', 'internacional'], 'descripcion': 'De nada han servido los llamamientos de clemencia de familiares, amigos y activistas de los derechos humanos. Poco despu\xc3\xa9s de las nueve de la ma\xc3\xb1ana (dos horas menos en la Espa\xc3\xb1a peninsular), los siete j\xc3\xb3venes condenados por un atraco cometido cuando varios de ellos eran menores han sido ejecutados en Arabia Saud\xc3\xad por un pelot\xc3\xb3n de fusilamiento. Finalmente, las autoridades no han llevado a cabo la anunciada crucifixi\xc3\xb3n del supuesto cabecilla del grupo, \xe2\x80\x9cpara no emporar su imagen internacional\xe2\x80\x9d.', 'titulo': 'Ejecutados en Arabia Saud\xc3\xad los siete j\xc3\xb3venes condenados por un atraco', 'fechaEnvio': datetime.datetime(2013, 3, 13, 8, 19, 24, 708839), 'meneos': '351', 'comentario': 8}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#8
+{'autor': 'yonose', 'link_noticia': 'http://www.meneame.net/story/rajoy-dice-paro-febrero-prueba-bondad-reforma-laboral/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 14, 45, 24, 708963), 'link': 'http://www.publico.es/452078/rajoy-dice-que-el-paro-de-febrero-es-la-prueba-de-la-bondad-de-su-reforma-laboral', 'tags': ['actualidad', 'econom\xc3\xada'], 'descripcion': 'Rajoy cree que su reforma laboral est\xc3\xa1 funcionando. Y para ello ha facilitado un dato que considera la prueba de esta convicci\xc3\xb3n: el aumento del paro en el mes de febrero - casi 60.000 nuevos desempleados - es el menor de los cinco \xc3\xbaltimos a\xc3\xb1os. En consecuencia, pese a ser &quot;un dato malo, es menos malo&quot;, ha dicho Rajoy. Eso prueba, ha a\xc3\xb1adido, &quot;que la reforma laboral est\xc3\xa1 dando resultados. Por esa raz\xc3\xb3n vamos a perseverar en la pol\xc3\xadtica econ\xc3\xb3mica que hemos emprendido&quot;.', 'titulo': 'Rajoy dice que el paro de febrero es la prueba de la bondad de su reforma laboral', 'fechaEnvio': datetime.datetime(2013, 3, 13, 11, 9, 24, 708926), 'meneos': '613', 'comentario': 9}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#9
+{'autor': 'disconubes', 'link_noticia': 'http://www.meneame.net/story/primera-ronda-pago-yo-como-divulgador-debe-proceder-prostituir/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 14, 25, 24, 709050), 'link': 'http://naukas.com/2013/03/13/la-primera-ronda-la-pago-yo-o-como-un-divulgador-debe-proceder-para-prostituir-y-desprestigiar-su-trabajo-aun-mas-si-cabe-un-post-autobiografico-con-videos-musicales/', 'tags': ['cultura', 'divulgaci\xc3\xb3n'], 'descripcion': 'No se preocupen, o s\xc3\xad, esto no es un art\xc3\xadculo sobre ciencia, aunque creo que en el fondo s\xc3\xad lo es; tampoco les hablar\xc3\xa9, en esta ocasi\xc3\xb3n, sobre ciencia ficci\xc3\xb3n, aunque lo que les relate parezca mentira y se acerque bastante. La verdad es que no s\xc3\xa9 muy bien c\xc3\xb3mo empezar a escribirlo, tanto tiempo dando vueltas en mi alocada quijotera, pues creo que plantea un tema nada f\xc3\xa1cily puede que controvertido, aunque cada vez estoy m\xc3\xa1s convencido de que no deber\xc3\xada ser as\xc3\xad, sino todo lo contrario, es decir, tendr\xc3\xada que resultar obvio para todo el mundo y...', 'titulo': 'La primera ronda la pago yo, o c\xc3\xb3mo un divulgador debe proceder para prostituir y desprestigiar su trabajo', 'fechaEnvio': datetime.datetime(2013, 3, 13, 11, 17, 24, 709013), 'meneos': '220', 'comentario': 10}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#10
+{'autor': 'sanxoelfuerte', 'link_noticia': 'http://www.meneame.net/story/artista-callejero-tocando-valla-obra-como-fuese-flauta/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 14, 15, 24, 709138), 'link': 'http://www.youtube.com/watch?v=xHOXn_SCNRw', 'tags': ['cultura', 'arte'], 'descripcion': 'Ir caminando por la calle y encontrarte a alguien tocando m\xc3\xbasica con una valla como si fuese un instrumento de viento...', 'titulo': 'Artista callejero tocando una valla de obra como si fuese una flauta', 'fechaEnvio': datetime.datetime(2013, 3, 13, 11, 58, 24, 709100), 'meneos': '355', 'comentario': 11}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#11
+{'autor': 'Tarod7', 'link_noticia': 'http://www.meneame.net/story/ceoe-ve-inevitable-cobrar-peajes-autovias-gratuitas/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 14, 10, 24, 709229), 'link': 'http://www.eleconomista.es/ecomotor/motor/noticias/4667835/03/13/La-CEOE-ve-inevitable-cobrar-peajes-en-autovias-gratuitas', 'tags': ['actualidad', 'econom\xc3\xada'], 'descripcion': 'El presidente de la Comisi\xc3\xb3n de Econom\xc3\xada y Pol\xc3\xadtica Financiera de la CEOE, Jos\xc3\xa9 Luis Feito, asegura que es &quot;inevitable&quot; que Espa\xc3\xb1a &quot;m\xc3\xa1s tarde o m\xc3\xa1s pronto&quot; imponga el cobro de peajes en toda la red de autov\xc3\xadas actualmente gratuita, y considera adem\xc3\xa1s que ello puede evitar alguna de las futura subidas de impuestos que augura. &quot;Los impuestos van a subir, pero poniendo peajes en las autov\xc3\xadas subir\xc3\xadan menos&quot;...', 'titulo': 'La CEOE ve inevitable cobrar peajes en autov\xc3\xadas gratuitas', 'fechaEnvio': datetime.datetime(2013, 3, 12, 14, 32, 24, 709190), 'meneos': '630', 'comentario': 12}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#12
+{'autor': 'Fotoperfecta', 'link_noticia': 'http://www.meneame.net/story/juez-devuelve-pp-demanda-contra-barcenas-estar-mal-planteada/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 13, 50, 24, 709315), 'link': 'http://www.publico.es/espana/452089/el-juez-devuelve-al-pp-su-demanda-contra-barcenas-por-estar-mal-planteada', 'tags': ['actualidad', 'pol\xc3\xadtica'], 'descripcion': 'El PP tard\xc3\xb3 m\xc3\xa1s de un mes en demandar a El Pa\xc3\xads y al autor de los &quot;papeles de B\xc3\xa1rcenas&quot; publicados en dicho peri\xc3\xb3dico, pero lo hizo mal. Su demanda contiene un defecto de forma clamoroso, que ha llevado al juez de Primera Instancia n\xc3\xbamero 83 de Madrid, David Rodr\xc3\xadguez Fern\xc3\xa1ndez-Yepes, a requerir al partido conservador que lo subsane antes de decidir si admite a tr\xc3\xa1mite la demanda.', 'titulo': 'El juez devuelve al PP su demanda contra B\xc3\xa1rcenas por estar mal planteada', 'fechaEnvio': datetime.datetime(2013, 3, 13, 13, 37, 24, 709278), 'meneos': '787', 'comentario': 13}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#13
+{'autor': 'Fotoperfecta', 'link_noticia': 'http://www.meneame.net/story/pp-demandado-ante-inspeccion-trabajo-recoger-curriculos/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 13, 40, 24, 709400), 'link': 'http://www.eldiario.es/economia/CCOO-PP-madrileno-inspeccion-trabajo_0_110589217.html', 'tags': ['actualidad', 'sociedad'], 'descripcion': 'Comisiones Obreras de Madrid ha presentado esta ma\xc3\xb1ana una demanda ante la inspecci\xc3\xb3n de trabajo contra el Partido Popular de Parla por recoger curr\xc3\xadculos con la promesa de entregarlos a la empresa encargada del macroproyecto de Eurovegas. Los servicios jur\xc3\xaddicos del sindicato entienden que el PP podr\xc3\xada estar vulnerando la Ley de Protecci\xc3\xb3n de Datos al tratar informaci\xc3\xb3n personal y usurpando la funci\xc3\xb3n de las agencias de colocaci\xc3\xb3n.', 'titulo': 'El PP demandado ante la inspecci\xc3\xb3n de trabajo por recoger curr\xc3\xadculos para Eurovegas', 'fechaEnvio': datetime.datetime(2013, 3, 13, 13, 24, 24, 709364), 'meneos': '952', 'comentario': 14}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#14
+{'autor': 'CarlosJG', 'link_noticia': 'http://www.meneame.net/story/terribles-imagenes-destruccion-biblioteca-nacional-iraq/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 13, 30, 24, 709484), 'link': 'http://www.huffingtonpost.com/2013/03/05/iraq-national-library-destruction_n_2813825.html', 'tags': ['cultura', 'historia'], 'descripcion': 'Im\xc3\xa1genes de la destrucci\xc3\xb3n en 2003 de la Biblioteca Nacional de una civilizaci\xc3\xb3n con casi 5000 a\xc3\xb1os de  antig\xc3\xbcedad que se extiende desde la antigua escritura cuneiforme en tablillas de arcilla de los voluminosos expedientes personales de la polic\xc3\xada secreta de Saddam Hussein. V\xc3\xada <a  href="https://twitter.com/Libroantiguo/status/311549804654256128" title="twitter.com/Libroantiguo/status/311549804654256128" rel="nofollow">twitter.com/Libroantiguo/status/311549804654256128</a>', 'titulo': 'Las terribles im\xc3\xa1genes de la destrucci\xc3\xb3n de la Biblioteca Nacional de Iraq', 'fechaEnvio': datetime.datetime(2013, 3, 12, 19, 54, 24, 709449), 'meneos': '269', 'comentario': 15}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#15
+{'autor': 'torbe_1964', 'link_noticia': 'http://www.meneame.net/story/pp-psoe-upyd-rechazan-despenalizar-cultivo-distribucion-consumo/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 12, 55, 24, 709569), 'link': 'http://ecodiario.eleconomista.es/espana/noticias/4669043/03/13/PP-PSOE-y-UPyD-rechazan-despenalizar-el-cultivo-distribucion-y-consumo-de-cannabis.html', 'tags': ['actualidad', 'sociedad'], 'descripcion': 'El Pleno del Congreso, con los votos del PP, el PSOE y UPyD han rechazado la propuesta presentada por Esquerra (ERC) y apoyada por la Izquierda Plural (IU-ICV-CHA) para regularizar, en el plazo m\xc3\xa1s breve posible, la producci\xc3\xb3n, distribuci\xc3\xb3n y consumo de cannabis en Espa\xc3\xb1a. La iniciativa planteaba a su vez la creaci\xc3\xb3n de una subcomisi\xc3\xb3n o grupo de trabajo para estudiar la citada despenalizaci\xc3\xb3n, que tampoco ha salido adelante. Relacionada:<a  href="http://www.meneame.net/story/veintena-ayuntamientos-catalanes-piden-cambios-legales-poder" title="www.meneame.net/story/veintena-ayuntamientos-catalanes-piden-cambios-legales-poder" rel="nofollow">www.meneame.net/story/veintena-ayuntamientos-catalanes-piden-cambios-l</a>', 'titulo': 'PP, PSOE y UPyD rechazan despenalizar el cultivo, distribuci\xc3\xb3n y consumo de cannabis', 'fechaEnvio': datetime.datetime(2013, 3, 12, 20, 37, 24, 709533), 'meneos': '850', 'comentario': 16}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#16
+{'autor': 'conversador', 'link_noticia': 'http://www.meneame.net/story/pp-intenta-utilizar-ruz-tratar-calmar-barcenas/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 12, 20, 24, 709652), 'link': 'http://www.elboletin.com/index.php?noticia=71972', 'tags': ['actualidad', 'pol\xc3\xadtica'], 'descripcion': 'El PP quiere sacar provecho de la decisi\xc3\xb3n de Pablo Ruz de ser \xc3\xa9l el que asuma los \xe2\x80\x98papeles de B\xc3\xa1rcenas\xe2\x80\x99 en detrimento del magistrado del 11M, Javier G\xc3\xb3mez Berm\xc3\xbadez. El \xc3\xa9nfasis que ha mostrado por esta causa ha provocado que G\xc3\xa9nova insista en que este juez se haga cargo de la investigaci\xc3\xb3n. Un inter\xc3\xa9s, el de los populares, que se debe a sus esfuerzos por tratar de calmar al extesorero, ya que Ruz tiene \xe2\x80\x98fecha de caducidad\xe2\x80\x99.', 'titulo': 'El PP intenta utilizar a Ruz para tratar de calmar a B\xc3\xa1rcenas', 'fechaEnvio': datetime.datetime(2013, 3, 12, 22, 55, 24, 709616), 'meneos': '595', 'comentario': 17}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#17
+{'autor': 'disconubes', 'link_noticia': 'http://www.meneame.net/story/espana-eliminada-europa-league/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 11, 40, 24, 709736), 'link': 'http://aldea-irreductible.blogspot.com.es/2013/03/espana-eliminada-de-la-europa-league.html', 'tags': ['cultura', 'ciencia'], 'descripcion': 'Espa\xc3\xb1a es un pa\xc3\xads moroso. Espa\xc3\xb1a es un pa\xc3\xads que no paga sus cuotas. Espa\xc3\xb1a es un pa\xc3\xads que no hace frente a sus deudas. La European Science Fundation ha decidido suspender temporalmente el apoyo econ\xc3\xb3mico a los proyectos surgidos de instituciones espa\xc3\xb1olas a causa del impago de las cuotas a la ESF. Los pol\xc3\xadticos que gobiernan y han gobernado nuestro pa\xc3\xads durante los a\xc3\xb1os que dura esta crisis han tomado la firme decisi\xc3\xb3n de destruir cualquier atisbo de ciencia e investigaci\xc3\xb3n.', 'titulo': 'Espa\xc3\xb1a eliminada de la Europa League', 'fechaEnvio': datetime.datetime(2013, 3, 13, 11, 30, 24, 709699), 'meneos': '1008', 'comentario': 18}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#18
+{'autor': 'Israfil', 'link_noticia': 'http://www.meneame.net/story/aplicacion-permite-grabar-conversaciones-telefonicas-validez/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 11, 11, 24, 709823), 'link': 'http://www.abc.es/tecnologia/moviles-aplicaciones/20130312/abci-burovoz-grabar-legal-201303121504.html', 'tags': ['tecnolog\xc3\xada', 'novedades'], 'descripcion': 'La aplicaci\xc3\xb3n permite grabar y almacenar tanto las llamadas realizadas como las recibidas mediante un sistema de comunicaci\xc3\xb3n certificada que proporciona total seguridad jur\xc3\xaddica.  Cualquier persona pueda dejar constancia legal de acuerdos, quejas, reclamaciones, contrataci\xc3\xb3n de productos y servicios, o incluso amenazas.', 'titulo': 'Una aplicaci\xc3\xb3n permite grabar conversaciones telef\xc3\xb3nicas con validez legal', 'fechaEnvio': datetime.datetime(2013, 3, 13, 16, 51, 24, 709786), 'meneos': '443', 'comentario': 19}
+------------------------------------------------------------------
+------------------------------------------------------------------
+#19
+{'autor': 'sofia.gella', 'link_noticia': 'http://www.meneame.net/story/estan-encubriendo-pp-mossos-policia-ministro-maltratador/', 'fechaPublicacion': datetime.datetime(2013, 3, 13, 10, 20, 24, 709908), 'link': 'http://www.diegomorales.net/2013/03/estan-encubriendo-el-pp-los-mossos-y-la.html', 'tags': ['actualidad', 'pol\xc3\xadtica'], 'descripcion': 'En un art\xc3\xadculo publicado en Vozpopuli se afirma que en la grabaci\xc3\xb3n de la conversaci\xc3\xb3n que mantuvieron la ex de Jordi Pujol Ferrusola y Alicia S\xc3\xa1nchez-Camacho (presidenta del PP) aparece el nombre de un ministro del actual gobierno que maltrata a su mujer (...) Decido conectarme a Twitter para preguntar a Jos\xc3\xa9 Manuel S\xc3\xa1nchez Fornet (Secretario General del Sindicato Unificado de la Polic\xc3\xada) qu\xc3\xa9 opina de lo que se relata en el art\xc3\xadculo. Me contesta &quot;que es verdad&quot;:', 'titulo': '\xc2\xbfEst\xc3\xa1n encubriendo el PP, los mossos y la polic\xc3\xada a un ministro maltratador?', 'fechaEnvio': datetime.datetime(2013, 3, 13, 1, 47, 24, 709871), 'meneos': '1018', 'comentario': 20}
+------------------------------------------------------------------
+         37889 function calls (37115 primitive calls) in 14.806 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     1432    9.739    0.007    9.739    0.007 {method 'recv' of '_socket.socket' objects}
+       21    2.196    0.105    2.196    0.105 {_socket.getaddrinfo}
+       21    2.034    0.097    2.034    0.097 {method 'connect' of '_socket.socket' objects}
+      160    0.752    0.005    0.752    0.005 {method 'search' of '_sre.SRE_Pattern' objects}
+   625/21    0.013    0.000    6.585    0.314 socket.py:336(read)
+        8    0.012    0.001    0.012    0.001 {method 'findall' of '_sre.SRE_Pattern' objects}
+     1969    0.005    0.000    0.005    0.000 {method 'write' of 'cStringIO.StringO' objects}
+      199    0.004    0.000    6.583    0.033 httplib.py:568(_read_chunked)
+      546    0.004    0.000    3.407    0.006 socket.py:406(readline)
+      604    0.003    0.000    6.362    0.011 httplib.py:626(_safe_read)
+     1072    0.003    0.000    0.003    0.000 {method 'find' of 'str' objects}
+       21    0.002    0.000    0.005    0.000 httplib.py:234(readheaders)
+        1    0.002    0.002    0.002    0.002 socket.py:45(<module>)
+      316    0.001    0.000    0.001    0.000 {method 'getvalue' of 'cStringIO.StringO' objects}
+    39/22    0.001    0.000    0.003    0.000 sre_parse.py:379(_parse)
+       40    0.001    0.000    0.002    0.000 obtenerNoticias.py:187(_coger_fecha)
+4354/4320    0.001    0.000    0.001    0.000 {len}
+     1864    0.001    0.000    0.001    0.000 {method 'seek' of 'cStringIO.StringO' objects}
+     3431    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
+        1    0.001    0.001   14.806   14.806 noticias.py:2(<module>)
+    73/22    0.001    0.000    0.001    0.000 sre_compile.py:32(_compile)
+       21    0.001    0.000    7.433    0.354 urllib2.py:1132(do_open)
+        1    0.001    0.001    0.008    0.008 urllib2.py:76(<module>)
+     1213    0.001    0.000    0.001    0.000 {cStringIO.StringIO}
+      772    0.001    0.000    0.001    0.000 {min}
+        1    0.001    0.001    0.008    0.008 obtenerNoticias.py:2(<module>)
+        2    0.001    0.000    0.001    0.000 collections.py:237(namedtuple)
+      220    0.001    0.000    6.583    0.030 httplib.py:532(read)
+      562    0.001    0.000    0.001    0.000 sre_parse.py:182(__next)
+        1    0.001    0.001    0.001    0.001 collections.py:1(<module>)
+      952    0.001    0.000    0.001    0.000 {method 'join' of 'str' objects}
+        1    0.001    0.001    0.005    0.005 httplib.py:67(<module>)
+   107/56    0.001    0.000    0.001    0.000 sre_parse.py:140(getwidth)
+       63    0.001    0.000    0.001    0.000 socket.py:276(close)
+      647    0.001    0.000    0.001    0.000 {method 'read' of 'cStringIO.StringO' objects}
+       21    0.000    0.000    4.231    0.201 socket.py:537(create_connection)
+       21    0.000    0.000    3.197    0.152 httplib.py:400(begin)
+       21    0.000    0.000    0.001    0.000 socket.py:185(__init__)
+      193    0.000    0.000    0.006    0.000 re.py:226(_compile)
+        1    0.000    0.000    0.001    0.001 mimetools.py:1(<module>)
+       21    0.000    0.000    7.437    0.354 urllib2.py:382(open)
+       21    0.000    0.000    0.000    0.000 {method 'sendall' of '_socket.socket' objects}
+      249    0.000    0.000    0.001    0.000 rfc822.py:197(isheader)
+        8    0.000    0.000    0.770    0.096 obtenerNoticias.py:37(_obtener_items)
+       21    0.000    0.000    3.190    0.152 httplib.py:363(_read_status)
+        1    0.000    0.000    0.002    0.002 urlparse.py:29(<module>)
+      494    0.000    0.000    0.001    0.000 sre_parse.py:201(get)
+      249    0.000    0.000    0.000    0.000 httplib.py:220(addheader)
+       21    0.000    0.000    3.198    0.152 httplib.py:994(getresponse)
+       21    0.000    0.000    4.233    0.202 httplib.py:977(_send_request)
+       40    0.000    0.000    0.000    0.000 {built-in method today}
+      156    0.000    0.000    0.000    0.000 {hasattr}
+       21    0.000    0.000    0.001    0.000 urlparse.py:160(urlsplit)
+     1322    0.000    0.000    0.000    0.000 {method 'tell' of 'cStringIO.StringO' objects}
+      625    0.000    0.000    0.000    0.000 {max}
+      485    0.000    0.000    0.000    0.000 urllib.py:1199(<genexpr>)
+      683    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        1    0.000    0.000    0.001    0.001 urllib.py:23(<module>)
+       63    0.000    0.000    0.000    0.000 {method 'match' of '_sre.SRE_Pattern' objects}
+       84    0.000    0.000    0.000    0.000 httplib.py:930(putheader)
+      647    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+      485    0.000    0.000    0.000    0.000 urlparse.py:315(<genexpr>)
+       21    0.000    0.000    0.000    0.000 mimetools.py:33(parsetype)
+       21    0.000    0.000    4.232    0.202 httplib.py:772(send)
+       21    0.000    0.000    0.006    0.000 mimetools.py:24(__init__)
+      556    0.000    0.000    0.000    0.000 {method 'strip' of 'str' objects}
+      238    0.000    0.000    0.000    0.000 sre_parse.py:130(__getitem__)
+        1    0.000    0.000   13.372   13.372 obtenerNoticias.py:130(_obtener_comentarios)
+      396    0.000    0.000    0.000    0.000 sre_parse.py:138(append)
+       21    0.000    0.000    0.002    0.000 urllib2.py:195(__init__)
+        1    0.000    0.000    0.000    0.000 heapq.py:31(<module>)
+       42    0.000    0.000    0.000    0.000 socket.py:246(__init__)
+       21    0.000    0.000    7.433    0.354 urllib2.py:410(_open)
+      253    0.000    0.000    0.000    0.000 {getattr}
+      353    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+       64    0.000    0.000    0.000    0.000 {range}
+     1347    0.000    0.000    0.000    0.000 {ord}
+      348    0.000    0.000    0.000    0.000 {isinstance}
+       21    0.000    0.000    0.001    0.000 urllib2.py:1103(do_request_)
+      353    0.000    0.000    0.000    0.000 {method 'readline' of 'cStringIO.StringO' objects}
+        1    0.000    0.000    0.000    0.000 random.py:40(<module>)
+      160    0.000    0.000    0.755    0.005 re.py:139(search)
+       21    0.000    0.000    0.001    0.000 urllib2.py:177(request_host)
+       21    0.000    0.000    0.000    0.000 httplib.py:820(putrequest)
+       42    0.000    0.000    2.034    0.048 socket.py:223(meth)
+        1    0.000    0.000    0.000    0.000 tempfile.py:18(<module>)
+       20    0.000    0.000   13.370    0.669 obtenerNoticias.py:22(_obtener_contenido_url)
+       42    0.000    0.000    0.001    0.000 httplib.py:516(close)
+       21    0.000    0.000    0.000    0.000 mimetools.py:50(parseplist)
+      126    0.000    0.000    0.000    0.000 rfc822.py:285(getheader)
+       22    0.000    0.000    0.003    0.000 sre_parse.py:663(parse)
+        1    0.000    0.000    0.000    0.000 base64.py:3(<module>)
+       22    0.000    0.000    0.001    0.000 sre_compile.py:361(_compile_info)
+      266    0.000    0.000    0.000    0.000 {setattr}
+       21    0.000    0.000    0.000    0.000 socket.py:192(close)
+        7    0.000    0.000    0.000    0.000 sre_compile.py:207(_optimize_charset)
+       22    0.000    0.000    0.006    0.000 sre_compile.py:495(compile)
+       21    0.000    0.000    0.001    0.000 urlparse.py:129(urlparse)
+       42    0.000    0.000    7.433    0.177 urllib2.py:370(_call_chain)
+       66    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+       21    0.000    0.000    0.000    0.000 urlparse.py:152(_splitnetloc)
+       21    0.000    0.000    4.231    0.201 httplib.py:754(connect)
+       21    0.000    0.000    7.433    0.354 urllib2.py:1206(http_open)
+       21    0.000    0.000    4.232    0.202 httplib.py:799(_send_output)
+       21    0.000    0.000    0.000    0.000 httplib.py:335(__init__)
+      270    0.000    0.000    0.000    0.000 rfc822.py:209(islast)
+       21    0.000    0.000    0.000    0.000 urllib.py:948(__init__)
+     1224    0.000    0.000    0.000    0.000 {chr}
+       21    0.000    0.000    7.437    0.354 urllib2.py:122(urlopen)
+        2    0.000    0.000    0.000    0.000 obtenerNoticias.py:105(_obtener_links_noticias)
+    39/22    0.000    0.000    0.003    0.000 sre_parse.py:301(_parse_sub)
+       10    0.000    0.000    0.000    0.000 {dir}
+      181    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+       21    0.000    0.000    0.000    0.000 {method 'sub' of '_sre.SRE_Pattern' objects}
+        1    0.000    0.000    0.002    0.002 obtenerNoticias.py:160(_make_noticias)
+       21    0.000    0.000    0.000    0.000 urllib.py:1063(splittype)
+        9    0.000    0.000    0.000    0.000 urllib2.py:319(add_handler)
+      339    0.000    0.000    0.000    0.000 {_sre.getlower}
+      270    0.000    0.000    0.000    0.000 rfc822.py:219(iscomment)
+       42    0.000    0.000    0.000    0.000 urllib2.py:257(get_host)
+        1    0.000    0.000    0.000    0.000 hashlib.py:55(<module>)
+       21    0.000    0.000    0.000    0.000 socket.py:212(makefile)
+       21    0.000    0.000    0.000    0.000 urllib.py:1077(splithost)
+       34    0.000    0.000    0.000    0.000 sre_compile.py:354(_simple)
+       21    0.000    0.000    0.006    0.000 rfc822.py:88(__init__)
+       21    0.000    0.000    0.000    0.000 httplib.py:680(__init__)
+       20    0.000    0.000    0.002    0.000 obtenerNoticias.py:215(_tratar_fecha)
+      191    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+       84    0.000    0.000    0.000    0.000 urllib2.py:1161(<genexpr>)
+       21    0.000    0.000    0.000    0.000 httplib.py:710(_set_hostport)
+       21    0.000    0.000    0.000    0.000 urllib.py:1002(__init__)
+      105    0.000    0.000    0.000    0.000 httplib.py:792(_output)
+       42    0.000    0.000    0.000    0.000 urllib2.py:250(get_type)
+       21    0.000    0.000    0.000    0.000 urllib2.py:512(http_response)
+       21    0.000    0.000    0.000    0.000 httplib.py:486(_check_close)
+       21    0.000    0.000    0.000    0.000 httplib.py:762(close)
+       21    0.000    0.000    4.233    0.202 httplib.py:956(request)
+        1    0.000    0.000    0.000    0.000 rfc822.py:71(<module>)
+      146    0.000    0.000    0.000    0.000 sre_parse.py:195(match)
+       22    0.000    0.000    0.002    0.000 sre_compile.py:480(_code)
+       42    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x88d8a0}
+      160    0.000    0.000    0.000    0.000 {method 'groups' of '_sre.SRE_Match' objects}
+       21    0.000    0.000    0.000    0.000 urllib.py:1165(splittag)
+        1    0.000    0.000   14.797   14.797 obtenerNoticias.py:222(get)
+      136    0.000    0.000    0.000    0.000 sre_parse.py:126(__len__)
+       21    0.000    0.000    4.232    0.202 httplib.py:941(endheaders)
+       42    0.000    0.000    0.000    0.000 socket.py:285(__del__)
+       73    0.000    0.000    0.000    0.000 sre_parse.py:90(__init__)
+       21    0.000    0.000    0.000    0.000 urllib.py:1054(unwrap)
+       89    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+       42    0.000    0.000    0.000    0.000 urllib2.py:289(add_unredirected_header)
+       22    0.000    0.000    0.000    0.000 {_sre.compile}
+       21    0.000    0.000    0.000    0.000 urllib.py:1202(unquote)
+       20    0.000    0.000    0.000    0.000 re.py:164(split)
+        1    0.000    0.000    0.000    0.000 ssl.py:56(<module>)
+       20    0.000    0.000    0.000    0.000 {method 'split' of '_sre.SRE_Pattern' objects}
+        1    0.000    0.000    0.000    0.000 socket.py:179(_socketobject)
+       44    0.000    0.000    0.000    0.000 sre_compile.py:474(isstring)
+       42    0.000    0.000    0.000    0.000 {method 'index' of 'str' objects}
+       42    0.000    0.000    0.000    0.000 socket.py:292(flush)
+       99    0.000    0.000    0.000    0.000 collections.py:277(<genexpr>)
+       42    0.000    0.000    0.000    0.000 urllib2.py:293(has_header)
+       63    0.000    0.000    0.000    0.000 {method 'title' of 'str' objects}
+       20    0.000    0.000    0.001    0.000 obtenerNoticias.py:118(_obtener_pagina_siguiente)
+       21    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+       22    0.000    0.000    0.000    0.000 sre_parse.py:178(__init__)
+       42    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       21    0.000    0.000    0.000    0.000 <string>:8(__new__)
+       42    0.000    0.000    0.000    0.000 urllib2.py:244(get_full_url)
+       42    0.000    0.000    0.000    0.000 urllib2.py:238(has_data)
+        1    0.000    0.000    0.000    0.000 os.py:35(_get_exports_list)
+       63    0.000    0.000    0.000    0.000 {method 'group' of '_sre.SRE_Match' objects}
+        7    0.000    0.000    0.000    0.000 sre_compile.py:178(_compile_charset)
+        8    0.000    0.000    0.014    0.002 re.py:169(findall)
+       63    0.000    0.000    0.000    0.000 {method 'capitalize' of 'str' objects}
+       21    0.000    0.000    0.000    0.000 urllib2.py:227(get_method)
+        1    0.000    0.000    0.000    0.000 urllib2.py:450(build_opener)
+        1    0.000    0.000    0.000    0.000 obtenerNoticias.py:88(_make_tags)
+        8    0.000    0.000    0.000    0.000 {_bisect.insort}
+        1    0.000    0.000    0.000    0.000 {zip}
+       26    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+       34    0.000    0.000    0.000    0.000 sre_parse.py:134(__setitem__)
+       16    0.000    0.000    0.000    0.000 sre_parse.py:72(opengroup)
+        1    0.000    0.000    0.000    0.000 bisect.py:1(<module>)
+       21    0.000    0.000    0.000    0.000 urllib.py:1008(info)
+       16    0.000    0.000    0.000    0.000 sre_parse.py:83(closegroup)
+       21    0.000    0.000    0.000    0.000 urllib2.py:276(has_proxy)
+        1    0.000    0.000    0.000    0.000 {math.exp}
+       22    0.000    0.000    0.000    0.000 sre_parse.py:67(__init__)
+        1    0.000    0.000    0.000    0.000 urllib.py:1341(getproxies_environment)
+        1    0.000    0.000    0.000    0.000 {posix.urandom}
+       21    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+       21    0.000    0.000    0.000    0.000 httplib.py:730(set_debuglevel)
+       21    0.000    0.000    0.000    0.000 urllib2.py:1150(<genexpr>)
+        1    0.000    0.000    0.000    0.000 __future__.py:48(<module>)
+        1    0.000    0.000    0.000    0.000 random.py:72(Random)
+       13    0.000    0.000    0.000    0.000 {all}
+       21    0.000    0.000    0.000    0.000 {method 'iteritems' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {function seed at 0x7f5a07fca7d0}
+        1    0.000    0.000    0.000    0.000 <string>:1(SplitResult)
+        1    0.000    0.000    0.000    0.000 random.py:100(seed)
+        1    0.000    0.000    0.000    0.000 <string>:1(ParseResult)
+        1    0.000    0.000    0.000    0.000 {method 'clear' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 collections.py:25(OrderedDict)
+        2    0.000    0.000    0.000    0.000 {repr}
+        2    0.000    0.000    0.000    0.000 {math.log}
+        1    0.000    0.000    0.000    0.000 tempfile.py:493(SpooledTemporaryFile)
+       16    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+       13    0.000    0.000    0.000    0.000 urllib2.py:499(__lt__)
+        1    0.000    0.000    0.653    0.653 obtenerNoticias.py:15(_obtener_contenido)
+       21    0.000    0.000    0.000    0.000 urllib2.py:264(get_selector)
+        2    0.000    0.000    0.000    0.000 sre_parse.py:257(_escape)
+        1    0.000    0.000    0.000    0.000 obtenerNoticias.py:10(ObtenerNoticias)
+        6    0.000    0.000    0.000    0.000 hashlib.py:94(__get_openssl_constructor)
+       86    0.000    0.000    0.000    0.000 {method 'isalnum' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 rfc822.py:85(Message)
+        1    0.000    0.000    0.000    0.000 keyword.py:11(<module>)
+        1    0.000    0.000    0.000    0.000 urllib2.py:193(Request)
+        1    0.000    0.000    0.003    0.003 obtenerNoticias.py:54(_obtener_titulos)
+        2    0.000    0.000    0.000    0.000 {locals}
+        1    0.000    0.000    0.000    0.000 httplib.py:325(HTTPResponse)
+        5    0.000    0.000    0.001    0.000 re.py:188(compile)
+        1    0.000    0.000    0.000    0.000 httplib.py:669(HTTPConnection)
+        1    0.000    0.000    0.000    0.000 socket.py:235(_fileobject)
+        1    0.000    0.000    0.002    0.002 obtenerNoticias.py:77(_obtener_tag1)
+        1    0.000    0.000    0.000    0.000 urlparse.py:63(clear_cache)
+        1    0.000    0.000    0.000    0.000 urllib.py:609(FancyURLopener)
+        1    0.000    0.000    0.000    0.000 tempfile.py:107(_RandomNameSequence)
+        2    0.000    0.000    0.000    0.000 {map}
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_md5}
+        1    0.000    0.000    0.000    0.000 urllib2.py:308(__init__)
+        1    0.000    0.000    0.000    0.000 urllib2.py:149(HTTPError)
+        1    0.000    0.000    0.000    0.000 UserDict.py:40(items)
+       16    0.000    0.000    0.000    0.000 sre_compile.py:51(fixup)
+        1    0.000    0.000    0.000    0.000 urlparse.py:68(ResultMixin)
+       13    0.000    0.000    0.000    0.000 collections.py:294(<genexpr>)
+       14    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 warnings.py:339(__enter__)
+        1    0.000    0.000    0.002    0.002 obtenerNoticias.py:83(_obtener_tag2)
+        1    0.000    0.000    0.754    0.754 obtenerNoticias.py:60(_obtener_meneos)
+        1    0.000    0.000    0.000    0.000 ssl.py:100(SSLSocket)
+        1    0.000    0.000    0.000    0.000 urllib.py:115(URLopener)
+        7    0.000    0.000    0.000    0.000 __future__.py:75(__init__)
+        1    0.000    0.000    0.000    0.000 urllib2.py:823(AbstractBasicAuthHandler)
+        1    0.000    0.000    0.000    0.000 collections.py:356(Counter)
+        1    0.000    0.000    0.000    0.000 urllib2.py:710(__init__)
+        2    0.000    0.000    0.000    0.000 warnings.py:318(__init__)
+        1    0.000    0.000    0.001    0.001 obtenerNoticias.py:65(_obtener_descripciones)
+        4    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        8    0.000    0.000    0.000    0.000 urllib2.py:492(add_parent)
+        1    0.000    0.000    0.000    0.000 socket.py:167(_closedsocket)
+        1    0.000    0.000    0.000    0.000 tempfile.py:364(_TemporaryFileWrapper)
+        1    0.000    0.000    0.003    0.003 obtenerNoticias.py:98(_obtener_fechas)
+       13    0.000    0.000    0.000    0.000 {method 'isdigit' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'sort' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 urllib2.py:925(AbstractDigestAuthHandler)
+        1    0.000    0.000    0.002    0.002 obtenerNoticias.py:48(_obtener_links)
+        1    0.000    0.000    0.000    0.000 mimetools.py:20(Message)
+        1    0.000    0.000    0.000    0.000 {math.sqrt}
+        1    0.000    0.000    0.000    0.000 urllib2.py:1413(CacheFTPHandler)
+        1    0.000    0.000    0.000    0.000 urllib2.py:307(OpenerDirector)
+        1    0.000    0.000    0.000    0.000 urllib.py:974(addclosehook)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1301(FileHandler)
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_sha256}
+        1    0.000    0.000    0.000    0.000 rfc822.py:496(AddrlistClass)
+        1    0.000    0.000    0.000    0.000 {binascii.hexlify}
+        1    0.000    0.000    0.000    0.000 properties.py:1(<module>)
+        2    0.000    0.000    0.000    0.000 {sys._getframe}
+        1    0.000    0.000    0.000    0.000 httplib.py:1261(LineAndFileWrapper)
+        1    0.000    0.000    0.000    0.000 httplib.py:1140(HTTPSConnection)
+        1    0.000    0.000    0.000    0.000 urllib.py:999(addinfourl)
+        2    0.000    0.000    0.000    0.000 urllib2.py:1097(__init__)
+        1    0.000    0.000    0.000    0.000 httplib.py:1243(ResponseNotReady)
+        2    0.000    0.000    0.000    0.000 warnings.py:14(warnpy3k)
+        1    0.000    0.000    0.000    0.000 httplib.py:1220(IncompleteRead)
+       13    0.000    0.000    0.000    0.000 {method '__contains__' of 'frozenset' objects}
+        1    0.000    0.000    0.000    0.000 urllib2.py:1204(HTTPHandler)
+        1    0.000    0.000    0.000    0.000 urllib2.py:529(HTTPRedirectHandler)
+        1    0.000    0.000    0.000    0.000 urllib2.py:136(URLError)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1095(AbstractHTTPHandler)
+        6    0.000    0.000    0.000    0.000 {globals}
+        1    0.000    0.000    0.000    0.000 urllib.py:850(ftpwrapper)
+        2    0.000    0.000    0.000    0.000 warnings.py:355(__exit__)
+        1    0.000    0.000    0.000    0.000 random.py:651(WichmannHill)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1237(UnknownHandler)
+       11    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 rfc822.py:770(AddressList)
+        1    0.000    0.000    0.000    0.000 urllib.py:989(addinfo)
+        1    0.000    0.000    0.000    0.000 urllib2.py:489(BaseHandler)
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_sha384}
+        1    0.000    0.000    0.000    0.000 httplib.py:1044(HTTP)
+        1    0.000    0.000    0.000    0.000 urllib2.py:508(HTTPErrorProcessor)
+        1    0.000    0.000    0.000    0.000 random.py:91(__init__)
+        1    0.000    0.000    0.000    0.000 urllib2.py:749(HTTPPasswordMgr)
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_sha224}
+        1    0.000    0.000    0.000    0.000 urllib2.py:1219(HTTPCookieProcessor)
+        1    0.000    0.000    0.000    0.000 random.py:801(SystemRandom)
+        1    0.000    0.000    0.001    0.001 obtenerNoticias.py:71(_obtener_autores)
+        1    0.000    0.000    0.000    0.000 urlparse.py:113(SplitResult)
+        1    0.000    0.000    0.000    0.000 httplib.py:1234(ImproperConnectionState)
+        1    0.000    0.000    0.000    0.000 __future__.py:74(_Feature)
+        1    0.000    0.000    0.000    0.000 httplib.py:1203(NotConnected)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1083(ProxyDigestAuthHandler)
+        1    0.000    0.000    0.000    0.000 httplib.py:1246(BadStatusLine)
+        1    0.000    0.000    0.000    0.000 httplib.py:1165(HTTPS)
+        1    0.000    0.000    0.000    0.000 urllib2.py:706(ProxyHandler)
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_sha1}
+        8    0.000    0.000    0.000    0.000 sre_compile.py:24(_identityfunction)
+        1    0.000    0.000    0.000    0.000 urllib2.py:525(HTTPDefaultErrorHandler)
+        1    0.000    0.000    0.000    0.000 obtenerNoticias.py:12(__init__)
+        1    0.000    0.000    0.000    0.000 httplib.py:1217(UnimplementedFileMode)
+        1    0.000    0.000    0.000    0.000 httplib.py:1206(InvalidURL)
+        1    0.000    0.000    0.000    0.000 httplib.py:218(HTTPMessage)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1212(HTTPSHandler)
+        1    0.000    0.000    0.000    0.000 httplib.py:1237(CannotSendRequest)
+        1    0.000    0.000    0.000    0.000 urllib2.py:895(ProxyBasicAuthHandler)
+        1    0.000    0.000    0.000    0.000 urllib2.py:883(HTTPBasicAuthHandler)
+        2    0.000    0.000    0.000    0.000 {thread.allocate_lock}
+        1    0.000    0.000    0.000    0.000 {_hashlib.openssl_sha512}
+        1    0.000    0.000    0.000    0.000 httplib.py:1209(UnknownProtocol)
+        1    0.000    0.000    0.000    0.000 __init__.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 httplib.py:1240(CannotSendHeader)
+        1    0.000    0.000    0.000    0.000 urlparse.py:121(ParseResult)
+        1    0.000    0.000    0.000    0.000 httplib.py:1198(HTTPException)
+        1    0.000    0.000    0.000    0.000 httplib.py:1253(LineTooLong)
+        1    0.000    0.000    0.000    0.000 urllib.py:945(addbase)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1353(FTPHandler)
+        1    0.000    0.000    0.000    0.000 urllib2.py:813(HTTPPasswordMgrWithDefaultRealm)
+        1    0.000    0.000    0.000    0.000 urllib2.py:1065(HTTPDigestAuthHandler)
+        1    0.000    0.000    0.000    0.000 httplib.py:1214(UnknownTransferEncoding)
+        1    0.000    0.000    0.000    0.000 urllib.py:109(ContentTooShortError)
+        1    0.000    0.000    0.000    0.000 sre_parse.py:85(checkgroup)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
