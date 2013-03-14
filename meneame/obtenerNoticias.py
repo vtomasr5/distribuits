@@ -2,7 +2,8 @@
 from urllib2 import urlopen, URLError, HTTPError
 import re
 import httplib
-from properties import MENEAME_URL
+from properties import MENEAME_BASE, MENEAME_DESTACADAS
+from properties import MENEAME_PENDIENTES, MENEAME_POPULARES, MENEAME_MAS_VISITADAS
 import datetime
 from datetime import time, timedelta
 import sys
@@ -15,13 +16,17 @@ class ObtenerNoticias(object):
         self._html = None
         self.estado = False
         
-    def _obtener_contenido(self, pagina):
+    def _obtener_contenido(self, url=MENEAME_BASE, pagina=None):
         try:
-            html = urlopen(MENEAME_URL+'/?page='+str(pagina)).read()
+            uri = url
+            if pagina:
+                uri = uri +'?page='+str(pagina)
+            html = urlopen(uri).read()
             if html.__len__() > 0:
                 self.estado = True
             return html
         except:
+            self.estado = False
             return None    
 
     @retry(HTTPError, tries=4, delay=10, backoff=2)
@@ -128,7 +133,7 @@ class ObtenerNoticias(object):
             start_link = html.find('<a href="', start)
             end_link = html.find('"', start_link+9)
             link = html[start_link+9:end_link]
-            links.append(MENEAME_URL+link+'/')
+            links.append(MENEAME_BASE[:-1]+link+'/')
             html = html[start+1:]
         return links
 
@@ -158,7 +163,7 @@ class ObtenerNoticias(object):
             # for i in range(1,6):
                 # if self._existeix_url(link+str(i)):
             html_noticia = link['contenido']
-            #html_noticia = self._obtener_contenido_links(link)
+            #html_noticia = self._obtener_contenido(link)
             while True:
                 start_link = html_noticia.find('id="cid-')
                 if start_link == -1:
@@ -243,7 +248,7 @@ class ObtenerNoticias(object):
         
         
     def get(self, pagina=1):
-        self._html = self._obtener_contenido(pagina)
+        self._html = self._obtener_contenido(MENEAME_BASE, pagina)
         contenido = {}
         contenido['titulos'] = self._obtener_titulos()
         contenido['links'] = self._obtener_links()
@@ -255,4 +260,8 @@ class ObtenerNoticias(object):
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2()) 
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()
+
+        for item in contenido['comentarios']:
+            print len(item)
+        sys.exit()
         return self._make_noticias(contenido)

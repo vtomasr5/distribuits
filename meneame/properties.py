@@ -1,1 +1,5 @@
-MENEAME_URL= 'http://www.meneame.net'
+MENEAME_BASE			= 'http://www.meneame.net/'
+MENEAME_POPULARES 		= 'http://www.meneame.net/topclicked.php'
+MENEAME_PENDIENTES 		= 'http://www.meneame.net/shakeit.php'
+MENEAME_MAS_VISITADAS 	= 'http://www.meneame.net/topclicked.php'
+MENEAME_DESTACADAS 		= 'http://www.meneame.net/topactive.php'
