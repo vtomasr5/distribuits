@@ -14,7 +14,6 @@ def limpia(antigua):
 	return antigua
 
 def limpia1(antigua):
-	antigua.encode('latin-1')
   	antigua = antigua.replace('(','');
   	antigua = antigua.replace('*',' ');
 	antigua = antigua.replace(')','');
