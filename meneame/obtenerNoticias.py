@@ -177,7 +177,7 @@ class ObtenerNoticias(object):
                     pag_idas.append(int(pag))
                     link = link+'/'+pag_idas[-1]
                 html_noticia = html_noticia[end_link+1:]
-            comentaris.append(len(comentari))
+            comentaris.append(comentari)
         return comentaris
 
     def _make_noticias(self, contenido):
@@ -202,7 +202,7 @@ class ObtenerNoticias(object):
                  'comentario': contenido['comentarios'][i],
                  'tags': contenido['tags'][i],
                  'fechaEnvio': f[0],
-         'fechaPublicacion': f[1]
+                 'fechaPublicacion': f[1]
                 })
         
         return l
@@ -254,7 +254,5 @@ class ObtenerNoticias(object):
         contenido['comentarios'] = self._obtener_comentarios()
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()
-        
-       
         
         return self._make_noticias(contenido)
