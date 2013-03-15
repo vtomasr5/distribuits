@@ -152,6 +152,39 @@ class ObtenerNoticias(object):
         a = int(html[start+20: end])+1
         return a
 
+    def _obtener_autor_comentario(self, html):
+        htm = html
+        autors = []
+        while True:
+            start_link = htm.find('<div class="comment-info"')
+            if start_link == -1:
+                break
+            end_link = htm.find('</div>', start_link+1)
+            html_info = htm[start_link:end_link]
+            start_link2 = html_info.find('<a href="/user/')
+            end_link2 = html_info.find('"', start_link2+10)
+            autor = html_info[start_link2+15:end_link2]
+            # print autor
+            autors.append(autor)
+            htm = htm[end_link+1:]
+        return autors
+
+    # obté tots els autors de totes 
+    def _obtener_autores_comentarios(self):
+        autores_com = []
+        links = self._obtener_links_noticias(self._html)
+        for link in links: # para todas las noticias
+            html_noticia = self._obtener_contenido_url(link)
+            pags = self._obtener_paginas(html_noticia)
+            if pags == -1:
+                pags = 1
+            for p in range(1, pags+1):
+                html_noticia = self._obtener_contenido_url(link+str(p))
+                autores = self._obtener_autor_comentario(html_noticia)
+                autores_com.append(autores)
+        return autores_com
+
+    # obté els comentaris d'una sola notícia i d'una sola página d'una notícia
     def _obtener_comentario(self, html):
         h = html
         l = []
@@ -169,6 +202,7 @@ class ObtenerNoticias(object):
         l.append('$FI$')
         return l
 
+    # obté tots els comentaris de totes les notícies (incuides amb més d'una pagina de comentaris també)
     def _obtener_comentarios(self):
         comentarios = []
         links = self._obtener_links_noticias(self._html)
@@ -207,7 +241,8 @@ class ObtenerNoticias(object):
                  'comentario': contenido['comentarios'][i],
                  'tags': contenido['tags'][i],
                  'fechaEnvio': f[0],
-                 'fechaPublicacion': f[1]
+                 'fechaPublicacion': f[1],
+                 'autor_comentario': contenido['autores_comentarios'][i]
                 })
         
         return l
@@ -260,6 +295,7 @@ class ObtenerNoticias(object):
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2()) 
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()
+        contenido['autores_comentarios'] = self._obtener_autores_comentarios()
 
         for item in contenido['comentarios']:
             print len(item)
