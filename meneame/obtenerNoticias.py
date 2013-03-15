@@ -29,13 +29,6 @@ class ObtenerNoticias(object):
             self.estado = False
             return None  
 
-    def _obtener_contenido_url(self, url):
-        try:
-            html = urlopen(url).read()
-            return html
-        except:
-            return None
-
     @retry(HTTPError, tries=4, delay=10, backoff=2)
     def _obtener_contenido_links(self, url, l):
         try:
@@ -173,12 +166,12 @@ class ObtenerNoticias(object):
         autores_com = []
         links = self._obtener_links_noticias(self._html)
         for link in links: # para todas las noticias
-            html_noticia = self._obtener_contenido_url(link)
+            html_noticia = self._obtener_contenido(link)
             pags = self._obtener_paginas(html_noticia)
             if pags == -1:
                 pags = 1
             for p in range(1, pags+1):
-                html_noticia = self._obtener_contenido_url(link+str(p))
+                html_noticia = self._obtener_contenido(link+str(p))
                 autores = self._obtener_autor_comentario(html_noticia)
                 autores_com.append(autores)
         return autores_com
@@ -205,16 +198,18 @@ class ObtenerNoticias(object):
     def _obtener_comentarios(self):
         comentarios = []
         links = self._obtener_links_noticias(self._html)
-        # res = self.fetch_parallel(links)
-        for link in links: # para todas las noticias
+        res = self.fetch_parallel(links)
+        for link in res:
+        #for link in links: # para todas las noticias
             # print "LINK >>> ", link
-            html_noticia = self._obtener_contenido_url(link)
+            #html_noticia = self._obtener_contenido_url(link)
+            html_noticia = link['contenido']
             pags = self._obtener_paginas(html_noticia)
             if pags == -1:
                 pags = 1
             # print "PAGS >>> ", pags
             for p in range(1, pags+1):
-                html_noticia = self._obtener_contenido_url(link+str(p))
+                html_noticia = self._obtener_contenido(link['url']+str(p))
                 com = self._obtener_comentario(html_noticia)
                 comentarios.append(com) 
         return comentarios # llista de subllistes que contenen els comentaris de cada noticia
