@@ -183,8 +183,8 @@ class ObtenerNoticias(object):
                 html_noticia = self._obtener_contenido_url(link+str(p))
                 com = self._obtener_comentario(html_noticia)
                 # print "LEN ", len(com)
-                comentarios.append(com)
-        return comentarios
+                comentarios.append(com) 
+        return comentarios # llista de subllistes que contenen els comentaris de cada noticia
 
     def _make_noticias(self, contenido):
         l = []

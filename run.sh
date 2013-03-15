@@ -1,4 +1,4 @@
 #!/bin/sh
 
 sh set_env.sh
-python parser.py
+python noticias.py
