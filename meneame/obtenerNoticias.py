@@ -37,22 +37,22 @@ class ObtenerNoticias(object):
             return None
 
     @retry(HTTPError, tries=4, delay=10, backoff=2)
-    def _obtener_contenido_links(self, url, list):
+    def _obtener_contenido_links(self, url, l):
         try:
             html = urlopen(url).read()
-            list.append({'url':url,'contenido':html})
+            l.append({'url':url,'contenido':html})
             return html
         except:
             return None
 
     def fetch_parallel(self, urls):
-        list = []
-        threads = [threading.Thread(target=self._obtener_contenido_links, args = (url,list)) for url in urls]
+        l= []
+        threads = [threading.Thread(target=self._obtener_contenido_links, args = (url,l)) for url in urls]
         for t in threads:
             t.start()
         for t in threads:
             t.join()
-        return list
+        return l
 
 
     def _existeix_url(self, url):
@@ -125,7 +125,6 @@ class ObtenerNoticias(object):
         return l
 
     def _obtener_fechas(self):
-
         regexpr1 = r'por  <a href="/user/.*?</a>.*?</div>'
         regexpr2 = 'por  <a href="/user/.*?</a>(.*?)</div>'
         return self._obtener_items(regexpr1,regexpr2)
@@ -169,7 +168,7 @@ class ObtenerNoticias(object):
             htm = htm[end_link+1:]
         return autors
 
-    # obté tots els autors de totes 
+    # obté tots els autors de tots els comentaris de les noticies
     def _obtener_autores_comentarios(self):
         autores_com = []
         links = self._obtener_links_noticias(self._html)
@@ -184,7 +183,7 @@ class ObtenerNoticias(object):
                 autores_com.append(autores)
         return autores_com
 
-    # obté els comentaris d'una sola notícia i d'una sola página d'una notícia
+    # obté els comentaris d'una sola notícia i d'una sola página (general) d'una notícia
     def _obtener_comentario(self, html):
         h = html
         l = []
@@ -199,13 +198,14 @@ class ObtenerNoticias(object):
             end_link2 = html_comentari.find('</div>', start_link2+1)
             h = h[end_link+1:]
             l.append(html_comentari[start_link2+16:end_link2])
-        l.append('$FI$')
+        # l.append('$FI$')
         return l
 
     # obté tots els comentaris de totes les notícies (incuides amb més d'una pagina de comentaris també)
     def _obtener_comentarios(self):
         comentarios = []
         links = self._obtener_links_noticias(self._html)
+        # res = self.fetch_parallel(links)
         for link in links: # para todas las noticias
             # print "LINK >>> ", link
             html_noticia = self._obtener_contenido_url(link)
@@ -216,7 +216,6 @@ class ObtenerNoticias(object):
             for p in range(1, pags+1):
                 html_noticia = self._obtener_contenido_url(link+str(p))
                 com = self._obtener_comentario(html_noticia)
-                # print "LEN ", len(com)
                 comentarios.append(com) 
         return comentarios # llista de subllistes que contenen els comentaris de cada noticia
 
@@ -299,5 +298,6 @@ class ObtenerNoticias(object):
 
         for item in contenido['comentarios']:
             print len(item)
+
         sys.exit()
         return self._make_noticias(contenido)
