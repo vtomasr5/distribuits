@@ -122,7 +122,6 @@ class ObtenerNoticias(object):
         regexpr2 = 'por  <a href="/user/.*?</a>(.*?)</div>'
         return self._obtener_items(regexpr1,regexpr2)
         
-        
     def _obtener_links_noticias(self, html):
         links = []
         while True:
@@ -143,6 +142,36 @@ class ObtenerNoticias(object):
         end = html.find('">', start)
         a = int(html[start+20: end])+1
         return a
+
+    def _obtener_fecha_comentario(self, html):
+        htm = html
+        dates = []
+        while True:
+            start_link = htm.find('<div class="comment-info"')
+            if start_link == -1:
+                break
+            end_link = htm.find('<', start_link+1)
+            html_data = htm[start_link+27:end_link]
+            # print html_data
+            d = self._coger_fecha(html_data)
+            # print d
+            dates.append(d)
+            htm = htm[end_link+1:]
+        return dates
+
+    def _obtener_fechas_comentarios(self):
+        fechas_com = []
+        links = self._obtener_links_noticias(self._html)
+        for link in links: # para todas las noticias
+            html_noticia = self._obtener_contenido(link)
+            pags = self._obtener_paginas(html_noticia)
+            if pags == -1:
+                pags = 1
+            for p in range(1, pags+1):
+                html_noticia = self._obtener_contenido(link+str(p))
+                fechas = self._obtener_fecha_comentario(html_noticia)
+                fechas_com.append(fechas)
+        return fechas_com        
 
     def _obtener_autor_comentario(self, html):
         htm = html
@@ -226,6 +255,7 @@ class ObtenerNoticias(object):
         
         for i in range(min,max):
             f = self._tratar_fecha(contenido['fechas'][i])
+            fc = self._coger_fecha(contenido['fechas_comentarios'][i])
             l.append({ 'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
                  'meneos': contenido['meneos'][i],
@@ -236,7 +266,8 @@ class ObtenerNoticias(object):
                  'tags': contenido['tags'][i],
                  'fechaEnvio': f[0],
                  'fechaPublicacion': f[1],
-                 'autor_comentario': contenido['autores_comentarios'][i]
+                 'autor_comentario': contenido['autores_comentarios'][i],
+                 'fecha_comentario': fc[0],
                 })
         
         return l
@@ -290,6 +321,7 @@ class ObtenerNoticias(object):
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()
         contenido['autores_comentarios'] = self._obtener_autores_comentarios()
+        contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
 
         for item in contenido['comentarios']:
             print len(item)
