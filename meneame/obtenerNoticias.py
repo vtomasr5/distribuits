@@ -323,8 +323,8 @@ class ObtenerNoticias(object):
         contenido['autores_comentarios'] = self._obtener_autores_comentarios()
         contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
 
-        for item in contenido['comentarios']:
-            print len(item)
+        # for item in contenido['comentarios']:
+        #     print len(item)
 
         sys.exit()
         return self._make_noticias(contenido)
