@@ -8,7 +8,7 @@ import datetime
 from datetime import time, timedelta
 import sys
 import threading
-from utils import retry
+from utils import retry,reorder_list
 
 class ObtenerNoticias(object):
     
@@ -227,7 +227,8 @@ class ObtenerNoticias(object):
     def _obtener_comentarios(self):
         comentarios = []
         links = self._obtener_links_noticias(self._html)
-        res = self.fetch_parallel(links)
+        #res = self.fetch_parallel(links)
+        res =reorder_list(links, self.fetch_parallel(links))
         for link in res:
         #for link in links: # para todas las noticias
             # print "LINK >>> ", link

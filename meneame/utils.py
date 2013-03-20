@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+import sys
 from functools import wraps
 
 def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
@@ -64,3 +65,12 @@ def limpia1(antigua):
     antigua = antigua.replace('ñ','n');
     antigua = antigua.replace("'",'*');
     return antigua
+
+def reorder_list(links, concurrent):
+    aux = []
+
+    for url in links:
+        for item in concurrent:
+            if url == item['url']:
+                aux.append(item)
+    return aux
