@@ -254,8 +254,8 @@ class ObtenerNoticias(object):
             #contenido['descripciones'].pop(0)
         
         for i in range(min,max):
-            f = self._tratar_fecha(contenido['fechas'][i])
-            fc = self._coger_fecha(contenido['fechas_comentarios'][i])
+            f = self._tratar_fecha(contenido['fechas'][i],0)
+            #fc = self._tratar_fecha(contenido['fechas_comentarios'][i],1)
             l.append({ 'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
                  'meneos': contenido['meneos'][i],
@@ -267,7 +267,7 @@ class ObtenerNoticias(object):
                  'fechaEnvio': f[0],
                  'fechaPublicacion': f[1],
                  'autor_comentario': contenido['autores_comentarios'][i],
-                 'fecha_comentario': fc[0],
+                 'fecha_comentario': contenido['fechas_comentarios'][i],
                 })
         
         return l
@@ -296,16 +296,23 @@ class ObtenerNoticias(object):
             data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
         else:
             #17-02-2013 21:35 
-            data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
+	    try:
+            	data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
+	    except:
+		data = datetime.datetime.today()
+		return data
         return data
 
 
-    def _tratar_fecha(self,fechas):
-        fechaEnvio = re.split("publicado ",fechas)
-        fechaPublicado = fechaEnvio[1]
-        fechaEnvio = fechaEnvio[0]
-        return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
-        
+    def _tratar_fecha(self,fechas,i):
+	if i==0:
+		fechaEnvio = re.split("publicado ",fechas)
+		fechaPublicado = fechaEnvio[1]
+		fechaEnvio = fechaEnvio[0]
+		return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
+	else:
+		return self._coger_fecha(fechas)
+		
         
     def get(self, pagina=1):
         self._html = self._obtener_contenido(MENEAME_BASE, pagina)
@@ -322,9 +329,4 @@ class ObtenerNoticias(object):
         contenido['fechas'] = self._obtener_fechas()
         contenido['autores_comentarios'] = self._obtener_autores_comentarios()
         contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
-
-        for item in contenido['comentarios']:
-            print len(item)
-
-        sys.exit()
         return self._make_noticias(contenido)

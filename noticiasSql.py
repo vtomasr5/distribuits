@@ -22,6 +22,7 @@ for i in reversed(range(init-1,max)):
 	c = ""
     #falta pasar de unicode a utf-8
 	i = 1
+	comment_id = 0
 	for index,item in (enumerate(res)):
 		b = b + "insert into users (user_id,user_login) values (NULL,'"+ item['autor'] +"');\n\n"
 		b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
@@ -42,12 +43,23 @@ for i in reversed(range(init-1,max)):
 		f.write(b)
 		f1.write(b)
 		b =""
-		for comment in (enumerate(item['comentario'])): #rellenar otros campos
+		comment_id = 0
+		print "Noticia"+str(i)
+		print "Comentarios: "+str(len(item['comentario']))
+		print "Fechas de comentarios: "+str(len(item['fecha_comentario']))
+		print "Fechas de autores: "+str(len(item['autor_comentario']))
+		for comment in (enumerate(item['comentario'])):
+			if comment_id < len(item['fecha_comentario']):#Esto está asi para que no pete
+				comentario_fecha = item['fecha_comentario'][comment_id]
+			if comment_id < len(item['autor_comentario']):
+				comentario_autor = item['autor_comentario'][comment_id]
 			c = c + "insert into comments (comment_id,comment_type,comment_link_id,comment_content,"
-			c = c + "comment_user_id)values (NULL,'normal',"+str(i)+",'"+limpia1(str(comment))+"',1);\n\n"
+			c = c + "comment_user_id,comment_date)values (NULL,'normal',"+str(i)+",'"+limpia1(str(comment))+"',"
+			c = c + "(Select user_id from users where user_login ='"+ comentario_autor +"'),'"+str(comentario_fecha)+"');\n\n"
 			f.write(c)
 			f1.write(c)
 			c =""
+			comment_id = comment_id + 1
 		i = i + 1
 	f.close()
 f1.close()
