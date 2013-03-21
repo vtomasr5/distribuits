@@ -232,19 +232,19 @@ class ObtenerNoticias(object):
         res =reorder_list(links, self.fetch_parallel(links))
         for link in res:
         #for link in links: # para todas las noticias
-            print "LINK >>> ", link['url']
+            # print "LINK >>> ", link['url']
             #html_noticia = self._obtener_contenido_url(link)
             html_noticia = link['contenido']
             pags = self._obtener_paginas(html_noticia)
             if pags == -1:
                 pags = 1
-            print "PAGS >>> ", pags
+            # print "PAGS >>> ", pags
             com = []
             for p in range(1, pags+1):
                 html_noticia = self._obtener_contenido(link['url']+str(p))
                 com = com + self._obtener_comentario(html_noticia)        
                 # comentarios.append(com) 
-            print "COMMENTS >>> ", len(com)                
+            # print "COMMENTS >>> ", len(com)                
         return com # llista de subllistes que contenen els comentaris de cada noticia
 
     def _make_noticias(self, contenido):
