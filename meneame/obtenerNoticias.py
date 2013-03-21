@@ -309,16 +309,16 @@ class ObtenerNoticias(object):
 
 
     def _tratar_fecha(self,fechas,i):
-	if i==0:
-		fechaEnvio = re.split("publicado ",fechas)
-		fechaPublicado = fechaEnvio[1]
-		fechaEnvio = fechaEnvio[0]
-		return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
-	else:
-		return self._coger_fecha(fechas)
+    	if i==0:
+    		fechaEnvio = re.split("publicado ",fechas)
+    		fechaPublicado = fechaEnvio[1]
+    		fechaEnvio = fechaEnvio[0]
+    		return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
+    	else:
+    		return self._coger_fecha(fechas)
 		
         
-    def get(self, pagina=1):
+    def get(self, pagina=1, url=MENEAME_BASE):
         self._html = self._obtener_contenido(MENEAME_BASE, pagina)
         contenido = {}
         contenido['titulos'] = self._obtener_titulos()

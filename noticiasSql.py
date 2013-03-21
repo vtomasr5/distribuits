@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from meneame.obtenerNoticias import ObtenerNoticias
 from meneame.utils import limpia, limpia1
+from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES
 import sys
 import re
 
@@ -13,11 +14,21 @@ max = int(sys.argv[2])
 
 status = sys.argv[3]
 
-f1 = open('all_page.sql','w')
+url_news = ''
+
+if not status in ('published', 'pending'):
+	print 'python noticiasSql.py <pag_inicial> <pag_final> <published|pending>'
+	sys.exit()
+elif status == 'published':
+	url_news = MENEAME_BASE
+else:
+	url_news = MENEAME_PENDIENTES
+
+f1 = open('all_page_'+status+'.sql','w')
 for i in reversed(range(init-1,max)):
 	k = str(i)
-	f = open('page'+str(i)+'.sql','w')
-	res = o.get(i)
+	f = open('page'+str(i)+'_'+status+'.sql','w')
+	res = o.get(i, url_news)
 	b = ""
 	c = ""
     #falta pasar de unicode a utf-8
@@ -26,7 +37,10 @@ for i in reversed(range(init-1,max)):
 	for index,item in (enumerate(res)):
 		b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'"+ item['autor'] +"', '0000');\n\n"
 		b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
-		b = b + "link_tags,link_status,link_sent_date,link_date) values ("+str(i)+", '" 
+		b = b + "link_tags,link_status,link_sent_date"
+		if status == 'published':
+			b = b + ",link_date"
+		b = b + ") values ("+str(i)+", '" 
 		b = b + limpia(item['descripcion']) + "',"
 		b = b + "'" + limpia(item['titulo']) + "',"
 		b = b + "'" + item['link'] + "',"
@@ -38,7 +52,9 @@ for i in reversed(range(init-1,max)):
 		k = re.split(".",str(item['fechaEnvio']))
 		#print k
 		k1 = re.split(".",str(item['fechaPublicacion']))
-		b = b + "'" + status +"','"+str(item['fechaEnvio'])+"','"+str(item['fechaPublicacion'])
+		b = b + "'" + status +"','"+str(item['fechaEnvio'])
+		if status == 'published':
+			b = b +"','"+str(item['fechaPublicacion'])
 		b = b + "');" "\n\n"
 		f.write(b)
 		f1.write(b)
