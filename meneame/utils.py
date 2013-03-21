@@ -68,7 +68,6 @@ def limpia1(antigua):
 
 def reorder_list(links, concurrent):
     aux = []
-
     for url in links:
         for item in concurrent:
             if url == item['url']:

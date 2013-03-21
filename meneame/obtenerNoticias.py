@@ -2,7 +2,7 @@
 from urllib2 import urlopen, URLError, HTTPError
 import re
 import httplib
-from properties import MENEAME_BASE
+from properties import MENEAME_BASE, MENEAME_PENDIENTES
 import datetime
 from datetime import time, timedelta
 import sys
@@ -131,7 +131,7 @@ class ObtenerNoticias(object):
             start_link = html.find('<a href="', start)
             end_link = html.find('"', start_link+9)
             link = html[start_link+9:end_link]
-            links.append(self._url[:-1]+link+'/')
+            links.append(MENEAME_BASE[:-1]+link+'/')
             html = html[start+1:]
         return links
 
@@ -348,7 +348,6 @@ class ObtenerNoticias(object):
         contenido['comentarios'] = comentarios['comentarios']
         contenido['autores_comentarios'] = comentarios['autores']
         contenido['fechas_comentarios'] = comentarios['fechas']
-
         # contenido['comentarios'] = self._obtener_comentarios()
         # contenido['autores_comentarios'] = self._obtener_autores_comentarios()
         # contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
