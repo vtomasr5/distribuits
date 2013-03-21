@@ -53,6 +53,7 @@ for i in reversed(range(init-1,max)):
 				comentario_fecha = item['fecha_comentario'][comment_id]
 			if comment_id < len(item['autor_comentario']):
 				comentario_autor = item['autor_comentario'][comment_id]
+			c = c +"insert into users (user_id,user_login,user_pass) values (NULL,'"+ comentario_autor ] +"', '0000');\n\n"
 			c = c + "insert into comments (comment_id,comment_type,comment_link_id,comment_content,"
 			c = c + "comment_user_id,comment_date)values (NULL,'normal',"+str(i)+",'"+limpia1(str(comment))+"',"
 			c = c + "(Select user_id from users where user_login ='"+ comentario_autor +"'),'"+str(comentario_fecha)+"');\n\n"
