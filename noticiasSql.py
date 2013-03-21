@@ -24,7 +24,7 @@ for i in reversed(range(init-1,max)):
 	i = 1
 	comment_id = 0
 	for index,item in (enumerate(res)):
-		b = b + "insert into users (user_id,user_login) values (NULL,'"+ item['autor'] +"');\n\n"
+		b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'"+ item['autor'] +"', '0000');\n\n"
 		b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
 		b = b + "link_tags,link_status,link_sent_date,link_date) values ("+str(i)+", '" 
 		b = b + limpia(item['descripcion']) + "',"
