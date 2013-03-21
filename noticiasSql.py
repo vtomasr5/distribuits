@@ -22,6 +22,7 @@ if not status in ('published', 'pending'):
 elif status == 'published':
 	url_news = MENEAME_BASE
 else:
+	status = 'queued'
 	url_news = MENEAME_PENDIENTES
 
 f1 = open('all_page_'+status+'.sql','w')
@@ -40,7 +41,8 @@ for i in reversed(range(init-1,max)):
 		b = b + "link_tags,link_status,link_sent_date"
 		if status == 'published':
 			b = b + ",link_date"
-		b = b + ") values ("+str(i)+", '" 
+		#b = b + ") values ("+str(i)+", '" 
+		b = b + ") values (NULL, '" 
 		b = b + limpia(item['descripcion']) + "',"
 		b = b + "'" + limpia(item['titulo']) + "',"
 		b = b + "'" + item['link'] + "',"
