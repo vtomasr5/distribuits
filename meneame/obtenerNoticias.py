@@ -331,7 +331,7 @@ class ObtenerNoticias(object):
         
     def get(self, pagina=1, url=MENEAME_BASE):
         self._url = url
-        self._html = self._obtener_contenido(MENEAME_BASE, pagina)
+        self._html = self._obtener_contenido(url, pagina)
         contenido = {}
         contenido['titulos'] = self._obtener_titulos()
         contenido['links'] = self._obtener_links()
