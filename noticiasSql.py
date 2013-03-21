@@ -42,7 +42,6 @@ for i in reversed(range(init-1,max)):
 		b = b + "');" "\n\n"
 		f.write(b)
 		f1.write(b)
-		b =""
 		comment_id = 0
 		print "Noticia"+str(i)
 		print "Comentarios: "+str(len(item['comentario']))
@@ -61,6 +60,10 @@ for i in reversed(range(init-1,max)):
 			f1.write(c)
 			c =""
 			comment_id = comment_id + 1
+		b = "update links set link_comments="+str(len(item['comentario']))+" where link_id="+str(i)+";"+"\n\n"
+		f.write(b)
+		f1.write(b)
+		b=""
 		i = i + 1
 	f.close()
 f1.close()
