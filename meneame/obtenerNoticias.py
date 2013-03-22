@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-from urllib2 import urlopen, HTTPError
-from properties import MENEAME_BASE, MENEAME_PENDIENTES
 from datetime import time, timedelta
+from urllib2 import urlopen, HTTPError
+
+from properties import MENEAME_BASE, MENEAME_PENDIENTES
 import threading, datetime, re
 from utils import retry,reorder_list, print_list
 
 class ObtenerNoticias(object):
-    
-    def __init__(self):
+
+    def __init__(self):        
         self._html = None
         self.estado = False
         self._url = ''
-        self._links_noticias
+        self._links_noticias = None
         
     def _obtener_contenido(self, url=MENEAME_BASE, pagina=None):
         try:
@@ -36,7 +37,7 @@ class ObtenerNoticias(object):
             return None
 
     def fetch_parallel(self, urls):
-        l= []
+        l = []
         threads = [threading.Thread(target=self._obtener_contenido_links, args = (url,l)) for url in urls]
         for t in threads:
             t.start()
@@ -150,26 +151,10 @@ class ObtenerNoticias(object):
                 break
             end_link = htm.find('<', start_link+1)
             html_data = htm[start_link+27:end_link]
-            # print html_data
-            d = self._coger_fecha(html_data)
-            # print d
-            dates.append(d)
+            # d = self._coger_fecha(html_data)
+            dates.append(html_data) # d
             htm = htm[end_link+1:]
-        return dates
-
-    # def _obtener_fechas_comentarios(self):
-    #     fechas_com = []
-    #     links = self._obtener_links_noticias(self._html)
-    #     for link in links: # para todas las noticias
-    #         html_noticia = self._obtener_contenido(link)
-    #         pags = self._obtener_paginas(html_noticia)
-    #         if pags == -1:
-    #             pags = 1
-    #         for p in range(1, pags+1):
-    #             html_noticia = self._obtener_contenido(link+str(p))
-    #             fechas = self._obtener_fecha_comentario(html_noticia)
-    #             fechas_com.append(fechas)
-    #     return fechas_com        
+        return dates   
 
     def _obtener_autor_comentario(self, html):
         htm = html
@@ -187,21 +172,6 @@ class ObtenerNoticias(object):
             autors.append(autor)
             htm = htm[end_link+1:]
         return autors
-
-    # obté tots els autors de tots els comentaris de les noticies
-    # def _obtener_autores_comentarios(self):
-    #     autores_com = []
-    #     links = self._obtener_links_noticias(self._html)
-    #     for link in links: # para todas las noticias
-    #         html_noticia = self._obtener_contenido(link)
-    #         pags = self._obtener_paginas(html_noticia)
-    #         if pags == -1:
-    #             pags = 1
-    #         for p in range(1, pags+1):
-    #             html_noticia = self._obtener_contenido(link+str(p))
-    #             autores = self._obtener_autor_comentario(html_noticia)
-    #             autores_com.append(autores)
-    #     return autores_com
 
     # obté els comentaris d'una sola notícia i d'una sola página (general) d'una notícia
     def _obtener_comentario(self, html):
@@ -221,33 +191,29 @@ class ObtenerNoticias(object):
         return l
 
     # obté tots els comentaris de totes les notícies (incuides amb més d'una pagina de comentaris també)
-    def _obtener_comentarios(self):
+    def _obtener_comentarios_noticias(self):
         c = {'comentarios'  : [],
              'autores'      : [],
              'fechas'       : []
             }
-        # links = self._obtener_links_noticias(self._html)
+        links = self._obtener_links_noticias(self._html)
         res = reorder_list(links, self.fetch_parallel(self._links_noticias))
         for link in res:
-            # print "LINK >>> ", link['url']
-            html_noticia = link['contenido']
-            pags = self._obtener_paginas(html_noticia)
+            pags = self._obtener_paginas(link['contenido'])
             if pags == -1:
                 pags = 1
-            # print "PAGS >>> ", pags
             com = []
+            autores = []
+            fechas = []
             for p in range(1, pags+1):
                 html_noticia = self._obtener_contenido(link['url']+str(p))
                 com = com + self._obtener_comentario(html_noticia)
-                autores = self._obtener_autor_comentario(html_noticia)
-                fechas = self._obtener_fecha_comentario(html_noticia)
-                c['fechas'].append(fechas)
-                c['autores'].append(autores)
-                c['comentarios'].append(com)
-            # print_list(c['comentarios'], "COMME >>> ")
-            # print_list(c['autores'], "AUTORES >>> ")
-            # print_list(c['fechas'], "FECHAS >>> ")
-            # print "COMMENTS >>> ", len(com)
+                autores = autores + self._obtener_autor_comentario(html_noticia)
+                fechas = fechas + self._obtener_fecha_comentario(html_noticia)
+
+            c['fechas'].append(fechas)
+            c['autores'].append(autores)
+            c['comentarios'].append(com)
         return c
 
     def _make_noticias(self, contenido):
@@ -263,20 +229,28 @@ class ObtenerNoticias(object):
         for i in range(min,max):
             f = self._tratar_fecha(contenido['fechas'][i],0)
             #fc = self._tratar_fecha(contenido['fechas_comentarios'][i],1)
-            l.append({ 'titulo': contenido['titulos'][i],
+            l.append(
+                {'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
                  'meneos': contenido['meneos'][i],
                  'descripcion': contenido['descripciones'][i],
                  'autor': contenido['autores'][i],
                  'link_noticia': contenido['links_noticias'][i],
-                 'comentario': contenido['comentarios'][i],
+                 # 'comentario': contenido['comentarios'][0][i],
                  'tags': contenido['tags'][i],
                  'fechaEnvio': f[0],
                  'fechaPublicacion': f[1],
-                 'autor_comentario': contenido['autores_comentarios'][i],
-                 'fecha_comentario': contenido['fechas_comentarios'][i],
+                 # 'autor_comentario': contenido['autores_comentarios'][0][i],
+                 # 'fecha_comentario': contenido['fechas_comentarios'][0][i],
                 })
-        
+            for c in range(len(contenido['comentarios'][0])):
+                comentario = contenido['comentarios'][0][i]
+                autor_comentario = contenido['autores_comentarios'][0][i]
+                fecha_comentario = contenido['fechas_comentarios'][0][i]
+                l[-1]['comentario'] = comentario
+                l[-1]['autor_comentario'] = autor_comentario
+                l[-1]['fecha_comentario'] = fecha_comentario
+
         return l
 
     def _coger_fecha(self,fecha):
@@ -292,6 +266,7 @@ class ObtenerNoticias(object):
                 p.append(a)
                 a = ""
                 num = "false"
+
         if (len(p)==3):
             data = datetime.datetime.today() - timedelta(days=int(p[0]))
             data = data - timedelta(hours=int(p[1]))
@@ -304,11 +279,11 @@ class ObtenerNoticias(object):
         else:
             pass
             #17-02-2013 21:35 
-	    try:
+        try:
             data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
-	    except:
-		  data = datetime.datetime.today()
-		return data
+        except:
+            data = datetime.datetime.today()
+        return data
 
 
     def _tratar_fecha(self,fechas,i):
@@ -316,12 +291,13 @@ class ObtenerNoticias(object):
             fechaEnvio = re.split("publicado ",fechas)
             fechaEnvio = fechaEnvio[0]
             fechaPublicado = ''
+
             if MENEAME_BASE == self._url:
-              fechaPublicado = fechaEnvio[1]
+                fechaPublicado = fechaEnvio[1]
             return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
         else:
             return self._coger_fecha(fechas)
-		
+
         
     def get(self, pagina=1, url=MENEAME_BASE):
         self._url = url
@@ -338,12 +314,11 @@ class ObtenerNoticias(object):
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()
 
-
-        comentarios = self._obtener_comentarios()
+        comentarios = self._obtener_comentarios_noticias()
         contenido['comentarios'] = comentarios['comentarios']
         contenido['autores_comentarios'] = comentarios['autores']
         contenido['fechas_comentarios'] = comentarios['fechas']
-        # contenido['comentarios'] = self._obtener_comentarios()
+        # contenido['comentarios'] = self._obtener_comentarios_noticias()
         # contenido['autores_comentarios'] = self._obtener_autores_comentarios()
         # contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
 
