@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-from urllib2 import urlopen, URLError, HTTPError
-import re
-import httplib
+from urllib2 import urlopen
 from properties import MENEAME_BASE, MENEAME_PENDIENTES
 import datetime
 from datetime import time, timedelta
-import sys
 import threading
 from utils import retry,reorder_list
 
@@ -221,7 +218,6 @@ class ObtenerNoticias(object):
             end_link2 = html_comentari.find('</div>', start_link2+1)
             h = h[end_link+1:]
             l.append(html_comentari[start_link2+16:end_link2])
-        # l.append('$FI$')
         return l
 
     # obté tots els comentaris de totes les notícies (incuides amb més d'una pagina de comentaris també)
@@ -230,14 +226,10 @@ class ObtenerNoticias(object):
              'autores'      : [],
              'fechas'       : []
              }
-        #comentarios = []
         links = self._obtener_links_noticias(self._html)
-        #res = self.fetch_parallel(links)
-        res =reorder_list(links, self.fetch_parallel(links))
+        res = reorder_list(links, self.fetch_parallel(links))
         for link in res:
-        #for link in links: # para todas las noticias
             # print "LINK >>> ", link['url']
-            #html_noticia = self._obtener_contenido_url(link)
             html_noticia = link['contenido']
             pags = self._obtener_paginas(html_noticia)
             if pags == -1:
@@ -247,7 +239,6 @@ class ObtenerNoticias(object):
             for p in range(1, pags+1):
                 html_noticia = self._obtener_contenido(link['url']+str(p))
                 com = com + self._obtener_comentario(html_noticia)        
-                #comentarios.append(com)
                 autores = self._obtener_autor_comentario(html_noticia)
                 fechas = self._obtener_fecha_comentario(html_noticia)
                 c['fechas'].append(fechas)
@@ -255,16 +246,15 @@ class ObtenerNoticias(object):
                 c['comentarios'].append(com)
             # print "COMMENTS >>> ", len(com)                
         return c
-        #return comentarios # llista de subllistes que contenen els comentaris de cada noticia
 
     def _make_noticias(self, contenido):
         l = []
-        min=0
+        min = 0
         #max = len(contenido['descripciones'])
         max = len(contenido['fechas'])
         
         if (max > 20):
-            max=20
+            max = 20
             #contenido['descripciones'].pop(0)
         
         for i in range(min,max):
@@ -316,7 +306,6 @@ class ObtenerNoticias(object):
 	    except:
 		data = datetime.datetime.today()
 		return data
-        return data
 
 
     def _tratar_fecha(self,fechas,i):
