@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from urllib2 import urlopen
+from urllib2 import urlopen, HTTPError
 from properties import MENEAME_BASE, MENEAME_PENDIENTES
-import datetime
 from datetime import time, timedelta
-import threading
-from utils import retry,reorder_list
+import threading, datetime, re
+from utils import retry,reorder_list, print_list
 
 class ObtenerNoticias(object):
     
@@ -12,6 +11,7 @@ class ObtenerNoticias(object):
         self._html = None
         self.estado = False
         self._url = ''
+        self._links_noticias
         
     def _obtener_contenido(self, url=MENEAME_BASE, pagina=None):
         try:
@@ -225,9 +225,9 @@ class ObtenerNoticias(object):
         c = {'comentarios'  : [],
              'autores'      : [],
              'fechas'       : []
-             }
-        links = self._obtener_links_noticias(self._html)
-        res = reorder_list(links, self.fetch_parallel(links))
+            }
+        # links = self._obtener_links_noticias(self._html)
+        res = reorder_list(links, self.fetch_parallel(self._links_noticias))
         for link in res:
             # print "LINK >>> ", link['url']
             html_noticia = link['contenido']
@@ -238,13 +238,16 @@ class ObtenerNoticias(object):
             com = []
             for p in range(1, pags+1):
                 html_noticia = self._obtener_contenido(link['url']+str(p))
-                com = com + self._obtener_comentario(html_noticia)        
+                com = com + self._obtener_comentario(html_noticia)
                 autores = self._obtener_autor_comentario(html_noticia)
                 fechas = self._obtener_fecha_comentario(html_noticia)
                 c['fechas'].append(fechas)
                 c['autores'].append(autores)
                 c['comentarios'].append(com)
-            # print "COMMENTS >>> ", len(com)                
+            # print_list(c['comentarios'], "COMME >>> ")
+            # print_list(c['autores'], "AUTORES >>> ")
+            # print_list(c['fechas'], "FECHAS >>> ")
+            # print "COMMENTS >>> ", len(com)
         return c
 
     def _make_noticias(self, contenido):
@@ -302,9 +305,9 @@ class ObtenerNoticias(object):
             pass
             #17-02-2013 21:35 
 	    try:
-            	data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
+            data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
 	    except:
-		data = datetime.datetime.today()
+		  data = datetime.datetime.today()
 		return data
 
 
@@ -330,6 +333,7 @@ class ObtenerNoticias(object):
         contenido['descripciones'] = self._obtener_descripciones()
         contenido['autores'] = self._obtener_autores()
         contenido['links_noticias'] = self._obtener_links_noticias(self._html)
+        self._links_noticias = contenido['links_noticias']
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2()) 
         contenido['tags'] = self._make_tags(self._obtener_tag1(), self._obtener_tag2())
         contenido['fechas'] = self._obtener_fechas()

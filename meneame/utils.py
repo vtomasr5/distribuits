@@ -73,3 +73,7 @@ def reorder_list(links, concurrent):
             if url == item['url']:
                 aux.append(item)
     return aux
+
+def print_list(l, prompt):
+    for i in l:
+        print prompt, i
