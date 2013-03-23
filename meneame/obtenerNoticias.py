@@ -168,7 +168,6 @@ class ObtenerNoticias(object):
             start_link2 = html_info.find('<a href="/user/')
             end_link2 = html_info.find('"', start_link2+10)
             autor = html_info[start_link2+15:end_link2]
-            # print autor
             autors.append(autor)
             htm = htm[end_link+1:]
         return autors
@@ -214,6 +213,8 @@ class ObtenerNoticias(object):
             c['fechas'].append(fechas)
             c['autores'].append(autores)
             c['comentarios'].append(com)
+            # print "COM >>> ", com
+            # print "\n\n ------------------------------"
         return c
 
     def _make_noticias(self, contenido):
@@ -249,7 +250,6 @@ class ObtenerNoticias(object):
             #     l[-1]['comentario'] = comentario
             #     l[-1]['autor_comentario'] = autor_comentario
             #     l[-1]['fecha_comentario'] = fecha_comentario
-
         return l
 
     def _coger_fecha(self,fecha):
