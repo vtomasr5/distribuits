@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import time, timedelta
+import sys
 from urllib2 import urlopen, HTTPError
-
 from properties import MENEAME_BASE, MENEAME_PENDIENTES
 import threading, datetime, re
 from utils import retry,reorder_list, print_list
@@ -219,7 +219,6 @@ class ObtenerNoticias(object):
     def _make_noticias(self, contenido):
         l = []
         min = 0
-        #max = len(contenido['descripciones'])
         max = len(contenido['fechas'])
         
         if (max > 20):
@@ -236,20 +235,20 @@ class ObtenerNoticias(object):
                  'descripcion': contenido['descripciones'][i],
                  'autor': contenido['autores'][i],
                  'link_noticia': contenido['links_noticias'][i],
-                 # 'comentario': contenido['comentarios'][0][i],
+                 'comentario': contenido['comentarios'][i],
                  'tags': contenido['tags'][i],
                  'fechaEnvio': f[0],
                  'fechaPublicacion': f[1],
-                 # 'autor_comentario': contenido['autores_comentarios'][0][i],
-                 # 'fecha_comentario': contenido['fechas_comentarios'][0][i],
+                 'autor_comentario': contenido['autores_comentarios'][i],
+                 'fecha_comentario': contenido['fechas_comentarios'][i],
                 })
-            for c in range(len(contenido['comentarios'][0])):
-                comentario = contenido['comentarios'][0][i]
-                autor_comentario = contenido['autores_comentarios'][0][i]
-                fecha_comentario = contenido['fechas_comentarios'][0][i]
-                l[-1]['comentario'] = comentario
-                l[-1]['autor_comentario'] = autor_comentario
-                l[-1]['fecha_comentario'] = fecha_comentario
+            # for c in range(len(contenido['comentarios'][0])):
+            #     comentario = contenido['comentarios'][0][i]
+            #     autor_comentario = contenido['autores_comentarios'][0][i]
+            #     fecha_comentario = contenido['fechas_comentarios'][0][i]
+            #     l[-1]['comentario'] = comentario
+            #     l[-1]['autor_comentario'] = autor_comentario
+            #     l[-1]['fecha_comentario'] = fecha_comentario
 
         return l
 
@@ -318,8 +317,5 @@ class ObtenerNoticias(object):
         contenido['comentarios'] = comentarios['comentarios']
         contenido['autores_comentarios'] = comentarios['autores']
         contenido['fechas_comentarios'] = comentarios['fechas']
-        # contenido['comentarios'] = self._obtener_comentarios_noticias()
-        # contenido['autores_comentarios'] = self._obtener_autores_comentarios()
-        # contenido['fechas_comentarios'] = self._obtener_fechas_comentarios()
 
         return self._make_noticias(contenido)
