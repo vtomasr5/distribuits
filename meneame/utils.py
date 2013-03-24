@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-import sys
+import sys, os
 from functools import wraps
 
 def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
@@ -77,3 +77,6 @@ def reorder_list(links, concurrent):
 def print_list(l, prompt):
     for i in l:
         print prompt, i
+
+def get_path():
+    return os.path.realpath(os.path.dirname(sys.argv[0]))
