@@ -1,6 +1,7 @@
 *.pyc
 .DS_Store
 *.sql
+output/*
 
 # C extensions
 *.so
