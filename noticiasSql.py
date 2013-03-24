@@ -6,12 +6,15 @@ from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES
 import sys
 import re
 
+if len(sys.argv) != 4:
+	print 'python noticiasSql.py <pag_inicial> <pag_final> <published|pending>'	
+	sys.exit(1)
+
 o = ObtenerNoticias()
 #'discard','queued','published'
 
 init = int(sys.argv[1])
 max = int(sys.argv[2])
-
 status = sys.argv[3]
 
 url_news = ''
