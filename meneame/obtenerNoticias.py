@@ -221,11 +221,11 @@ class ObtenerNoticias(object):
         l = []
         min = 0
         max = len(contenido['fechas'])
-        
-        if (max > 20):
-            max = 20
-            #contenido['descripciones'].pop(0)
-        
+
+        # if (max > 20):
+        #     max = 20
+        #contenido['descripciones'].pop(0)
+
         for i in range(min,max):
             f = self._tratar_fecha(contenido['fechas'][i],0)
             #fc = self._tratar_fecha(contenido['fechas_comentarios'][i],1)
