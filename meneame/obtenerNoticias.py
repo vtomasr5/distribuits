@@ -227,8 +227,8 @@ class ObtenerNoticias(object):
         #contenido['descripciones'].pop(0)
 
         for i in range(min,max):
-            f = self._tratar_fecha(contenido['fechas'][i],0)
-            #fc = self._tratar_fecha(contenido['fechas_comentarios'][i],1)
+            f = self._tratar_fecha(contenido['fechas'][i],1)
+            fc = self._tratar_fecha(contenido['fechas_comentarios'][i],2)
             l.append(
                 {'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],
@@ -241,7 +241,7 @@ class ObtenerNoticias(object):
                  'fechaEnvio': f[0],
                  'fechaPublicacion': f[1],
                  'autor_comentario': contenido['autores_comentarios'][i],
-                 'fecha_comentario': contenido['fechas_comentarios'][i],
+                 'fecha_comentario': fc,
                 })
             # for c in range(len(contenido['comentarios'][0])):
             #     comentario = contenido['comentarios'][0][i]
@@ -276,26 +276,29 @@ class ObtenerNoticias(object):
         elif (len(p)==1):
             data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
         else:
-            pass
             #17-02-2013 21:35 
-        try:
-            data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
-        except:
-            data = datetime.datetime.today()
+            try:
+            	data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))
+            except:
+            	data = datetime.datetime.today()
         return data
 
 
     def _tratar_fecha(self,fechas,i):
         if i==0:
             fechaEnvio = re.split("publicado ",fechas)
-            fechaEnvio = fechaEnvio[0]
             fechaPublicado = ''
-
             if MENEAME_BASE == self._url:
                 fechaPublicado = fechaEnvio[1]
-            return self._coger_fecha(fechaEnvio),self._coger_fecha(fechaPublicado)
-        else:
-            return self._coger_fecha(fechas)
+            return self._coger_fecha(fechaEnvio[0]),self._coger_fecha(fechaPublicado)
+        elif i==1:
+	    return self._coger_fecha(fechas),""
+	else:
+	    comments_fecha = []
+	    for i in range (0,len(fechas)):
+		#print self._coger_fecha(fechas[i]) + str(i)
+		comments_fecha.append(self._coger_fecha(fechas[i]))
+	    return comments_fecha
 
         
     def get(self, pagina=1, url=MENEAME_BASE):
