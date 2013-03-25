@@ -1,17 +1,18 @@
 # python noticiasSql.py <pag_inicial> <pag_final> published
 # -*- coding: utf-8 -*-
+import sys
+import re
 from meneame.obtenerNoticias import ObtenerNoticias
 from meneame.utils import limpia, limpia1
 from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES
-import sys
-import re
+from meneame.utils import get_path
 
 if len(sys.argv) != 4:
 	print 'python noticiasSql.py <pag_inicial> <pag_final> <published|pending>'	
 	sys.exit(1)
 
 o = ObtenerNoticias()
-#'discard','queued','published'
+path =  get_path() + '/output/'
 
 init = int(sys.argv[1])
 max = int(sys.argv[2])
@@ -28,10 +29,10 @@ else:
 	status = 'queued'
 	url_news = MENEAME_PENDIENTES
 
-f1 = open('all_page_'+status+'.sql','w')
+f1 = open(path+'all_page_'+status+'.sql','w')
 for i in reversed(range(init-1,max)):
 	k = str(i)
-	f = open('page'+str(i)+'_'+status+'.sql','w')
+	f = open(path+'page'+str(i)+'_'+status+'.sql','w')
 	res = o.get(i, url_news)
 	b = ""
 	c = ""
