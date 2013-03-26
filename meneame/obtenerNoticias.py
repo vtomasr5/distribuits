@@ -235,7 +235,7 @@ class ObtenerNoticias(object):
                  'autor_comentario': contenido['autores_comentarios'][i],
                  'fecha_comentario': fc,
                 })
-            
+
         return l
 
     def _coger_fecha(self,fecha):
@@ -260,7 +260,10 @@ class ObtenerNoticias(object):
             data = datetime.datetime.today() - timedelta(hours=int(p[0]))
             data = data - timedelta(minutes=int(p[1]))
         elif (len(p)==1):
-            data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
+            if re.search('segundos', fecha) > 0:
+                data = datetime.datetime.today()
+            else:
+                data = datetime.datetime.today() - timedelta(minutes=int(p[0]))
         else:
             try:
             	data = datetime.datetime(int(p[2]),int(p[1]),int(p[0]),int(p[3]),int(p[4]))

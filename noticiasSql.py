@@ -39,6 +39,8 @@ for i in reversed(range(init-1,max)):
     #falta pasar de unicode a utf-8
 	i = 1
 	comment_id = 0
+	if status== 'queued':
+		res.reverse()
 	for index,item in (enumerate(res)):
 		b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'"+ item['autor'] +"', '0000');\n\n"
 		b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
