@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import time, timedelta
 import sys
+import unicodedata
 from urllib2 import urlopen, HTTPError
 from properties import MENEAME_BASE, MENEAME_PENDIENTES
 import threading, datetime, re

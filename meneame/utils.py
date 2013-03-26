@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import time
+import time, unicodedata
 import sys, os
 from functools import wraps
 
@@ -80,3 +80,6 @@ def print_list(l, prompt):
 
 def get_path():
     return os.path.realpath(os.path.dirname(sys.argv[0]))
+
+def remove_accents(s):
+    return ''.join((c for c in unicodedata.normalize('NFD', s.decode('utf-8')) if unicodedata.category(c) != 'Mn'))
