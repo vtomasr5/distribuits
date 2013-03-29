@@ -48,7 +48,7 @@ for i in reversed(range(init-1,max)):
 			all_news.append(item['titulo'])
 			b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'"+ item['autor'] +"', '0000');\n\n"
 			b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
-			b = b + "link_tags,link_status,link_sent_date"
+			b = b + "link_category,link_status,link_sent_date"
 			if status == 'published':
 				b = b + ",link_date"
 			#b = b + ") values ("+str(i)+", '" 
@@ -59,7 +59,7 @@ for i in reversed(range(init-1,max)):
 			b = b + item['meneos'] + ","
 			b = b + "(Select user_id from users where user_login ='"+ item['autor'] +"'),"
 			#falten es tags, es pos un xk sinos no va be
-			b = b + "'" + limpia(item['tags'][0]) + "-" +  limpia(item['tags'][1]) + "',"
+			b = b + "(SELECT category_id FROM categories WHERE category_name='"+item['tags'][1]+"'),"
 			#print str(item['fechaEnvio'])
 			k = re.split(".",str(item['fechaEnvio']))
 			#print k
