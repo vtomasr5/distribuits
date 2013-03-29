@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import sys
 import re
+import os
 from meneame.obtenerNoticias import ObtenerNoticias
 from meneame.utils import limpia, limpia1
-from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES
+from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES, DIROUT
 from meneame.utils import get_path
 
 if len(sys.argv) != 4:
@@ -12,7 +13,12 @@ if len(sys.argv) != 4:
 	sys.exit(1)
 
 o = ObtenerNoticias()
-path =  get_path() + '/output/'
+p = get_path()
+d = os.listdir(p)
+if DIROUT not in d:
+	os.mkdir(DIROUT)	
+
+path = p+'/'+DIROUT+'/'
 
 init = int(sys.argv[1])
 max = int(sys.argv[2])
