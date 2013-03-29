@@ -2,20 +2,11 @@ import feedparser
 import sys
 import configparser
 import datetime
-from properties import DIROUT
-from utils import get_path
 
 class obtenerEstadisticas(object):
 	def __init__(self, path, url):
 		self._feed = feedparser.parse(url)
 		name = self._feed['channel']['title'].split(' ')[-1]
-		# chseck output dir
-		p = get_path('..')
-		print p
-		d = os.listdir(p)
-		if DIROUT not in d:
-			os.mkdir(DIROUT)
-
 		self._output_file = path+'/output/'+name+'.ini'
 
 	def getFeeds(self):
