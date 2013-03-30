@@ -38,3 +38,5 @@ nosetests.xml
 .project
 .pydevproject
 .ropeproject/*
+#For this Project
+noticias.py
