@@ -8,9 +8,3 @@ Autors:
 	- Miquel Barceló   
 	- Benet Oliver  
 	- Vicenç Juan Tomàs Montserrat  
-
-Requeriments  
-==============================  
-easy_install feedparser  
-easy_install configparser  
-easy_install scipy
