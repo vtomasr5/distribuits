@@ -8,3 +8,7 @@ Autors:
 	- Miquel Barceló   
 	- Benet Oliver  
 	- Vicenç Juan Tomàs Montserrat  
+  
+Requeriments
+==============================
+pip install -r requeriments.txt
