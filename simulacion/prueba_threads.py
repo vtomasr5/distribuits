@@ -12,7 +12,7 @@ for i in range(1, 10):
 	m.add_client(url, sesionTime, consumptionTime)
 	ident = m.get_last_client()
 
-	m.messato_to_client(ident, 'Soy un nuevo hilo')
+	m.print_message(ident, 'Soy un nuevo hilo')
 
 print 'Proceso finalizado...'
 sleep(10)
