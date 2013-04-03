@@ -19,13 +19,16 @@ class Client(threading.Thread):
 		#Permited Operation
 		self.operation 		 = {'shutdown': self._shutdown,
 					 	  		'wait': self._wait,
-					 	  		'print': self._print
+					 	  		'print': self._print,
+					 	  		'setConsumptionTime': self._setConsumptionTime,
+					 	  		'openPath': self._obtain_path_connection
 					 	 	   }
 
 
 	def run(self):
 		while not self.exitFlag:
 			try:
+				self._open_connection()
 				msg = self._mailbox.get()
 				operation = msg['operation']
 				param = msg['parameter']
@@ -37,8 +40,9 @@ class Client(threading.Thread):
 
 	def _open_connection(self):
 		self._connection = httplib.HTTPConnection(self.url)
-		self._connection.request("GET","/")
 
+	def _obtain_path_connection(self,path):
+		self._connection.request("GET", path)
 		return self._connection.getresponse()
 
 	def _close_connection(self):
@@ -58,6 +62,7 @@ class Client(threading.Thread):
 			Exit Thread
 		"""
 		self._print('shutdown')
+		self._close_connection()
 		self.exitFlag = True
 
 	def _wait(self, seconds=0):
@@ -65,6 +70,9 @@ class Client(threading.Thread):
 			Thread Wait a x seconds
 		"""
 		self._print("Sleeping "+ str(seconds) + " seconds")
-		print 
 		sleep(seconds)
+
+	def _setConsumptionTime(self,consumptionTime=0):
+		self._print("Changing consumptionTime: " + str(consumptionTime))
+		self.consumptionTime = consumptionTime
 

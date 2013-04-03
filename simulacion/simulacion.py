@@ -20,11 +20,10 @@ class Session(threading.Thread):
   
       def run(self):  
 			while(True):
-				if not(self.Esperar):
+				if not(self.esperar):
 					response = self.connection.getresponse()
 					data = response.read()
 					self.connection.close()
-					print self.hola
 					self.esperar=True
 				else:
 					a=1
@@ -42,27 +41,34 @@ def calculaTiempoEntrePeticion():
 	return 4;
 	
 import Queue
+import time
 
 
-tactual = 0
-texec = 1
+#Def. de variables de la simulacion
+tactual = time.time()
+texec = 60+tactual
 cola = Queue.PriorityQueue(0)
 numCliente = 0
 dominio = "www.google.es"
 
+#Inicializacion Simulacion
+#Calculo de todas las llegadas
 while tactual < texec :
 	
-	tiempoLlegada = calculaTiempoLlegada()
+	tiempoLlegada = calculaTiempoLlegada() #Funcion estadistica de t.llegada
 	tactual = tiempoLlegada + tactual
-	evento1 = evento("LlegadaCliente",tactual,numCliente)
+	evento1 = evento("LlegadaCliente",tactual,numCliente) 
 	cola.put((tactual,evento1))
 	numCliente = numCliente + 1
 
 
-tactual = 0
+#Inicio Simulacion
 sessiones = {}
 while not(cola.empty()):
-	p= cola.get()[1]
+	p = cola.get()[1] #Coge el evento
+	while tactual < p.tiempo:
+		tactual = time.time()
+		pass
 	tactual = p.tiempo
 	if p.tipoEvento == "LlegadaCliente":
 		print "T:"+str(tactual)+" El cliente : "+str(p.numCliente) + " ha llegado en el tiempo " + str(p.tiempo)

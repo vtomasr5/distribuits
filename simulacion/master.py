@@ -1,11 +1,21 @@
 from client import Client
-
+from time import time
+from estadistica import Estadistica
+from evento import Evento
+import Queue
 
 
 class Master:
-	def __init__(self):
+	def __init__(self, texec, nconexions, url):
 		self.clients = []
 		self._last_id = 1
+		self.tactual = time()
+		self.texec = self.tactual+(60*texec)
+		self.cola = Queue.PriorityQueue(0)
+		self._estadistica = Estadistica()
+		self.url = url
+		self.cola = Queue.PriorityQueue(0)
+		self.nconexion = nconexions
 
 	def _build_message(self, operation, parameter):
 		return {'operation' : operation, 'parameter': parameter}
@@ -17,16 +27,14 @@ class Master:
 		client = self.get_client(threadID)
 		client['thread'].set_message(msg)
 
-	def add_client(self, url, sesionTime, consumptionTime):
+	def add_client(self, threadID, url, sesionTime, consumptionTime):
 		"""
 			Create new Client Thread
 		"""
-		c = Client(self._last_id, url, sesionTime, consumptionTime)
-		self.clients.append({'id': self._last_id, 'thread' : c })
+		c = Client(threadID, url, sesionTime, consumptionTime)
+		self.clients.append({'id': threadID, 'thread' : c })
 
 		c.start()
-
-		self._last_id = self._last_id + 1
 
 	def get_client(self, threadID):
 		"""
@@ -56,8 +64,91 @@ class Master:
 		"""
 		self._messato_to_client(threadID, self._build_message('wait', seconds))
 
+	def open_path_client(self, threadID, path):
+		"""
+			Client Thread wait x seconds
+		"""
+		self._messato_to_client(threadID, self._build_message('openPath', path))
+
 	def print_message(self, threadID, msg):
 		"""
 			Print a Message in console
 		"""
 		self._messato_to_client(threadID, self._build_message('print', msg))
+
+	def setConsumptionTime_client(self, threadID, consumptionTime):
+		self._messato_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))		
+
+
+	def rutina_inicializacion(self):
+		#Inicializamos todos los eventos
+		tactual = self.tactual
+		while tactual < self.texec:
+			tiempoLlegada = self._estadistica.calculaTiempoLlegada() #Funcion estadistica de t.llegada
+			tactual = tiempoLlegada + tactual
+			evento1 = Evento("LlegadaCliente",tactual,self._last_id) 
+			self.cola.put((tactual,evento1))
+			self._last_id = self._last_id +1
+
+	def rutina_llegadas(self, evento):
+		print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
+		ts = self._estadistica.calculaTiempoSesion()
+		tep = self._estadistica.calculaTiempoEntrePeticion()
+		tactual = evento.tiempo
+
+		#Anyade un evento de salida
+		if tep < ts:
+			evento1 = Evento("SalidaCliente",tactual+tep,evento.numCliente)
+			temps = tactual+tep
+		else:
+			evento1 = Evento("SalidaCliente",tactual+ts,evento.numCliente)
+			temps = tactual+ts
+
+		self.cola.put((temps,evento1))
+		domini = self.url
+		path = self._estadistica.calculaDireccionPopularidad()
+		self.add_client(evento1.numCliente, domini, ts, tep)
+		self.open_path_client(evento1.numCliente,  path)
+
+	def rutina_salida(self, evento):
+		print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
+		#aqui mediante mensajes le diria al cliente que vaya a otro sitio, no se como se hace aun y restaria el tiempo de consumo
+		tep = self._estadistica.calculaTiempoEntrePeticion()
+		client = self.get_client(evento.numCliente)
+		clientActual = client['thread']
+		tactual = evento.tiempo
+		#sessionActual = sessiones[str(p.numCliente)]
+		path = self._estadistica.calculaDireccionPopularidad()
+		if clientActual.consumptionTime + tep < clientActual.sesionTime:
+			evento1 = Evento("SalidaCliente",tactual+tep,evento.numCliente)
+			temps = tactual+tep
+			self.open_path_client(evento1.numCliente,  path)
+			newComsuptionTime = clientActual.consumptionTime+tep
+		else:
+			tr = clientActual.sesionTime  - clientActual.consumptionTime
+			temps = tactual+tr
+			evento1 = Evento("SalidaClienteTotal",temps,evento.numCliente)
+			newComsuptionTime = tr
+
+		self.cola.put((temps,evento1))
+		self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
+
+	def rutina_salida_sistema(self, evento):
+		print "El cliente : "+str(evento.numCliente) + " ha salido "
+		self.remove_client(evento.numCliente)
+
+	def simular(self):
+		tactual = self.tactual
+		self.rutina_inicializacion()
+		while not(self.cola.empty()):
+			evento = self.cola.get()[1] #Coge el evento
+			while tactual < evento.tiempo:
+				tactual = time()
+
+			tactual = evento.tiempo
+			if evento.tipoEvento == "LlegadaCliente":
+				self.rutina_llegadas(evento)
+			elif evento.tipoEvento == "SalidaCliente":
+				self.rutina_salida(evento)
+			else:
+				self.rutina_salida_sistema(evento)
