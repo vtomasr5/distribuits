@@ -7,15 +7,14 @@ import Queue
 
 class Master:
 	def __init__(self, texec, nconexions, url):
-		self.clients = []
+		self._clients = []
 		self._last_id = 1
-		self.tactual = time()
-		self.texec = self.tactual+(60*texec)
-		self.cola = Queue.PriorityQueue(0)
+		self._tactual = time()
+		self._texec = self._tactual+(60*texec)
 		self._estadistica = Estadistica()
-		self.url = url
-		self.cola = Queue.PriorityQueue(0)
-		self.nconexion = nconexions
+		self._domain = url
+		self._numberOfConnections = nconexions
+		self._cola = Queue.PriorityQueue(0)
 
 	def _build_message(self, operation, parameter):
 		return {'operation' : operation, 'parameter': parameter}
@@ -32,7 +31,7 @@ class Master:
 			Create new Client Thread
 		"""
 		c = Client(threadID, url, sesionTime, consumptionTime)
-		self.clients.append({'id': threadID, 'thread' : c })
+		self._clients.append({'id': threadID, 'thread' : c })
 
 		c.start()
 
@@ -40,7 +39,7 @@ class Master:
 		"""
 			Return a client Thread
 		"""
-		client = [client for client in self.clients if client['id'] == threadID]
+		client = [client for client in self._clients if client['id'] == threadID]
 		return client[0]
 
 	def get_last_client(self):
@@ -82,12 +81,12 @@ class Master:
 
 	def rutina_inicializacion(self):
 		#Inicializamos todos los eventos
-		tactual = self.tactual
-		while tactual < self.texec:
+		tactual = self._tactual
+		while tactual < self._texec:
 			tiempoLlegada = self._estadistica.calculaTiempoLlegada() #Funcion estadistica de t.llegada
 			tactual = tiempoLlegada + tactual
 			evento1 = Evento("LlegadaCliente",tactual,self._last_id) 
-			self.cola.put((tactual,evento1))
+			self._cola.put((tactual,evento1))
 			self._last_id = self._last_id +1
 
 	def rutina_llegadas(self, evento):
@@ -104,8 +103,8 @@ class Master:
 			evento1 = Evento("SalidaCliente",tactual+ts,evento.numCliente)
 			temps = tactual+ts
 
-		self.cola.put((temps,evento1))
-		domini = self.url
+		self._cola.put((temps,evento1))
+		domini = self._domain
 		path = self._estadistica.calculaDireccionPopularidad()
 		self.add_client(evento1.numCliente, domini, ts, tep)
 		self.open_path_client(evento1.numCliente,  path)
@@ -130,7 +129,7 @@ class Master:
 			evento1 = Evento("SalidaClienteTotal",temps,evento.numCliente)
 			newComsuptionTime = tr
 
-		self.cola.put((temps,evento1))
+		self._cola.put((temps,evento1))
 		self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
 	def rutina_salida_sistema(self, evento):
@@ -138,10 +137,10 @@ class Master:
 		self.remove_client(evento.numCliente)
 
 	def simular(self):
-		tactual = self.tactual
+		tactual = self._tactual
 		self.rutina_inicializacion()
-		while not(self.cola.empty()):
-			evento = self.cola.get()[1] #Coge el evento
+		while not(self._cola.empty()):
+			evento = self._cola.get()[1] #Coge el evento
 			while tactual < evento.tiempo:
 				tactual = time()
 
