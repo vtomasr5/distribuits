@@ -76,10 +76,16 @@ class Master:
 		self._messato_to_client(threadID, self._build_message('print', msg))
 
 	def setConsumptionTime_client(self, threadID, consumptionTime):
+		"""
+			Set Consumption Time for a one Client 
+		"""
 		self._messato_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))		
 
 
 	def rutina_inicializacion(self):
+		"""
+			Init Simulation
+		"""
 		#Inicializamos todos los eventos
 		tactual = self._tactual
 		while tactual < self._texec:
@@ -90,6 +96,9 @@ class Master:
 			self._last_id = self._last_id +1
 
 	def rutina_llegadas(self, evento):
+		"""
+			Routine arrivals
+		"""
 		print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
 		ts = self._estadistica.calculaTiempoSesion()
 		tep = self._estadistica.calculaTiempoEntrePeticion()
@@ -110,6 +119,9 @@ class Master:
 		self.open_path_client(evento1.numCliente,  path)
 
 	def rutina_salida(self, evento):
+		"""
+			exit routine
+		"""
 		print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
 		#aqui mediante mensajes le diria al cliente que vaya a otro sitio, no se como se hace aun y restaria el tiempo de consumo
 		tep = self._estadistica.calculaTiempoEntrePeticion()
@@ -133,10 +145,16 @@ class Master:
 		self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
 	def rutina_salida_sistema(self, evento):
+		"""
+			routine system exit
+		"""
 		print "El cliente : "+str(evento.numCliente) + " ha salido "
 		self.remove_client(evento.numCliente)
 
 	def simular(self):
+		"""
+			Main method for run the simulation
+		"""
 		tactual = self._tactual
 		self.rutina_inicializacion()
 		while not(self._cola.empty()):

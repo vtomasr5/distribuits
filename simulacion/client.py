@@ -39,22 +39,37 @@ class Client(threading.Thread):
 				return
 
 	def _open_connection(self):
+		"""
+			Open http connection
+		"""
 		self._connection = httplib.HTTPConnection(self.url)
 
 	def _obtain_path_connection(self,path):
+		"""
+			Open path 
+		"""
 		self._connection.request("GET", path)
 		return self._connection.getresponse()
 
 	def _close_connection(self):
+		"""
+			Close Open connection
+		"""
 		self._connection.close()
 
 	def set_message(self, msg):
+		"""
+			Set a message for this client
+		"""
 		self._mailbox.put(msg)
 
 	"""
 		Threads Operations
 	"""
 	def _print(self, msg=''):
+		"""
+			Print a Message
+		"""
 		print "#"+str(self._threadID) + " Msg: " + msg
 
 	def _shutdown(self, info=None):
@@ -73,6 +88,9 @@ class Client(threading.Thread):
 		sleep(seconds)
 
 	def _setConsumptionTime(self,consumptionTime=0):
+		"""
+			Set a consumption Time for this Thread
+		"""
 		self._print("Changing consumptionTime: " + str(consumptionTime))
 		self.consumptionTime = consumptionTime
 
