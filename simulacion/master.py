@@ -11,10 +11,11 @@ class Master:
 		self._last_id = 1
 		self._tactual = time()
 		self._texec = self._tactual+(60*texec)
-		self._estadistica = Estadistica()
 		self._domain = url
 		self._numberOfConnections = nconexions
 		self._cola = Queue.PriorityQueue(0)
+		self._lastKill = 1
+		self._estadistica = Estadistica(1000)
 
 	def _build_message(self, operation, parameter):
 		return {'operation' : operation, 'parameter': parameter}
@@ -88,21 +89,28 @@ class Master:
 		"""
 		#Inicializamos todos los eventos
 		tactual = self._tactual
-		while tactual < self._texec:
-			tiempoLlegada = self._estadistica.calculaTiempoLlegada() #Funcion estadistica de t.llegada
-			tactual = tiempoLlegada + tactual
-			evento1 = Evento("LlegadaCliente",tactual,self._last_id) 
-			self._cola.put((tactual,evento1))
-			self._last_id = self._last_id +1
+		#while tactual < self._texec:
+		tiempoLlegada = self._estadistica.obtenerLlegada() #Funcion estadistica de t.llegada
+		tactual = tiempoLlegada + tactual
+		evento1 = Evento("LlegadaCliente",tactual,self._last_id) 
+		self._cola.put((tactual,evento1))
+		self._last_id = self._last_id +1
 
 	def rutina_llegadas(self, evento):
 		"""
 			Routine arrivals
 		"""
 		print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
-		ts = self._estadistica.calculaTiempoSesion()
-		tep = self._estadistica.calculaTiempoEntrePeticion()
+		ts = self._estadistica.obtenerSesion()
+		tep = self._estadistica.obtenerPeticion()
 		tactual = evento.tiempo
+
+		tiempoLlegada = self._estadistica.obtenerLlegada() #Funcion estadistica de t.llegada
+		tactual = tiempoLlegada + tactual
+		evento1 = Evento("LlegadaCliente",tactual,self._last_id) 
+		self._cola.put((tactual,evento1))
+		self._last_id = self._last_id +1
+
 
 		#Anyade un evento de salida
 		if tep < ts:
@@ -114,7 +122,7 @@ class Master:
 
 		self._cola.put((temps,evento1))
 		domini = self._domain
-		path = self._estadistica.calculaDireccionPopularidad()
+		path = self._estadistica.obtenerPopularidad()
 		self.add_client(evento1.numCliente, domini, ts, tep)
 		self.open_path_client(evento1.numCliente,  path)
 
@@ -124,12 +132,12 @@ class Master:
 		"""
 		print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
 		#aqui mediante mensajes le diria al cliente que vaya a otro sitio, no se como se hace aun y restaria el tiempo de consumo
-		tep = self._estadistica.calculaTiempoEntrePeticion()
+		tep = self._estadistica.obtenerPeticion()
 		client = self.get_client(evento.numCliente)
 		clientActual = client['thread']
 		tactual = evento.tiempo
 		#sessionActual = sessiones[str(p.numCliente)]
-		path = self._estadistica.calculaDireccionPopularidad()
+		path = self._estadistica.obtenerPopularidad()
 		if clientActual.consumptionTime + tep < clientActual.sesionTime:
 			evento1 = Evento("SalidaCliente",tactual+tep,evento.numCliente)
 			temps = tactual+tep
@@ -150,6 +158,12 @@ class Master:
 		"""
 		print "El cliente : "+str(evento.numCliente) + " ha salido "
 		self.remove_client(evento.numCliente)
+		self._lastKill = evento.numCliente
+
+	def kill_threads(self):
+		for i in range(self._lastKill+1,self._last_id-1):
+			print "Killing thread "+str(i)
+			self.remove_client(i)
 
 	def simular(self):
 		"""
@@ -157,7 +171,7 @@ class Master:
 		"""
 		tactual = self._tactual
 		self.rutina_inicializacion()
-		while not(self._cola.empty()):
+		while not(self._cola.empty()) and tactual < self._texec:
 			evento = self._cola.get()[1] #Coge el evento
 			while tactual < evento.tiempo:
 				tactual = time()
@@ -169,3 +183,4 @@ class Master:
 				self.rutina_salida(evento)
 			else:
 				self.rutina_salida_sistema(evento)
+		self.kill_threads()
