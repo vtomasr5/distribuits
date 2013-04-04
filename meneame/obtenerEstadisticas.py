@@ -2,6 +2,7 @@ import feedparser
 import sys
 import configparser
 import datetime
+import time
 
 class obtenerEstadisticas(object):
 	def __init__(self, path, url):
@@ -83,6 +84,7 @@ class obtenerEstadisticas(object):
 			num_items = num_items + 1
 
 		self.__buildtemplate(num_items, date_max)
-		print 'Stats Guardadas en: ' + self._output_file
+		t = time.asctime( time.localtime(time.time()))
+		print '#'+str(t)+': Stats Guardadas (' + self._output_file +')'
 
 	
