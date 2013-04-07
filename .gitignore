@@ -40,3 +40,8 @@ nosetests.xml
 .ropeproject/*
 #For this Project
 noticias.py
+#Simulation files
+simulacion/llegadas.txt
+simulacion/peticion.txt
+simulacion/popularidad.txt
+simulacion/sesion.txt
