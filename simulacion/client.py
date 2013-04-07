@@ -76,7 +76,7 @@ class Client(threading.Thread):
 		"""
 			Exit Thread
 		"""
-		self._print('shutdown')
+		#self._print('shutdown')
 		self._close_connection()
 		self.exitFlag = True
 
@@ -91,6 +91,6 @@ class Client(threading.Thread):
 		"""
 			Set a consumption Time for this Thread
 		"""
-		self._print("Changing consumptionTime: " + str(consumptionTime))
+		#self._print("Changing consumptionTime: " + str(consumptionTime))
 		self.consumptionTime = consumptionTime
 
