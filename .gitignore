@@ -45,3 +45,7 @@ simulacion/llegadas.txt
 simulacion/peticion.txt
 simulacion/popularidad.txt
 simulacion/sesion.txt
+simulacion/estadisticas/llegadas.txt
+simulacion/estadisticas/peticion.txt
+simulacion/estadisticas/popularidad.txt
+simulacion/estadisticas/sesion.txt
