@@ -11,5 +11,5 @@ Autors:
   
 Requeriments
 ==============================
-configparse
+configparse  
 feedparse
