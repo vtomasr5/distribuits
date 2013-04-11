@@ -67,15 +67,27 @@ class Estadistica(object):
 		
 
 	def calculaTiempoLlegada(self):
+		'''
+			Exponential distribution
+		'''
 		return 1
 
 	def calculaDireccionPopularidad(self):
+		'''
+			Pareto distribution
+		'''
 		return "/"
 
 	def calculaTiempoSesion(self):
+		'''
+			Zipf distribution
+		'''
 		return 10
 
 	def calculaTiempoEntrePeticion(self):
+		'''
+			Lognormal distribution
+		'''
 		return 4
 
 if __name__ == "__main__" and __package__ is None:
