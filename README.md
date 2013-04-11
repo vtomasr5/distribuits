@@ -11,5 +11,5 @@ Autors:
   
 Requeriments
 ==============================
-configparse  
-feedparse
+easy_install configparse  
+easy_install feedparse
