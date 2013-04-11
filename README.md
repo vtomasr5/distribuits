@@ -11,4 +11,5 @@ Autors:
   
 Requeriments
 ==============================
-pip install -r requeriments.txt
+configparse
+feedparse
