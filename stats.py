@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from meneame.obtenerEstadisticas import obtenerEstadisticas
 from meneame.utils import get_path
 from meneame.properties import MENEAME_BASE_RSS
