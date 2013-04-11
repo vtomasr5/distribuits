@@ -1,6 +1,7 @@
 import random, sys, os
-class Estadistica:
-	
+from numpy.random import exponential, zipf, lognormal
+
+class Estadistica(object):	
 	def __init__(self,max):
 		self.llegadas = ""
 		self.popularidad = ""
