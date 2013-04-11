@@ -7,6 +7,6 @@ Ejecución:
   
 Requeriments
 ==============================
-numpy
-scipy
+easy_install numpy  
+easy_install scipy
 
