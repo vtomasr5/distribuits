@@ -1,5 +1,5 @@
 import random, sys, os
-from numpy.random import exponential, zipf, lognormal
+from numpy.random import rand
 
 class Estadistica(object):	
 	def __init__(self,max):
@@ -70,13 +70,25 @@ class Estadistica(object):
 		return 1
 
 	def calculaDireccionPopularidad(self):
+		mu    = -0.10
+		sigma = 2.43
+		print rand.lognormal(mu, sigma)
 		return "/"
 
 	def calculaTiempoSesion(self):
 		return 10
 
 	def calculaTiempoEntrePeticion(self):
-		return 4
+		mu    = 1.789
+		sigma = 2.366
+		return rand.lognormal(mu, sigma)
+
+	def puedoEscribir(self):
+		r = rand.random_sample()
+		if r <= 0.992:
+			return False
+		else:
+			return True
 
 if __name__ == "__main__" and __package__ is None:
     __package__ = "estadisticas.estadistica"
