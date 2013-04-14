@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-import time, unicodedata
-import sys, os
+import time
+import unicodedata
+import sys
+import os
 from functools import wraps
+
 
 def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
     """Retry calling the decorated function using an exponential backoff.
@@ -46,25 +49,27 @@ def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
 
 
 def limpia(antigua):
-    antigua = antigua.replace('á','a');
-    antigua = antigua.replace('é','e');
-    antigua = antigua.replace('í','i');
-    antigua = antigua.replace('ó','o');
-    antigua = antigua.replace('ú','u');
-    antigua = antigua.replace('ñ','n');
-    antigua = antigua.replace("'",'*');
+    antigua = antigua.replace('á', 'a')
+    antigua = antigua.replace('é', 'e')
+    antigua = antigua.replace('í', 'i')
+    antigua = antigua.replace('ó', 'o')
+    antigua = antigua.replace('ú', 'u')
+    antigua = antigua.replace('ñ', 'n')
+    antigua = antigua.replace("'", '*')
     return antigua
 
+
 def limpia1(antigua):
-    antigua = antigua.replace('(','');
-    antigua = antigua.replace('*',' ');
-    antigua = antigua.replace(')','');
-    antigua = antigua.replace('í','i');
-    antigua = antigua.replace('ó','o');
-    antigua = antigua.replace('ú','u');
-    antigua = antigua.replace('ñ','n');
-    antigua = antigua.replace("'",'*');
+    antigua = antigua.replace('(', '')
+    antigua = antigua.replace('*', ' ')
+    antigua = antigua.replace(')', '')
+    antigua = antigua.replace('í', 'i')
+    antigua = antigua.replace('ó', 'o')
+    antigua = antigua.replace('ú', 'u')
+    antigua = antigua.replace('ñ', 'n')
+    antigua = antigua.replace("'", '*')
     return antigua
+
 
 def reorder_list(links, concurrent):
     aux = []
@@ -74,12 +79,15 @@ def reorder_list(links, concurrent):
                 aux.append(item)
     return aux
 
+
 def print_list(l, prompt):
     for i in l:
         print prompt, i
 
+
 def get_path():
     return os.path.realpath(os.path.dirname(sys.argv[0]))
+
 
 def remove_accents(s):
     return ''.join((c for c in unicodedata.normalize('NFD', s.decode('utf-8')) if unicodedata.category(c) != 'Mn'))
