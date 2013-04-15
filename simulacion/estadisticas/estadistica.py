@@ -71,7 +71,12 @@ class Estadistica(object):
         return float(self.peticion.readline())
 
     def calculaTiempoLlegada(self):
-        return 1
+        """
+            Tiempo entre peticiones diferentes
+        """
+        mu = 1.789
+        sigma = 2.366
+        return rand.lognormal(mu, sigma)
 
     def calculaDireccionPopularidad(self):
         mu = -0.10
