@@ -54,7 +54,7 @@ for i in reversed(range(init-1, max)):
         if not item['titulo'] in all_news:
             all_news.append(item['titulo'])
             b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'" + item['autor'] + "', '"+md5('12345678').hexdigest()+"');\n\n"
-            b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
+            b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes, link_karma, link_author,"
             b = b + "link_category,link_status,link_sent_date"
             if status == 'published':
                 b = b + ",link_date"
@@ -64,6 +64,7 @@ for i in reversed(range(init-1, max)):
             b = b + "'" + limpia(item['titulo']) + "',"
             b = b + "'" + item['link'] + "',"
             b = b + item['meneos'] + ","
+            b = b + "6.0,"
             b = b + "(Select user_id from users where user_login ='" + item['autor'] + "'),"
             # falten es tags, es pos un xk sinos no va be
             b = b + "(SELECT category_id FROM categories WHERE category_name='"+item['tags'][1]+"'),"
