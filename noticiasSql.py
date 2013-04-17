@@ -7,6 +7,7 @@ from meneame.obtenerNoticias import ObtenerNoticias
 from meneame.utils import limpia, limpia1
 from meneame.properties import MENEAME_BASE, MENEAME_PENDIENTES, DIROUT
 from meneame.utils import get_path
+from hashlib import md5
 
 if len(sys.argv) != 4:
     print 'python noticiasSql.py <pag_inicial> <pag_final> <published|pending>'
@@ -52,7 +53,7 @@ for i in reversed(range(init-1, max)):
     for index, item in (enumerate(res)):
         if not item['titulo'] in all_news:
             all_news.append(item['titulo'])
-            b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'" + item['autor'] + "', '0000');\n\n"
+            b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'" + item['autor'] + "', '"+md5('12345678').hexdigest()+"');\n\n"
             b = b + "insert into links (link_id,link_content,link_title,link_url,link_votes,link_author,"
             b = b + "link_category,link_status,link_sent_date"
             if status == 'published':
