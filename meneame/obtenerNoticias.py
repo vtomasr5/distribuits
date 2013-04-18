@@ -81,8 +81,8 @@ class ObtenerNoticias(object):
         return self._obtener_items(regexpr1, regexpr2)
 
     def _obtener_descripciones(self):
-        regexpr1 = r'  <p>.*?</p>'
-        regexpr2 = '  <p>(.*?)</p>'
+        regexpr1 = r'<a href="/user/.*?</div>.*?<\!-- google'
+        regexpr2 = '<a href="/user/.*?</div>(.*?)<\!-- google'
         return self._obtener_items(regexpr1, regexpr2)
 
     def _obtener_autores(self):
@@ -214,6 +214,8 @@ class ObtenerNoticias(object):
         for i in range(min, max):
             f = self._tratar_fecha(contenido['fechas'][i], 0)
             fc = self._tratar_fecha(contenido['fechas_comentarios'][i], 2)
+	    if contenido['descripciones'][i][0] =="<":
+		contenido['descripciones'][i] = contenido['descripciones'][i][113:]
             l.append(
                 {'titulo': contenido['titulos'][i],
                  'link': contenido['links'][i],

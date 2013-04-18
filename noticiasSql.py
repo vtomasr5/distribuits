@@ -51,6 +51,8 @@ for i in reversed(range(init-1, max)):
     if status == 'queued':
         res.reverse()
     for index, item in (enumerate(res)):
+	print item['descripcion']
+	sys.exit()
         if not item['titulo'] in all_news:
             all_news.append(item['titulo'])
             b = b + "insert into users (user_id,user_login,user_pass) values (NULL,'" + item['autor'] + "', '"+md5('12345678').hexdigest()+"');\n\n"
