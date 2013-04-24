@@ -34,11 +34,11 @@ class Estadistica(object):
 		
 
     def _obtain_path(self):
-        return os.path.realpath(os.path.dirname(sys.argv[0]))+'/estadisticas/'
+        return os.path.realpath(os.path.dirname(sys.argv[0]))
 
     def generaFicheroLlegadas(self):
         path = self._obtain_path() + 'llegadas.txt'
-        self.llegadas = open(path, 'w')
+        self.llegadas = open(path,'w')
         for i in range(0, self.max):
             self.llegadas.write(str(self.calculaTiempoLlegada())+"\n")
         self.llegadas.close()
@@ -98,7 +98,7 @@ class Estadistica(object):
         """
         mu = 1.789
         sigma = 2.366
-        return rand.lognormal(mu, sigma)
+        return numpy.random.lognormal(mu, sigma)
 		  
 	
     def calculaDireccionPopularidad(self):
@@ -106,15 +106,20 @@ class Estadistica(object):
         i = 0
         while i < self.numNoticias and not(self.probabilidades[i] > noticia):
         	i =  i + 1
-        return "/numnoticia"+str(i)
+        return "/story.php?id="+str(i)
 
     def calculaTiempoSesion(self):
-        return 10
 
+
+		  rho = 1.0006
+		  a = numpy.random.zipf(rho)
+		  a = a % 1000
+		  print (a % 1000)
+		  return a
     def calculaTiempoEntrePeticion(self):
         mu = 2.245
         sigma = 1.133
-        return rand.lognormal(mu, sigma)
+        return numpy.random.lognormal(mu, sigma)
 
     def puedoEscribir(self):
         r = rand.random_sample()
