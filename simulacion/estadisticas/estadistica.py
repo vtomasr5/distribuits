@@ -111,10 +111,9 @@ class Estadistica(object):
     def calculaTiempoSesion(self):
 
 
-		  rho = 1.0006
+		  rho = 2
 		  a = numpy.random.zipf(rho)
-		  a = a % 1000
-		  print (a % 1000)
+		  print a
 		  return a
     def calculaTiempoEntrePeticion(self):
         mu = 2.245
@@ -124,9 +123,16 @@ class Estadistica(object):
     def puedoEscribir(self):
         r = rand.random_sample()
         if r <= 0.992:
-            return False
+            return 'No'
         else:
-            return True
+            return self.tipoPeticion()
+
+	def puedoEscribirComentario(self):
+		  r = rand.random_sample()
+        if r <= 0.898:
+            return 'Comentario'
+        else:
+            return 'Noticia'
 
 if __name__ == "__main__" and __package__ is None:
     __package__ = "estadisticas.estadistica"
