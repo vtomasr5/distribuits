@@ -5,7 +5,7 @@ import random
 
 class Estadistica(object):
 
-    def __init__(self, max, numNoticiaInicial, totalNoticias):
+    def __init__(self, max, numNoticiaInicial=0, totalNoticias=0):
         self.llegadas = ""
         self.popularidad = ""
         self.sesion = ""
@@ -13,7 +13,9 @@ class Estadistica(object):
         self.max = max
         self.numNoticiaInicial = numNoticiaInicial
         self.numNoticias = totalNoticias
-        self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, numNoticiaInicial+totalNoticias)
+        self.probabilidades,self.noticias = [],[]
+        if numNoticiaInicial > 0:
+            self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, numNoticiaInicial+totalNoticias)
 
     def initPopularidad(self, numNoticiaInicio, numNoticiaFinal):
         self.noticias = []
