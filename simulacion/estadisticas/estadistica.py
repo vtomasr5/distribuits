@@ -34,7 +34,7 @@ class Estadistica(object):
 		
 
     def _obtain_path(self):
-        return os.path.realpath(os.path.dirname(sys.argv[0]))
+        return os.path.realpath(os.path.dirname(sys.argv[0])) + '/'
 
     def generaFicheroLlegadas(self):
         path = self._obtain_path() + 'llegadas.txt'
@@ -106,15 +106,11 @@ class Estadistica(object):
         i = 0
         while i < self.numNoticias and not(self.probabilidades[i] > noticia):
         	i =  i + 1
-        return "/story.php?id="+str(i)
+        return str(i)
 
     def calculaTiempoSesion(self):
-
-
-		  rho = 1.0006
+		  rho = 2
 		  a = numpy.random.zipf(rho)
-		  a = a % 1000
-		  print (a % 1000)
 		  return a
     def calculaTiempoEntrePeticion(self):
         mu = 2.245
@@ -124,9 +120,16 @@ class Estadistica(object):
     def puedoEscribir(self):
         r = rand.random_sample()
         if r <= 0.992:
-            return False
+            return 'No'
         else:
-            return True
+            return self.tipoPeticion()
+
+	def puedoEscribirComentario(self):
+		  r = rand.random_sample()
+        if r <= 0.898:
+            return 'Comentario'
+        else:
+            return 'Noticia'
 
 if __name__ == "__main__" and __package__ is None:
     __package__ = "estadisticas.estadistica"

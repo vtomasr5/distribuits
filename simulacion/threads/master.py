@@ -29,6 +29,9 @@ class Master(object):
         self._cola = Queue.PriorityQueue(0)
         self._lastKill = 1
         self._estadistica = Estadistica(1000)
+        self._responseTime = 0
+        self._npeticions = 0
+        self._infoTimeClient = []
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -81,6 +84,8 @@ class Master(object):
         """
             Client Thread wait x seconds
         """
+        d = {'url':path, 'action':self._estadistica.puedoEscribir(), 'time': 0}
+        self._infoTimeClient[threadID] = d 
         self._messato_to_client(threadID, self._build_message('openPath', path))
 
     def print_message(self, threadID, msg):
@@ -159,7 +164,8 @@ class Master(object):
             temps = tactual+tr
             evento1 = Evento("SalidaClienteTotal", temps, evento.numCliente)
             newComsuptionTime = tr
-
+        self._npeticions = self._npeticions + 1
+        self._responseTime = self._responseTime + self._infoTimeClient[clientActual]['time']
         self._cola.put((temps, evento1))
         self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
@@ -168,6 +174,8 @@ class Master(object):
             routine system exit
         """
         print "El cliente : "+str(evento.numCliente) + " ha salido "
+        self._npeticions = self._npeticions + 1
+        self._responseTime = self._responseTime +  self._infoTimeClient[clientActual]['time']
         self.remove_client(evento.numCliente)
         self._lastKill = evento.numCliente
 
@@ -195,3 +203,4 @@ class Master(object):
             else:
                 self.rutina_salida_sistema(evento)
         self.kill_threads()
+        print "TRESP: "+ str(self._responseTime / self._npeticions)
