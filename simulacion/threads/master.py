@@ -5,16 +5,15 @@ from estadisticas.estadistica import Estadistica
 from evento import Evento
 
 class Master(object):
-    def __init__(self, texec, nconexions, url):
+    def __init__(self, texec, url, numNoticiaInicial, totalNoticias):
         self._clients = []
         self._last_id = 1
         self._tactual = time()
         self._texec = self._tactual+(60*texec)
         self._domain = url
-        self._numberOfConnections = nconexions
         self._cola = Queue.PriorityQueue(0)
         self._lastKill = 1
-        self._estadistica = Estadistica(1000)
+        self._estadistica = Estadistica(1000, numNoticiaInicial, totalNoticias)
         self._responseTime = 0
         self._npeticions = 0
         self._infoTimeClient = []
@@ -23,7 +22,7 @@ class Master(object):
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
 
-    def _messato_to_client(self, threadID, msg):
+    def _message_to_client(self, threadID, msg):
         """
             Send Message to a Client
         """
@@ -64,13 +63,13 @@ class Master(object):
         """
             Terminate with Client Thread
         """
-        self._messato_to_client(threadID, self._build_message('shutdown', None))
+        self._message_to_client(threadID, self._build_message('shutdown', None))
 
     def wait_client(self, threadID, seconds):
         """
             Client Thread wait x seconds
         """
-        self._messato_to_client(threadID, self._build_message('wait', seconds))
+        self._message_to_client(threadID, self._build_message('wait', seconds))
 
     def open_path_client(self, threadID, path):
         """
@@ -82,19 +81,20 @@ class Master(object):
              'time': 0
             }
         self._infoTimeClient.append(d)
-        self._messato_to_client(threadID, self._build_message('openPath', self._infoTimeClient[-1]))
+        self._message_to_client(threadID, self._build_message('openPath', self._infoTimeClient[-1]))
+        print 'salgo'
 
     def print_message(self, threadID, msg):
         """
             Print a Message in console
         """
-        self._messato_to_client(threadID, self._build_message('print', msg))
+        self._message_to_client(threadID, self._build_message('print', msg))
 
     def setConsumptionTime_client(self, threadID, consumptionTime):
         """
             Set Consumption Time for a one Client
         """
-        self._messato_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))
+        self._message_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))
 
     def rutina_inicializacion(self):
         """
@@ -200,7 +200,7 @@ class Master(object):
             else:
                 self.rutina_salida_sistema(evento)
         self.kill_threads()
-        
+
         print ''
         print ''
         print ''

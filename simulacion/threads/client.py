@@ -60,12 +60,13 @@ class Client(threading.Thread):
         	s = Sesion('cajainas', 'miquel1234')
 
         	if action == 'Comentario':
-        		s.make_a_comment(path) #noticia 2858
+        		s.make_a_comment(d['url']) #noticia 2858
         	else:
-        		s.make_a_new('www.meneame.net/story.php?id='+str(path))
+        		s.make_a_new('www.meneame.net/story.php?id='+str(d['url']))
         endTime = time() - timeStart
         #self._print("Response Time :" + str(endTime))
         self.responseTime = endTime + self.responseTime
+        self._print("Salgo de request")
         return html
 
     def _close_connection(self):

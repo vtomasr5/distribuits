@@ -50,14 +50,6 @@ class Sesion:
 		self._br['password'] = self.password
 		self._br.submit()
 
-	def make_a_comment(self, story, msg):
-		url = self._get_meneame_url()+'story.php?id='+str(story)
-
-		self._br.open(url)
-		self._br.select_form(nr=1)
-		self._br['comment_content'] = msg
-		self._br.submit()
-
 	def _random_tag(self, size=6, chars=string.ascii_uppercase + string.digits):
 		return ''.join(random.choice(chars) for x in range(size))
 
@@ -84,7 +76,14 @@ class Sesion:
 
 		return d
 
-		
+	def make_a_comment(self, story, msg=''):
+		url = self._get_meneame_url()+'story.php?id='+str(story)
+		if len(msg) == 0:
+			msg = chomsky(4, 72)[0:500]
+		self._br.open(url)
+		self._br.select_form(nr=1)
+		self._br['comment_content'] = msg
+		self._br.submit()
 
 	def make_a_new(self, url_of_new, title='', tags='', bodytext='', category=-1):
 		url = self._get_meneame_url()+'submit.php'

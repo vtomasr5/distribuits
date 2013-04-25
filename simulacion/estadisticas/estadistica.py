@@ -5,31 +5,32 @@ import random
 
 class Estadistica(object):
 
-    def initPopularidad(self):
-        self.numNoticias = 200
-        self.noticias = []
-        self.probabilidades = []
-        mu = -0.10
-        sigma = 2.43
-        acumulacion = 0
-        for i in range(0,self.numNoticias):
-        	self.noticias.append(random.randint(0,self.numNoticias))	
-        	aux = rand.lognormal(mu,sigma)
-        	acumulacion = acumulacion + aux
-        	self.probabilidades.append(acumulacion)
-        for i in range(0,self.numNoticias):
-            self.probabilidades[i] = self.probabilidades[i]/acumulacion
-		
-        self.probabilidades.sort()
-        return self.probabilidades,self.noticias,self.numNoticias	
-
-    def __init__(self, max):
+    def __init__(self, max, numNoticiaInicial, totalNoticias):
         self.llegadas = ""
         self.popularidad = ""
         self.sesion = ""
         self.peticion = ""
         self.max = max
-        self.probabilidades,self.noticias,self.numNoticias = self.initPopularidad()
+        self.numNoticiaInicial = numNoticiaInicial
+        self.numNoticias = totalNoticias
+        self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, numNoticiaInicial+totalNoticias)
+
+    def initPopularidad(self, numNoticiaInicio, numNoticiaFinal):
+        self.noticias = []
+        self.probabilidades = []
+        mu = -0.10
+        sigma = 2.43
+        acumulacion = 0
+        for i in range(0, numNoticiaFinal-numNoticiaInicio):
+        	self.noticias.append(random.randint(numNoticiaInicio,numNoticiaFinal))	
+        	aux = rand.lognormal(mu,sigma)
+        	acumulacion = acumulacion + aux
+        	self.probabilidades.append(acumulacion)
+        for i in range(0, numNoticiaFinal-numNoticiaInicio):
+            self.probabilidades[i] = self.probabilidades[i]/acumulacion
+		
+        self.probabilidades.sort()
+        return self.probabilidades,self.noticias
 		
 
     def _obtain_path(self):
@@ -105,7 +106,7 @@ class Estadistica(object):
         i = 0
         while i < self.numNoticias and not(self.probabilidades[i] > noticia):
         	i =  i + 1
-        return str(i)
+        return str(i+self.numNoticiaInicial)
 
     def calculaTiempoSesion(self):
 		  rho = 2
@@ -116,19 +117,19 @@ class Estadistica(object):
         sigma = 1.133
         return rand.lognormal(mu, sigma)
 
+    def peticionEscritura(self):
+        r = rand.random_sample()
+        if r <= 0.898:
+            return 'Comentario'
+        else:
+            return 'Noticia'
+
     def puedoEscribir(self):
         r = rand.random_sample()
         if r <= 0.992:
             return 'No'
         else:
-            return self.tipoPeticion()
-
-	def tipoPeticion(self):
-		r = rand.random_sample()
-        if r <= 0.898:
-            return 'Comentario'
-        else:
-            return 'Noticia'
+            return self.peticionEscritura()
 
 if __name__ == "__main__" and __package__ is None:
     __package__ = "estadisticas.estadistica"

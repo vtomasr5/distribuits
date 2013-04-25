@@ -6,6 +6,10 @@ from estadisticas.estadistica import Estadistica
 def main():
     len_parameter = (len(sys.argv) == 2)
     parameter = False
+
+    noticiaInicial     = 2826
+    numNoticiasTotales = 56
+
     if len_parameter:
         parameter = (sys.argv[1] in ('start', 'gen_log'))
 
@@ -16,12 +20,12 @@ def main():
         if sys.argv[1] == 'start':
             print 'Empezando Simulacion...'
             print '-------------------------------------'
-            m = Master(.5, 10, '130.206.134.123')
+            m = Master(.5, '130.206.134.123', noticiaInicial, numNoticiasTotales)
             m.simular()
             print '-------------------------------------'
             print 'Simulacion Finalizada'
         else:
-            a = Estadistica(1000)
+            a = Estadistica(1000, noticiaInicial, numNoticiasTotales)
             a.generaFicheroLlegadas()
             a.generaFicheroPopularidad()
             a.generaFicheroSesion()
