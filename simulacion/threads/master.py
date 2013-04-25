@@ -4,20 +4,6 @@ from client import Client
 from estadisticas.estadistica import Estadistica
 from evento import Evento
 
-# def import_file(full_path_to_module):
-#     try:
-#         module_dir, module_file = os.path.split(full_path_to_module)
-#         module_name, module_ext = os.path.splitext(module_file)
-#         save_cwd = os.getcwd()
-#         os.chdir(module_dir)
-#         module_obj = __import__(module_name)
-#         module_obj.__file__ = full_path_to_module
-#         globals()[module_name] = module_obj
-#         os.chdir(save_cwd)
-#     except:
-#         raise ImportError
-
-
 class Master(object):
     def __init__(self, texec, nconexions, url):
         self._clients = []
@@ -32,6 +18,7 @@ class Master(object):
         self._responseTime = 0
         self._npeticions = 0
         self._infoTimeClient = []
+        self._alive_clients = []
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -43,10 +30,15 @@ class Master(object):
         client = self.get_client(threadID)
         client['thread'].set_message(msg)
 
+    def _obtain_client_response_time(self, threadID):
+        client = self.get_client(threadID)
+        return client['thread'].responseTime
+
     def add_client(self, threadID, url, sesionTime, consumptionTime):
         """
             Create new Client Thread
         """
+        self._alive_clients.append(threadID)
         c = Client(threadID, url, sesionTime, consumptionTime)
         self._clients.append({'id': threadID, 'thread': c})
 
@@ -84,9 +76,13 @@ class Master(object):
         """
             Client Thread wait x seconds
         """
-        d = {'url':path, 'action':self._estadistica.puedoEscribir(), 'time': 0}
-        self._infoTimeClient[threadID] = d 
-        self._messato_to_client(threadID, self._build_message('openPath', path))
+        d = {'thread': threadID,
+             'url':path, 
+             'action':self._estadistica.puedoEscribir(), 
+             'time': 0
+            }
+        self._infoTimeClient.append(d)
+        self._messato_to_client(threadID, self._build_message('openPath', self._infoTimeClient[-1]))
 
     def print_message(self, threadID, msg):
         """
@@ -165,7 +161,7 @@ class Master(object):
             evento1 = Evento("SalidaClienteTotal", temps, evento.numCliente)
             newComsuptionTime = tr
         self._npeticions = self._npeticions + 1
-        self._responseTime = self._responseTime + self._infoTimeClient[clientActual]['time']
+        self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
         self._cola.put((temps, evento1))
         self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
@@ -175,14 +171,15 @@ class Master(object):
         """
         print "El cliente : "+str(evento.numCliente) + " ha salido "
         self._npeticions = self._npeticions + 1
-        self._responseTime = self._responseTime +  self._infoTimeClient[clientActual]['time']
+        self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
         self.remove_client(evento.numCliente)
+        self._alive_clients.remove(evento.numCliente)
         self._lastKill = evento.numCliente
 
     def kill_threads(self):
-        for i in range(self._lastKill + 1, self._last_id-1):
-            print "Killing thread "+str(i)
-            self.remove_client(i)
+        for thread in self._alive_clients:
+            print "Killing thread "+str(thread)
+            self.remove_client(thread)
 
     def simular(self):
         """
@@ -203,4 +200,9 @@ class Master(object):
             else:
                 self.rutina_salida_sistema(evento)
         self.kill_threads()
-        print "TRESP: "+ str(self._responseTime / self._npeticions)
+        
+        print ''
+        print ''
+        print ''
+        print "TRESP: "+ str(self._responseTime / self._npeticions) + " segundos"
+        print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)

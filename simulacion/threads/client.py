@@ -1,7 +1,7 @@
 import threading
 import httplib
 import Queue
-from time import sleep
+from time import sleep, time
 from datetime import datetime
 from sesion import Sesion
 
@@ -18,6 +18,7 @@ class Client(threading.Thread):
         #Simulation Variables
         self.sesionTime = sesionTime
         self.consumptionTime = consumptionTime
+        self.responseTime = 0
         #Permited Operation
         self.operation = {'shutdown': self._shutdown,
                           'wait': self._wait,
@@ -48,12 +49,13 @@ class Client(threading.Thread):
         """
             Open path
         """
-        timeStart = datetime.now()
-        path 	= 'story.php?id='+str(d['url'])
+        timeStart = time()
+        path 	= '/meneame/story.php?id='+str(d['url'])
         action  = d['action']
+        html = ''
         if action == 'No':
         	self._connection.request("GET", path)
-        	return self._connection.getresponse()
+        	html = self._connection.getresponse()
         else:# Es un comentario o una noticia
         	s = Sesion('cajainas', 'miquel1234')
 
@@ -61,9 +63,10 @@ class Client(threading.Thread):
         		s.make_a_comment(path) #noticia 2858
         	else:
         		s.make_a_new('www.meneame.net/story.php?id='+str(path))
-
-        timeEnd = datetime.now()
-        d['time'] = timeEnd - timeStart
+        endTime = time() - timeStart
+        #self._print("Response Time :" + str(endTime))
+        self.responseTime = endTime + self.responseTime
+        return html
 
     def _close_connection(self):
         """
@@ -90,7 +93,7 @@ class Client(threading.Thread):
         """
             Exit Thread
         """
-        #self._print('shutdown')
+        self._print('shutdown')
         self._close_connection()
         self.exitFlag = True
 

@@ -1,5 +1,6 @@
 from threads.master import Master
 import sys
+from estadisticas.estadistica import Estadistica
 
 
 def main():
@@ -13,11 +14,19 @@ def main():
         sys.exit(0)
     else:
         if sys.argv[1] == 'start':
-            print 'start'
-            m = Master(.5, 10, 'www.google.com')
+            print 'Empezando Simulacion...'
+            print '-------------------------------------'
+            m = Master(.5, 10, '130.206.134.123')
             m.simular()
+            print '-------------------------------------'
+            print 'Simulacion Finalizada'
         else:
-            print 'gen_log'
+            a = Estadistica(1000)
+            a.generaFicheroLlegadas()
+            a.generaFicheroPopularidad()
+            a.generaFicheroSesion()
+            a.generaFicheroPeticion()
+            print 'Traza Generada'
 
 if __name__ == "__main__":
     main()

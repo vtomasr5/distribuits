@@ -1,8 +1,7 @@
 import sys
 import os
-import numpy
+import numpy.random as rand
 import random
-
 
 class Estadistica(object):
 
@@ -15,7 +14,7 @@ class Estadistica(object):
         acumulacion = 0
         for i in range(0,self.numNoticias):
         	self.noticias.append(random.randint(0,self.numNoticias))	
-        	aux = numpy.random.lognormal(mu,sigma)
+        	aux = rand.lognormal(mu,sigma)
         	acumulacion = acumulacion + aux
         	self.probabilidades.append(acumulacion)
         for i in range(0,self.numNoticias):
@@ -34,7 +33,7 @@ class Estadistica(object):
 		
 
     def _obtain_path(self):
-        return os.path.realpath(os.path.dirname(sys.argv[0])) + '/'
+        return os.path.realpath(os.path.dirname(sys.argv[0])) + '/estadisticas/'
 
     def generaFicheroLlegadas(self):
         path = self._obtain_path() + 'llegadas.txt'
@@ -98,11 +97,11 @@ class Estadistica(object):
         """
         mu = 1.789
         sigma = 2.366
-        return numpy.random.lognormal(mu, sigma)
+        return rand.lognormal(mu, sigma)
 		  
 	
     def calculaDireccionPopularidad(self):
-        noticia = random.random()
+        noticia = rand.random_sample()
         i = 0
         while i < self.numNoticias and not(self.probabilidades[i] > noticia):
         	i =  i + 1
@@ -110,12 +109,12 @@ class Estadistica(object):
 
     def calculaTiempoSesion(self):
 		  rho = 2
-		  a = numpy.random.zipf(rho)
+		  a = rand.zipf(rho)
 		  return a
     def calculaTiempoEntrePeticion(self):
         mu = 2.245
         sigma = 1.133
-        return numpy.random.lognormal(mu, sigma)
+        return rand.lognormal(mu, sigma)
 
     def puedoEscribir(self):
         r = rand.random_sample()
@@ -124,8 +123,8 @@ class Estadistica(object):
         else:
             return self.tipoPeticion()
 
-	def puedoEscribirComentario(self):
-		  r = rand.random_sample()
+	def tipoPeticion(self):
+		r = rand.random_sample()
         if r <= 0.898:
             return 'Comentario'
         else:
