@@ -34,12 +34,12 @@ def simular(numUsuarios, duracion):
     print 'Simulacion Finalizada!'
 
 def main():
-    len_parameter         = (len(sys.argv) >= 2)
-    option                = False
-    last_parameter        = False
+    len_parameter   = (len(sys.argv) >= 2)
+    option          = False
+    last_parameter  = False
 
     if len_parameter:
-        option  = (sys.argv[1] in ('start', 'gen_log'))
+        option         = (sys.argv[1] in ('start', 'gen_log'))
         last_parameter = is_param_int_or_float(sys.argv[2])
 
     if not (len_parameter and option and last_parameter):
