@@ -40,10 +40,7 @@ def main():
 
     if len_parameter:
         option  = (sys.argv[1] in ('start', 'gen_log'))
-        try:
-            last_parameter = is_param_int_or_float(sys.argv[2])
-        except ValueError:
-            last_parameter = False
+        last_parameter = is_param_int_or_float(sys.argv[2])
 
     if not (len_parameter and option and last_parameter):
         show_help()
