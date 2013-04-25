@@ -5,7 +5,7 @@ from estadisticas.estadistica import Estadistica
 from evento import Evento
 
 class Master(object):
-    def __init__(self, texec, url, numNoticiaInicial, totalNoticias):
+    def __init__(self, texec, numUsuario, url):
         self._clients = []
         self._last_id = 1
         self._tactual = time()
@@ -13,7 +13,7 @@ class Master(object):
         self._domain = url
         self._cola = Queue.PriorityQueue(0)
         self._lastKill = 1
-        self._estadistica = Estadistica(1000, numNoticiaInicial, totalNoticias)
+        self._estadistica = Estadistica(numUsuario)
         self._responseTime = 0
         self._npeticions = 0
         self._infoTimeClient = []
