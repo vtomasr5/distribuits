@@ -7,7 +7,7 @@ def show_help():
     print '     Argumentos:'
     print '         <Opcion>         : start | gen_log'
     print '     Opciones'
-    print '         start   <duracion en minutos> <numero de usuarios>'
+    print '         start   <numero de usuarios> <duracion en minutos>'
     print '         gen_log <numero de usuarios> <ID noticia Inicial> <noticias Totales>'
     sys.exit(0)
 
