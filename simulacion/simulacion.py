@@ -4,7 +4,7 @@ from estadisticas.estadistica import Estadistica
 
 
 def main():
-    len_parameter = (len(sys.argv) == 2)
+    len_parameter = (len(sys.argv) == 3)
     parameter = False
 
     noticiaInicial     = 2826
@@ -14,13 +14,14 @@ def main():
         parameter = (sys.argv[1] in ('start', 'gen_log'))
 
     if not (len_parameter and parameter):
-        print 'python simulacionv2.py <start|gen_log>'
+        print 'python simulacionv2.py start <tiempo simulacion en minutos>'
+        print 'python simulacionv2.py gen_log'
         sys.exit(0)
     else:
         if sys.argv[1] == 'start':
             print 'Empezando Simulacion...'
             print '-------------------------------------'
-            m = Master(.5, '130.206.134.123', noticiaInicial, numNoticiasTotales)
+            m = Master(float(sys.argv[2]), '130.206.134.123', noticiaInicial, numNoticiasTotales)
             m.simular()
             print '-------------------------------------'
             print 'Simulacion Finalizada'

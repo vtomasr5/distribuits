@@ -82,7 +82,6 @@ class Master(object):
             }
         self._infoTimeClient.append(d)
         self._message_to_client(threadID, self._build_message('openPath', self._infoTimeClient[-1]))
-        print 'salgo'
 
     def print_message(self, threadID, msg):
         """
