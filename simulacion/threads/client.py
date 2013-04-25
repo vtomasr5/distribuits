@@ -2,7 +2,8 @@ import threading
 import httplib
 import Queue
 from time import sleep
-
+from datetime import datetime
+from sesion import Sesion
 
 class Client(threading.Thread):
     def __init__(self, threadID, url, sesionTime, consumptionTime):
@@ -43,12 +44,26 @@ class Client(threading.Thread):
         """
         self._connection = httplib.HTTPConnection(self.url)
 
-    def _obtain_path_connection(self, path):
+    def _obtain_path_connection(self, d):
         """
             Open path
         """
-        self._connection.request("GET", path)
-        return self._connection.getresponse()
+        timeStart = datetime.now()
+        path 	= 'story.php?id='+str(d['url'])
+        action  = d['action']
+        if action == 'No':
+        	self._connection.request("GET", path)
+        	return self._connection.getresponse()
+        else:# Es un comentario o una noticia
+        	s = Sesion('cajainas', 'miquel1234')
+
+        	if action == 'Comentario':
+        		s.make_a_comment(path) #noticia 2858
+        	else:
+        		s.make_a_new('www.meneame.net/story.php?id='+str(path))
+
+        timeEnd = datetime.now()
+        d['time'] = timeEnd - timeStart
 
     def _close_connection(self):
         """
