@@ -4,20 +4,21 @@ from client import Client
 from estadisticas.estadistica import Estadistica
 from evento import Evento
 
+
 class Master(object):
     def __init__(self, texec, numUsuario, url):
-        self._clients = []
-        self._last_id = 1
-        self._tactual = time()
-        self._texec = self._tactual+(60*texec)
-        self._domain = url
-        self._cola = Queue.PriorityQueue(0)
-        self._lastKill = 1
-        self._estadistica = Estadistica(numUsuario)
-        self._responseTime = 0
-        self._npeticions = 0
+        self._clients        = []
+        self._last_id        = 1
+        self._tactual        = time()
+        self._texec          = self._tactual+(60*texec)
+        self._domain         = url
+        self._cola           = Queue.PriorityQueue(0)
+        self._lastKill       = 1
+        self._estadistica    = Estadistica(numUsuario)
+        self._responseTime   = 0
+        self._npeticions     = 0
         self._infoTimeClient = []
-        self._alive_clients = []
+        self._alive_clients  = []
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}

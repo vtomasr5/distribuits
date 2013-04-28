@@ -2,8 +2,8 @@ import threading
 import httplib
 import Queue
 from time import sleep, time
-from datetime import datetime
 from sesion import Sesion
+
 
 class Client(threading.Thread):
     def __init__(self, threadID, url, sesionTime, consumptionTime):

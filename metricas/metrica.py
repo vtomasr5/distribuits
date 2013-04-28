@@ -6,10 +6,13 @@ import time
 
 
 def mesura_cpu():
-    print "CPU usage: " + str(ps.cpu_percent()) + "%"
+    print "CPU usage: " + str(ps.cpu_percent(interval=1)) + "%"
 
 
 def mesura_mem():
+    """
+        Memory available
+    """
     print "Mem usage: " + str(ps.virtual_memory()[2]) + "%"
 
 
