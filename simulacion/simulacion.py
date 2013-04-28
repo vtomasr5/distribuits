@@ -20,11 +20,19 @@ def is_param_int_or_float(param):
 
 def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
     a = Estadistica(tamanyo, noticiaInicial, numNoticiasTotales)
-    a.generaFicheroLlegadas()
+    mSesion     = a.generaFicheroSesion()
+    mPeticion   = a.generaFicheroPeticion()
+    mLlegadas   = a.generaFicheroLlegadas()
+
     a.generaFicheroPopularidad()
-    a.generaFicheroSesion()
-    a.generaFicheroPeticion()
     a.generaFicheroPeticionEsc()
+    path = a._obtain_path()
+    cabecera = "Media Tiempo entre Sesion;Media tiempo entre peticiones;Media tiempo entre llegadas\n"
+    f = open(path+"medias.csv", 'w')
+    f.write(cabecera)
+    line = str(mSesion)+ ";" + str(mPeticion)+ ";" + str(mLlegadas)
+    f.write(line)
+    f.close
     print 'Traza Generada'
 
 def simular(numUsuarios, duracion):
@@ -36,7 +44,7 @@ def simular(numUsuarios, duracion):
     print 'Simulacion Finalizada!'
 
 def main():
-    len_parameter   = (len(sys.argv) >= 2)
+    len_parameter   = (len(sys.argv) >= 3)
     option          = False
     last_parameter  = False
 

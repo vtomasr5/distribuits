@@ -38,13 +38,24 @@ class Estadistica(object):
     def _obtain_path(self):
         return os.path.realpath(os.path.dirname(sys.argv[0])) + '/estadisticas/'
 
+    def obtenerMedias(self):
+        f = open(self._obtain_path()+"medias.csv", 'r')
+        l = f.readlines()
+        s = l[1].split(';')
+        f.close()
+        return float(s[0]), float(s[1]), float(s[2])
+
     def generaFicheroLlegadas(self):
         path = self._obtain_path() + 'llegadas.txt'
         self.llegadas = open(path,'w')
+        media = 0
         for i in range(0, self.max):
-            self.llegadas.write(str(self.calculaTiempoLlegada())+"\n")
+            valor = self.calculaTiempoLlegada()
+            self.llegadas.write(str(valor)+"\n")
+            media = media + valor
         self.llegadas.close()
         self.llegadas = ""
+        return (media/self.max)
 
     def generaFicheroPopularidad(self):
         path = self._obtain_path() + 'popularidad.txt'
@@ -57,18 +68,26 @@ class Estadistica(object):
     def generaFicheroSesion(self):
         path = self._obtain_path() + 'sesion.txt'
         self.sesion = open(path, 'w')
+        media = 0
         for i in range(0, self.max):
-            self.sesion.write(str(self.calculaTiempoSesion())+"\n")
+            valor = self.calculaTiempoSesion()
+            self.sesion.write(str(valor)+"\n")
+            media = media + valor
         self.sesion.close()
         self.sesion = ""
+        return (media/self.max)
 
     def generaFicheroPeticion(self):
         path = self._obtain_path() + 'peticion.txt'
         self.peticion = open(path, 'w')
+        media = 0
         for i in range(0, self.max):
+            valor = self.calculaTiempoEntrePeticion()
             self.peticion.write(str(self.calculaTiempoEntrePeticion())+"\n")
+            media = media + valor
         self.peticion.close()
         self.peticion = ""
+        return (media/self.max)
 
     def generaFicheroPeticionEsc(self):
         path = self._obtain_path() + 'peticionEsc.txt'

@@ -3,6 +3,7 @@ import Queue
 from client import Client
 from estadisticas.estadistica import Estadistica
 from evento import Evento
+import numpy as np
 
 
 class Master(object):
@@ -19,6 +20,14 @@ class Master(object):
         self._npeticions     = 0
         self._infoTimeClient = []
         self._alive_clients  = []
+        #Variables de la traza
+        self.mediaSesion     = 0
+        self.mediaPeticion   = 0
+        self.mediaLlegadas   = 0
+        #Variables muestrales
+        self.muestraMediaSesion   = []
+        self.muestraMediaPeticion = []
+        self.muestraMediaLlegadas = []
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -76,9 +85,10 @@ class Master(object):
         """
             Client Thread wait x seconds
         """
+        peticion = self._estadistica.obtenerPeticionEsc()
         d = {'thread': threadID,
              'url':path,
-             'action':self._estadistica.obtenerPeticionEsc(),
+             'action':peticion[:-1], #Quitamos \n
              'time': 0
             }
         self._infoTimeClient.append(d)
@@ -104,6 +114,7 @@ class Master(object):
         tactual = self._tactual
         # while tactual < self._texec:
         tiempoLlegada = self._estadistica.obtenerLlegada()  # Funcion estadistica de t.llegada
+        self.muestraMediaLlegadas.append(tiempoLlegada)
         tactual = tiempoLlegada + tactual
         evento1 = Evento("LlegadaCliente", tactual, self._last_id)
         self._cola.put((tactual, evento1))
@@ -115,10 +126,13 @@ class Master(object):
         """
         print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
         ts = self._estadistica.obtenerSesion()
+        self.muestraMediaSesion.append(ts)
         tep = self._estadistica.obtenerPeticion()
+        self.muestraMediaPeticion.append(tep)
         tactual = evento.tiempo
 
         tiempoLlegada = self._estadistica.obtenerLlegada()  # Funcion estadistica de t.llegada
+        self.muestraMediaLlegadas.append(tiempoLlegada)
         tactual = tiempoLlegada + tactual
         evento1 = Evento("LlegadaCliente", tactual, self._last_id)
         self._cola.put((tactual, evento1))
@@ -145,6 +159,7 @@ class Master(object):
         print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
         #aqui mediante mensajes le diria al cliente que vaya a otro sitio, no se como se hace aun y restaria el tiempo de consumo
         tep = self._estadistica.obtenerPeticion()
+        self.muestraMediaPeticion.append(tep)
         client = self.get_client(evento.numCliente)
         clientActual = client['thread']
         tactual = evento.tiempo
@@ -185,24 +200,52 @@ class Master(object):
         """
             Main method for run the simulation
         """
+        error = False
         tactual = self._tactual
         self.rutina_inicializacion()
-        while not(self._cola.empty()) and tactual < self._texec:
-            evento = self._cola.get()[1]  # Coge el evento
-            while tactual < evento.tiempo:
-                tactual = time()
+        self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
+        try:
+            while not(self._cola.empty()) and tactual < self._texec:
+                evento = self._cola.get()[1]  # Coge el evento
+                while tactual < evento.tiempo:
+                    tactual = time()
 
-            tactual = evento.tiempo
-            if evento.tipoEvento == "LlegadaCliente":
-                self.rutina_llegadas(evento)
-            elif evento.tipoEvento == "SalidaCliente":
-                self.rutina_salida(evento)
-            else:
-                self.rutina_salida_sistema(evento)
-        self.kill_threads()
+                tactual = evento.tiempo
+                if evento.tipoEvento == "LlegadaCliente":
+                    self.rutina_llegadas(evento)
+                elif evento.tipoEvento == "SalidaCliente":
+                    self.rutina_salida(evento)
+                else:
+                    self.rutina_salida_sistema(evento)
+        except KeyboardInterrupt:
+            self.kill_threads()
+            error = True
+
+        if not error:
+            self.kill_threads()
+
+        meanLlegadas   = np.mean(self.muestraMediaLlegadas)
+        meanPeticiones = np.mean(self.muestraMediaPeticion)
+        meanSesion     = np.mean(self.muestraMediaSesion)
+
+        stdLlegadas = np.std(self.muestraMediaLlegadas)
+        stdPeticion = np.std(self.muestraMediaPeticion)
+        stdLlegadas = np.std(self.muestraMediaSesion)
 
         print ''
-        print ''
-        print ''
-        print "TRESP: "+ str(self._responseTime / self._npeticions) + " segundos"
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
+        print ''
+        print "TIEMPO ENTRE LLEGADA: "
+        print "     Media Distribucion " + str(self.mediaLlegadas)
+        print "     Media Muestral "+ str(meanLlegadas) + " segundos"
+        print "     Desviacion Estandar Muestral " + str(stdLlegadas)
+        print "TIEMPO ENTRE PETICIONES:  "
+        print "     Media Distribucion " + str(self.mediaSesion)
+        print "     Media Muestral "+ str(meanPeticiones) + " segundos"
+        print "     Desviacion Estandar Muestral " + str(stdPeticion)
+        print "TIEMPO DURACION SESION:"
+        print "     Media Distribucion " + str(self.mediaPeticion)
+        print "     Media Muestral "+ str(meanSesion) + " segundos"
+        print "     Desviacion Estandar Muestral " + str(stdLlegadas)
+        print ""
+        print "TRESP: "+ str(self._responseTime / self._npeticions) + " segundos"
