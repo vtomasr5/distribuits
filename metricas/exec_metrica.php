@@ -6,8 +6,8 @@
 *	exec_metrica.php?pw=CLAVE&stop=1
 */
 define("CLAVE", "clave_ejecucion");
-$ruta	= '/home/meneame/distribuits/metricas/'
-$script = 'metrica.py'
+$ruta	= '/home/meneame/distribuits/metricas/';
+$script = 'metrica.py';
 
 if (isset($_GET['pw'])) {
 	if ($_GET['pw'] == CLAVE) {
