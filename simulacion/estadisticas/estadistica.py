@@ -10,6 +10,7 @@ class Estadistica(object):
         self.popularidad = ""
         self.sesion = ""
         self.peticion = ""
+        self.peticionEsc = ""
         self.max = max
         self.numNoticiaInicial = numNoticiaInicial
         self.numNoticias = totalNoticias
@@ -24,16 +25,15 @@ class Estadistica(object):
         sigma = 2.43
         acumulacion = 0
         for i in range(0, numNoticiaFinal-numNoticiaInicio):
-        	self.noticias.append(random.randint(numNoticiaInicio,numNoticiaFinal))	
+        	self.noticias.append(random.randint(numNoticiaInicio,numNoticiaFinal))
         	aux = rand.lognormal(mu,sigma)
         	acumulacion = acumulacion + aux
         	self.probabilidades.append(acumulacion)
         for i in range(0, numNoticiaFinal-numNoticiaInicio):
             self.probabilidades[i] = self.probabilidades[i]/acumulacion
-		
+
         self.probabilidades.sort()
         return self.probabilidades,self.noticias
-		
 
     def _obtain_path(self):
         return os.path.realpath(os.path.dirname(sys.argv[0])) + '/estadisticas/'
@@ -70,6 +70,14 @@ class Estadistica(object):
         self.peticion.close()
         self.peticion = ""
 
+    def generaFicheroPeticionEsc(self):
+        path = self._obtain_path() + 'peticionEsc.txt'
+        self.peticionEsc = open(path, 'w')
+        for i in range(0, self.max):
+            self.peticionEsc.write(str(self.puedoEscribir())+"\n")
+        self.peticionEsc.close()
+        self.peticionEsc = ""
+
     def obtenerLlegada(self):
         path = self._obtain_path() + 'llegadas.txt'
         if self.llegadas == "":
@@ -94,6 +102,12 @@ class Estadistica(object):
             self.peticion = open(path, 'r')
         return float(self.peticion.readline())
 
+    def obtenerPeticionEsc(self):
+        path = self._obtain_path() + 'peticionEsc.txt'
+        if self.peticionEsc == "":
+            self.peticionEsc = open(path, 'r')
+        return str(self.peticionEsc.readline())
+
     def calculaTiempoLlegada(self):
         """
             Tiempo entre peticiones diferentes
@@ -101,19 +115,19 @@ class Estadistica(object):
         mu = 1.789
         sigma = 2.366
         return rand.lognormal(mu, sigma)
-		  
-	
+
     def calculaDireccionPopularidad(self):
         noticia = rand.random_sample()
         i = 0
         while i < self.numNoticias and not(self.probabilidades[i] > noticia):
-        	i =  i + 1
+            i = i + 1
         return str(i+self.numNoticiaInicial)
 
     def calculaTiempoSesion(self):
-		  rho = 2
-		  a = rand.zipf(rho)
-		  return a
+        rho = 2
+        a = rand.zipf(rho)
+        return a
+
     def calculaTiempoEntrePeticion(self):
         mu = 2.245
         sigma = 1.133

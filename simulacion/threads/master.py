@@ -77,8 +77,8 @@ class Master(object):
             Client Thread wait x seconds
         """
         d = {'thread': threadID,
-             'url':path, 
-             'action':self._estadistica.puedoEscribir(), 
+             'url':path,
+             'action':self._estadistica.obtenerPeticionEsc(),
              'time': 0
             }
         self._infoTimeClient.append(d)

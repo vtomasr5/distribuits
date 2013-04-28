@@ -1,4 +1,5 @@
 import numpy.random as rand
+import numpy as np
 #Expontenial
 mean = 3.0
 print rand.exponential(scale=mean)
@@ -13,9 +14,14 @@ print rand.zipf(a)
 #print rand.zipf(a, numMuestras) #Devuelve un array con 1000 numeros
 
 #Lognormal
-mean  = 3.0
-mu    = -0.10
+mu = -0.10
 sigma = 2.43
-print rand.lognormal(mu, sigma)
+
+s = rand.lognormal(mu, sigma, 10)
+print s
+print np.mean(s)
+
+
+
 
 print rand.random_sample()

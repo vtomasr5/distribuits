@@ -1,5 +1,6 @@
 from threads.master import Master
-import sys, ast
+import sys
+import ast
 from estadisticas.estadistica import Estadistica
 
 def show_help():
@@ -23,13 +24,14 @@ def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
     a.generaFicheroPopularidad()
     a.generaFicheroSesion()
     a.generaFicheroPeticion()
+    a.generaFicheroPeticionEsc()
     print 'Traza Generada'
 
 def simular(numUsuarios, duracion):
     print 'Ejecutando Simulacion...'
     print ''
     m = Master(duracion, numUsuarios, '130.206.134.123')
-    m.simular() 
+    m.simular()
     print ''
     print 'Simulacion Finalizada!'
 
@@ -47,7 +49,7 @@ def main():
     else:
         if sys.argv[1] == 'start':
             if len(sys.argv) > 4:
-                show_help()           
+                show_help()
 
             simular(float(sys.argv[2]), int(sys.argv[3]))
         else: #Generamos la traza
