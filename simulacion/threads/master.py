@@ -4,6 +4,7 @@ from client import Client
 from estadisticas.estadistica import Estadistica
 from evento import Evento
 import numpy as np
+import math
 
 
 class Master(object):
@@ -28,6 +29,17 @@ class Master(object):
         self.muestraMediaSesion   = []
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
+        self.tStudent=[
+                -1,6.31,2.92,2.35,2.13,2.02,1.94,1.90,1.86,1.83,1.81, # 01-10
+                1.80,1.78,1.77,1.76,1.75,1.75,1.74,1.73,1.73,1.72,    # 11-20
+                1.72,1.72,1.71,1.71,1.71,1.71,1.70,1.70,1.70,1.70,    # 21-30
+                1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,    # 31-40
+                1.68,1.68,1.68,1.68,1.68,1.68,1.68,1.68,1.68,1.68,    # 41-50
+                1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,    # 51-60
+                1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,    # 61-70
+                1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,    # 71-80
+                1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,    # 81-90
+                1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66,1.66];   # 91-100
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -200,7 +212,9 @@ class Master(object):
         """
             Main method for run the simulation
         """
+        replicas = 0
         error = False
+        acabar = False
         tactual = self._tactual
         self.rutina_inicializacion()
         self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
@@ -232,19 +246,32 @@ class Master(object):
         stdPeticion = np.std(self.muestraMediaPeticion)
         stdLlegadas = np.std(self.muestraMediaSesion)
 
+        # Cálculo de error cometido
+        # varianzaMuestral = stdLlegadas**2
+        # mediaMuestral = self._responseTime / self._npeticions
+        # if replicas < 100:
+        #     intervaloConfianza = self.tStudent[replicas-1] * math.sqrt(varianzaMuestral / replicas)
+        # else:
+        #     intervaloConfianza = 1.645 * math.sqrt(varianzaMuestral / replicas)
+
+        # errorRelativo = intervaloConfianza/mediaMuestral
+        # if errorRelativo <= 0.1:
+        #     acabar = True
+
+
         print ''
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
         print ''
         print "TIEMPO ENTRE LLEGADA: "
-        print "     Media Distribucion " + str(self.mediaLlegadas)
+        print "     Media Traza " + str(self.mediaLlegadas)
         print "     Media Muestral "+ str(meanLlegadas) + " segundos"
         print "     Desviacion Estandar Muestral " + str(stdLlegadas)
         print "TIEMPO ENTRE PETICIONES:  "
-        print "     Media Distribucion " + str(self.mediaSesion)
+        print "     Media Traza " + str(self.mediaSesion)
         print "     Media Muestral "+ str(meanPeticiones) + " segundos"
         print "     Desviacion Estandar Muestral " + str(stdPeticion)
         print "TIEMPO DURACION SESION:"
-        print "     Media Distribucion " + str(self.mediaPeticion)
+        print "     Media Traza " + str(self.mediaPeticion)
         print "     Media Muestral "+ str(meanSesion) + " segundos"
         print "     Desviacion Estandar Muestral " + str(stdLlegadas)
         print ""
