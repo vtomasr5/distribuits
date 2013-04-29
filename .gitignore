@@ -2,6 +2,8 @@
 .DS_Store
 *.sql
 output/*
+*.txt
+*.csv
 
 # C extensions
 *.so
