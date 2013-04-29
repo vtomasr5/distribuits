@@ -119,7 +119,10 @@ class Estadistica(object):
         path = self._obtain_path() + 'peticion.txt'
         if self.peticion == "":
             self.peticion = open(path, 'r')
-        return float(self.peticion.readline())
+            line = self.peticion.readline()
+            if line != "":
+                return float(self.peticion.readline()[:-1])
+        return
 
     def obtenerPeticionEsc(self):
         path = self._obtain_path() + 'peticionEsc.txt'
