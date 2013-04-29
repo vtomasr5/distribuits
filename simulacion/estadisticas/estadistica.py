@@ -122,7 +122,7 @@ class Estadistica(object):
             line = self.peticion.readline()
             if line != "":
                 return float(self.peticion.readline()[:-1])
-        return
+        return 0.0  # FIXME
 
     def obtenerPeticionEsc(self):
         path = self._obtain_path() + 'peticionEsc.txt'
