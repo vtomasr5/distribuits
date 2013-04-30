@@ -3,6 +3,9 @@ import sys
 import ast
 from estadisticas.estadistica import Estadistica
 
+PASSWORD_WEB_METRICAS = 'clave_para_ejecutar_las_metricas'
+
+
 def show_help():
     print 'python simulacionv2.py <Opcion> <Argumentos>'
     print '     Argumentos:'
@@ -38,7 +41,7 @@ def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
 def simular(numUsuarios, duracion):
     print 'Ejecutando Simulacion...'
     print ''
-    m = Master(duracion, numUsuarios, '130.206.134.123')
+    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS)
     m.simular()
     print ''
     print 'Simulacion Finalizada!'

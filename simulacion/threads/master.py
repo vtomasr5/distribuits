@@ -4,23 +4,25 @@ from client import Client
 from estadisticas.estadistica import Estadistica
 from evento import Evento
 import numpy as np
-import math
-
+from sistema import Sistema
+import urllib2
 
 class Master(object):
-    def __init__(self, texec, numUsuario, url):
-        self._clients        = []
-        self._last_id        = 1
-        self._tactual        = time()
-        self._texec          = self._tactual+(60*texec)
-        self._domain         = url
-        self._cola           = Queue.PriorityQueue(0)
-        self._lastKill       = 1
-        self._estadistica    = Estadistica(numUsuario)
-        self._responseTime   = 0
-        self._npeticions     = 0
-        self._infoTimeClient = []
-        self._alive_clients  = []
+    def __init__(self, texec, numUsuario, url, password_metricas):
+        self._clients           = []
+        self._last_id           = 1
+        self._tactual           = time()
+        self._texec             = self._tactual+(60*texec)
+        self._domain            = url
+        self._cola              = Queue.PriorityQueue(0)
+        self._lastKill          = 1
+        self._estadistica       = Estadistica(numUsuario)
+        self._responseTime      = 0
+        self._npeticions        = 0
+        self._infoTimeClient    = []
+        self._alive_clients     = []
+        self.password_metricas  = password_metricas
+        self._sistema           = Sistema(1, self._estadistica._obtain_path())
         #Variables de la traza
         self.mediaSesion     = 0
         self.mediaPeticion   = 0
@@ -126,6 +128,7 @@ class Master(object):
             Routine arrivals
         """
         print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
+        self._sistema.numeroClientes = self._sistema.numeroClientes + 1
         ts = self._estadistica.obtenerSesion()
         self.muestraMediaSesion.append(ts)
         tep = self._estadistica.obtenerPeticion()
@@ -158,7 +161,7 @@ class Master(object):
             exit routine
         """
         print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
-        #aqui mediante mensajes le diria al cliente que vaya a otro sitio, no se como se hace aun y restaria el tiempo de consumo
+        
         tep = self._estadistica.obtenerPeticion()
         self.muestraMediaPeticion.append(tep)
         client = self.get_client(evento.numCliente)
@@ -186,6 +189,7 @@ class Master(object):
             routine system exit
         """
         print "El cliente : "+str(evento.numCliente) + " ha salido "
+        self._sistema.numeroClientes = self._sistema.numeroClientes - 1
         self._npeticions = self._npeticions + 1
         self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
         self.remove_client(evento.numCliente)
@@ -197,10 +201,19 @@ class Master(object):
             print "Killing thread "+str(thread)
             self.remove_client(thread)
 
+    def _start_metricas(self):
+        urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas).read()
+        self._sistema.start()
+
+    def _end_metricas(self):
+        urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas+'&stop=1').read()
+        self._sistema.shutdown()
+
     def simular(self):
         """
             Main method for run the simulation
         """
+        self._start_metricas()
         error   = False
         tactual = self._tactual
         self.rutina_inicializacion()
@@ -224,6 +237,7 @@ class Master(object):
 
         if not error:
             self.kill_threads()
+        self._end_metricas()
 
         meanLlegadas   = np.mean(self.muestraMediaLlegadas)
         meanPeticiones = np.mean(self.muestraMediaPeticion)

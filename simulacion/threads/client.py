@@ -9,22 +9,22 @@ class Client(threading.Thread):
     def __init__(self, threadID, url, sesionTime, consumptionTime):
         threading.Thread.__init__(self)
         #Threads Variables
-        self._threadID = threadID
-        self.url = url
-        self._connection = None
-        self.exitFlag = False
+        self._threadID       = threadID
+        self.url             = url
+        self._connection     = None
+        self.exitFlag        = False
         #Events Queue Messages
-        self._mailbox = Queue.Queue()
+        self._mailbox        = Queue.Queue()
         #Simulation Variables
-        self.sesionTime = sesionTime
+        self.sesionTime      = sesionTime
         self.consumptionTime = consumptionTime
-        self.responseTime = 0
+        self.responseTime    = 0
         #Permited Operation
-        self.operation = {'shutdown': self._shutdown,
-                          'wait': self._wait,
-                          'print': self._print,
-                          'setConsumptionTime': self._setConsumptionTime,
-                          'openPath': self._obtain_path_connection}
+        self.operation        = {'shutdown': self._shutdown,
+                                 'wait': self._wait,
+                                 'print': self._print,
+                                 'setConsumptionTime': self._setConsumptionTime,
+                                 'openPath': self._obtain_path_connection}
 
     def run(self):
         while not self.exitFlag:
