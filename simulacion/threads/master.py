@@ -188,7 +188,7 @@ class Master(object):
         """
             routine system exit
         """
-        print "El cliente : "+str(evento.numCliente) + " ha salido "
+        print "El cliente : "+str(evento.numCliente) + " ha salido del sistema"
         self._sistema.numeroClientes = self._sistema.numeroClientes - 1
         self._npeticions = self._npeticions + 1
         self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
