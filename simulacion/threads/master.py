@@ -161,7 +161,7 @@ class Master(object):
             exit routine
         """
         print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
-        
+
         tep = self._estadistica.obtenerPeticion()
         self.muestraMediaPeticion.append(tep)
         client = self.get_client(evento.numCliente)
@@ -218,19 +218,26 @@ class Master(object):
         tactual = self._tactual
         self.rutina_inicializacion()
         self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
-        try:
-            while not(self._cola.empty()) and tactual < self._texec:
-                evento = self._cola.get()[1]  # Coge el evento
-                while tactual < evento.tiempo:
-                    tactual = time()
+        ejecutar = True
 
-                tactual = evento.tiempo
-                if evento.tipoEvento == "LlegadaCliente":
-                    self.rutina_llegadas(evento)
-                elif evento.tipoEvento == "SalidaCliente":
-                    self.rutina_salida(evento)
-                else:
-                    self.rutina_salida_sistema(evento)
+        try:
+            while (not self._cola.empty()) and tactual < self._texec and ejecutar:
+                evento = self._cola.get()[1]  # Coge el evento
+                while (tactual < evento.tiempo) and (tactual < self._texec) and ejecutar:
+                    if tactual < evento.tiempo:
+                        tactual = time()
+                    else:
+                        ejecutar = False
+
+                if ejecutar:
+                    tactual = evento.tiempo
+                    if evento.tipoEvento == "LlegadaCliente":
+                        self.rutina_llegadas(evento)
+                    elif evento.tipoEvento == "SalidaCliente":
+                        self.rutina_salida(evento)
+                    else:
+                        self.rutina_salida_sistema(evento)
+
         except KeyboardInterrupt:
             self.kill_threads()
             error = True
