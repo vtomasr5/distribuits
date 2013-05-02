@@ -8,6 +8,8 @@ class Sistema(threading.Thread):
 
 		self.exitFlag   	= False
 		self.numeroClientes = 0
+		self.mediaClientes	= 0
+		self.iteracion		= 1
 		self.path 			= path
 		self.resolution		= resolution
 
@@ -16,7 +18,9 @@ class Sistema(threading.Thread):
 		while not self.exitFlag:
 			try:
 				while not self.exitFlag:
-					self.file.write(str(self.numeroClientes)+"\n")
+					self.mediaClientes = (self.mediaClientes + self.numeroClientes)
+					self.file.write(str(self.mediaClientes/self.iteracion)+"\n")
+					self.iteracion = self.iteracion + 1
 					sleep(self.resolution)
 			except KeyError:  # Operation not in self.operation
 				self._print(self.rol+" monitor no permitido")
