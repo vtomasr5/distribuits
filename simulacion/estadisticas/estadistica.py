@@ -16,7 +16,7 @@ class Estadistica(object):
         self.numNoticias = totalNoticias
         self.probabilidades,self.noticias = [],[]
         if numNoticiaInicial > 0:
-            self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, numNoticiaInicial+totalNoticias)
+            self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, totalNoticias)
 
     def initPopularidad(self, numNoticiaInicio, numNoticiaFinal):
         self.noticias = []
@@ -113,7 +113,7 @@ class Estadistica(object):
         path = self._obtain_path() + 'sesion.txt'
         if self.sesion == "":
             self.sesion = open(path, 'r')
-        return float(self.sesion.readline())
+        return float(self.sesion.readline())*60 #Paso a minutos
 
     def obtenerPeticion(self):
         path = self._obtain_path() + 'peticion.txt'
@@ -131,8 +131,8 @@ class Estadistica(object):
         """
             Tiempo entre peticiones diferentes
         """
-        mu = 1.789
-        sigma = 2.366
+        mu = 2.245
+        sigma = 1.133
         return rand.lognormal(mu, sigma)
 
     def calculaDireccionPopularidad(self):
@@ -148,8 +148,9 @@ class Estadistica(object):
         return a
 
     def calculaTiempoEntrePeticion(self):
-        mu = 2.245
-        sigma = 1.133
+        mu = 1.789
+        sigma = 2.366
+        
         return rand.lognormal(mu, sigma)
 
     def peticionEscritura(self):
