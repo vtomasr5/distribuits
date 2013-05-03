@@ -41,7 +41,7 @@ def wait_for_keyboard(threads, monitores):
 		make_csv_file(path, monitores)
 
 def get_min_lines(path, monitores):
-	min = 9999999999999999
+	min = sys.maxint  #9999999999999999
 	for monitor in monitores:
 		f = open(return_path_salida(path)+monitor+'.txt','r')
 		f.seek(0)
