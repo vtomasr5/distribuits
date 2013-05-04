@@ -54,8 +54,11 @@ class Client(threading.Thread):
         action  = d['action']
         html = ''
         if action == 'No':
-        	self._connection.request("GET", path)
-        	html = self._connection.getresponse()
+            try:
+        	   self._connection.request("GET", path)
+        	   html = self._connection.getresponse()
+            except httplib.BadStatusLine:
+                pass
         else:# Es un comentario o una noticia
         	s = Sesion('cajainas', 'miquel1234')
 

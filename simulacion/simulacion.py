@@ -4,7 +4,10 @@ import ast
 from estadisticas.estadistica import Estadistica
 
 PASSWORD_WEB_METRICAS = '1234'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 17f914be68191a672a70efe4bee1fd7a23495c68
 
 def show_help():
     print 'python simulacionv2.py <Opcion> <Argumentos>'

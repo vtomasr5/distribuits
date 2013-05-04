@@ -23,6 +23,9 @@ class Master(object):
         self._alive_clients     = []
         self.password_metricas  = password_metricas
         self._sistema           = Sistema(1, self._estadistica._obtain_path())
+        self.nclients = 0
+        self.clientsAc = 0
+        self.timeLastEvent = 0
         #Variables de la traza
         self.mediaSesion     = 0
         self.mediaPeticion   = 0
@@ -31,6 +34,11 @@ class Master(object):
         self.muestraMediaSesion   = []
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
+        self.timeStart = 0
+        self.ficheroClientes =  open('fichero', 'w')
+
+    def _escribirClientAc(self,ac):
+        self.ficheroClientes.write(str(ac) + "\n")
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -127,13 +135,20 @@ class Master(object):
         """
             Routine arrivals
         """
-        print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo)
+        print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo-self.timeStart)
         self._sistema.numeroClientes = self._sistema.numeroClientes + 1
         ts = self._estadistica.obtenerSesion()
         self.muestraMediaSesion.append(ts)
         tep = self._estadistica.obtenerPeticion()
         self.muestraMediaPeticion.append(tep)
         tactual = evento.tiempo
+        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
+        self.nclients = self.nclients + 1
+        if evento.tiempo-self.timeStart > 0:
+            self.timeLastEvent = evento.tiempo
+        
+        print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
+        self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
 
         tiempoLlegada = self._estadistica.obtenerLlegada()  # Funcion estadistica de t.llegada
         self.muestraMediaLlegadas.append(tiempoLlegada)
@@ -160,8 +175,14 @@ class Master(object):
         """
             exit routine
         """
-        print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo)
+        print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo-self.timeStart)
+        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
 
+        print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
+        self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
+
+        if evento.tiempo-self.timeStart > 0:
+            self.timeLastEvent = evento.tiempo
         tep = self._estadistica.obtenerPeticion()
         self.muestraMediaPeticion.append(tep)
         client = self.get_client(evento.numCliente)
@@ -176,7 +197,10 @@ class Master(object):
             newComsuptionTime = clientActual.consumptionTime+tep
         else:
             tr = clientActual.sesionTime - clientActual.consumptionTime
-            temps = tactual+tr
+            if tr < 0:
+                temps = tactual + 1
+            else:    
+                temps = tactual+tr
             evento1 = Evento("SalidaClienteTotal", temps, evento.numCliente)
             newComsuptionTime = tr
         self._npeticions = self._npeticions + 1
@@ -188,7 +212,18 @@ class Master(object):
         """
             routine system exit
         """
-        print "El cliente : "+str(evento.numCliente) + " ha salido del sistema"
+        print "El cliente : "+str(evento.numCliente) + " ha salido del sistema en el tiempo " + str(evento.tiempo-self.timeStart)
+
+        
+        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
+        self.nclients = self.nclients - 1
+
+        print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
+        self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
+
+        if evento.tiempo-self.timeStart > 0:
+            self.timeLastEvent = evento.tiempo
+
         self._sistema.numeroClientes = self._sistema.numeroClientes - 1
         self._npeticions = self._npeticions + 1
         self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
@@ -219,6 +254,7 @@ class Master(object):
         self.rutina_inicializacion()
         self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
         ejecutar = True
+        self.timeStart = time()
 
         try:
             while (not self._cola.empty()) and tactual < self._texec and ejecutar:
