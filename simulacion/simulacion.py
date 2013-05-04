@@ -4,10 +4,6 @@ import ast
 from estadisticas.estadistica import Estadistica
 
 PASSWORD_WEB_METRICAS = '1234'
-<<<<<<< HEAD
-
-=======
->>>>>>> 17f914be68191a672a70efe4bee1fd7a23495c68
 
 def show_help():
     print 'python simulacionv2.py <Opcion> <Argumentos>'
@@ -62,7 +58,7 @@ def main():
         show_help()
     else:
         if sys.argv[1] == 'start':
-            if len(sys.argv) > 4:
+            if (not is_param_int_or_float(sys.argv[2])) or  len(sys.argv) > 4:
                 show_help()
 
             simular(float(sys.argv[2]), int(sys.argv[3]))
