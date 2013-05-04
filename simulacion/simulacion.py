@@ -3,7 +3,7 @@ import sys
 import ast
 from estadisticas.estadistica import Estadistica
 
-PASSWORD_WEB_METRICAS = 'clave_para_ejecutar_las_metricas'
+PASSWORD_WEB_METRICAS = '1234'
 
 
 def show_help():
