@@ -58,7 +58,7 @@ def main():
         show_help()
     else:
         if sys.argv[1] == 'start':
-            if (not is_param_int_or_float(sys.argv[3])) or  len(sys.argv) > 4:
+            if (not is_param_int_or_float(sys.argv[3])) or  len(sys.argv) > 3:
                 show_help()
 
             simular(float(sys.argv[2]), int(sys.argv[3]))
