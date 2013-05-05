@@ -150,7 +150,7 @@ class Estadistica(object):
     def calculaTiempoEntrePeticion(self):
         mu = 1.789
         sigma = 2.366
-        
+
         return rand.lognormal(mu, sigma)
 
     def peticionEscritura(self):
