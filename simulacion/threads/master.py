@@ -267,7 +267,7 @@ class Master(object):
                 evento          = self._cola.get()[1]  # Coge el evento
                 clientsAcumults = self.clientsAc/(evento.tiempo-self.timeStart)
 
-                if clientsAcumults > self.transitorio:
+                if (clientsAcumults > self.transitorio) and (not self.regimenEstacionario):
                     self._start_metricas()
                     self.regimenEstacionario = True
 
@@ -292,7 +292,8 @@ class Master(object):
 
         if not error:
             self.kill_threads()
-        self._end_metricas()
+        if self.regimenEstacionario:
+            self._end_metricas()
 
         meanLlegadas   = np.mean(self.muestraMediaLlegadas)
         meanPeticiones = np.mean(self.muestraMediaPeticion)

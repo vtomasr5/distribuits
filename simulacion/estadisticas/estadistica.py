@@ -131,7 +131,7 @@ class Estadistica(object):
         """
             Tiempo entre peticiones diferentes
         """
-        mu = 2.245
+        mu = 1.5
         sigma = 1.133
         return rand.lognormal(mu, sigma)
 
@@ -148,7 +148,7 @@ class Estadistica(object):
         return a
 
     def calculaTiempoEntrePeticion(self):
-        mu = 1.789
+        mu = 2.245
         sigma = 2.366
 
         return rand.lognormal(mu, sigma)
