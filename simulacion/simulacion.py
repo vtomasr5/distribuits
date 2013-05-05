@@ -4,6 +4,7 @@ import ast
 from estadisticas.estadistica import Estadistica
 
 PASSWORD_WEB_METRICAS = '1234'
+TRANSITORIO           = 8
 
 def show_help():
     print 'python simulacionv2.py <Opcion> <Argumentos>'
@@ -40,7 +41,7 @@ def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
 def simular(numUsuarios, duracion):
     print 'Ejecutando Simulacion...'
     print ''
-    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS)
+    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO)
     m.simular()
     print ''
     print 'Simulacion Finalizada!'

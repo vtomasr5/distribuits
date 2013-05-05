@@ -8,24 +8,28 @@ from sistema import Sistema
 import urllib2
 
 class Master(object):
-    def __init__(self, texec, numUsuario, url, password_metricas):
-        self._clients           = []
-        self._last_id           = 1
-        self._tactual           = time()
-        self._texec             = self._tactual+(60*texec)
-        self._domain            = url
-        self._cola              = Queue.PriorityQueue(0)
-        self._lastKill          = 1
-        self._estadistica       = Estadistica(numUsuario)
-        self._responseTime      = 0
-        self._npeticions        = 0
-        self._infoTimeClient    = []
-        self._alive_clients     = []
-        self.password_metricas  = password_metricas
-        self._sistema           = Sistema(1, self._estadistica._obtain_path())
-        self.nclients = 0
-        self.clientsAc = 0
-        self.timeLastEvent = 0
+    def __init__(self, texec, numUsuario, url, password_metricas, transitorio):
+        self._clients            = []
+        self._last_id            = 1
+        self._tactual            = time()
+        self._texec              = self._tactual+(60*texec)
+        self._domain             = url
+        self._cola               = Queue.PriorityQueue(0)
+        self._lastKill           = 1
+        self._estadistica        = Estadistica(numUsuario)
+        self._responseTime       = 0
+        self._npeticions         = 0
+        self._infoTimeClient     = []
+        self._alive_clients      = []
+        self.password_metricas   = password_metricas
+        self._sistema            = Sistema(1, self._estadistica._obtain_path())
+        self.nclients            = 0
+        self.clientsAc           = 0
+        self.timeLastEvent       = 0
+        self.timeStart           = 0
+        self.ficheroClientes     = open('num_clientes_acumulado.txt', 'w')
+        self.transitorio         = transitorio
+        self.regimenEstacionario = False
         #Variables de la traza
         self.mediaSesion     = 0
         self.mediaPeticion   = 0
@@ -34,8 +38,6 @@ class Master(object):
         self.muestraMediaSesion   = []
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
-        self.timeStart = 0
-        self.ficheroClientes =  open('fichero', 'w')
 
     def _escribirClientAc(self,ac):
         self.ficheroClientes.write(str(ac) + "\n")
@@ -142,11 +144,11 @@ class Master(object):
         tep = self._estadistica.obtenerPeticion()
         self.muestraMediaPeticion.append(tep)
         tactual = evento.tiempo
-        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
+        self.clientsAc = self.clientsAc + self.nclients*(evento.tiempo - self.timeLastEvent)
         self.nclients = self.nclients + 1
         if evento.tiempo-self.timeStart > 0:
             self.timeLastEvent = evento.tiempo
-        
+
         print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
         self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
 
@@ -176,7 +178,7 @@ class Master(object):
             exit routine
         """
         print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo-self.timeStart)
-        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
+        self.clientsAc = self.clientsAc + self.nclients*(evento.tiempo - self.timeLastEvent)
 
         print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
         self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
@@ -199,12 +201,14 @@ class Master(object):
             tr = clientActual.sesionTime - clientActual.consumptionTime
             if tr < 0:
                 temps = tactual + 1
-            else:    
+            else:
                 temps = tactual+tr
             evento1 = Evento("SalidaClienteTotal", temps, evento.numCliente)
             newComsuptionTime = tr
-        self._npeticions = self._npeticions + 1
-        self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
+
+        if self.regimenEstacionario:
+            self._npeticions = self._npeticions + 1
+            self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
         self._cola.put((temps, evento1))
         self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
@@ -214,8 +218,8 @@ class Master(object):
         """
         print "El cliente : "+str(evento.numCliente) + " ha salido del sistema en el tiempo " + str(evento.tiempo-self.timeStart)
 
-        
-        self.clientsAc = self.clientsAc +  self.nclients*(evento.tiempo - self.timeLastEvent)
+
+        self.clientsAc = self.clientsAc + self.nclients*(evento.tiempo - self.timeLastEvent)
         self.nclients = self.nclients - 1
 
         print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
@@ -225,8 +229,11 @@ class Master(object):
             self.timeLastEvent = evento.tiempo
 
         self._sistema.numeroClientes = self._sistema.numeroClientes - 1
-        self._npeticions = self._npeticions + 1
-        self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
+
+        if self.regimenEstacionario:
+            self._npeticions   = self._npeticions + 1
+            self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
+
         self.remove_client(evento.numCliente)
         self._alive_clients.remove(evento.numCliente)
         self._lastKill = evento.numCliente
@@ -248,7 +255,6 @@ class Master(object):
         """
             Main method for run the simulation
         """
-        self._start_metricas()
         error   = False
         tactual = self._tactual
         self.rutina_inicializacion()
@@ -258,7 +264,13 @@ class Master(object):
 
         try:
             while (not self._cola.empty()) and tactual < self._texec and ejecutar:
-                evento = self._cola.get()[1]  # Coge el evento
+                evento          = self._cola.get()[1]  # Coge el evento
+                clientsAcumults = self.clientsAc/(evento.tiempo-self.timeStart)
+
+                if clientsAcumults > self.transitorio:
+                    self._start_metricas()
+                    self.regimenEstacionario = True
+
                 while (tactual < evento.tiempo) and (tactual < self._texec) and ejecutar:
                     if tactual < evento.tiempo:
                         tactual = time()
