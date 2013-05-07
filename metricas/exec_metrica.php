@@ -10,8 +10,6 @@ define("CLAVE" , "clave_ejecucion");
 define("RUTA"  , "/home/meneame/distribuits/metricas/");
 define("SCRIPT", "metricav2.py");
 
-//Run linux command in background and return the PID created by the OS
-
 if (isset($_GET['pw'])) {
 	if ($_GET['pw'] == CLAVE) {
 		$instruccion = "cd ".RUTA." && "; //Ejecutamos el comando desde el directorio
