@@ -8,7 +8,7 @@ from sistema import Sistema
 import urllib2
 
 class Master(object):
-    def __init__(self, texec, numUsuario, url, password_metricas, transitorio):
+    def __init__(self, texec, numUsuario, url, password_metricas, transitorio, sufijo):
         self._clients            = []
         self._last_id            = 1
         self._tactual            = time()
@@ -30,6 +30,7 @@ class Master(object):
         self.ficheroClientes     = open('num_clientes_acumulado.txt', 'w')
         self.transitorio         = transitorio
         self.regimenEstacionario = False
+        self.sufijoMetricas      = sufijo
         #Variables de la traza
         self.mediaSesion         = 0
         self.mediaPeticion       = 0
@@ -251,7 +252,7 @@ class Master(object):
             self.remove_client(thread)
 
     def _start_metricas(self):
-        urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas).read()
+        urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas+'&nom='+self.sufijoMetricas).read()
         self._sistema.start()
 
     def _end_metricas(self):

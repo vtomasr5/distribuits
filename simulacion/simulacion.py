@@ -11,8 +11,9 @@ def show_help():
     print '     Argumentos:'
     print '         <Opcion>         : start | gen_log'
     print '     Opciones'
+    print '         auto    <numero de usuarios> <duracion en minutos> <ID noticia Inicial> <noticias Totales>'
+    print '         gen_log <numero de usuarios> <ID noticia Inicial> <ID noticia Final>'
     print '         start   <numero de usuarios> <duracion en minutos>'
-    print '         gen_log <numero de usuarios> <ID noticia Inicial> <noticias Totales>'
     sys.exit(0)
 
 def is_param_int_or_float(param):
@@ -21,8 +22,22 @@ def is_param_int_or_float(param):
     except ValueError:
         return False
 
-def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
-    a = Estadistica(tamanyo, noticiaInicial, numNoticiasTotales)
+def automode(usuarios, duracion, noticiaInicial, noticiaFinal):
+    a = Estadistica(usuarios, noticiaInicial, noticiaFinal)
+    print 'Generadando Traza ...'
+    a.generaFicheroSesion()
+    a.generaFicheroPeticion()
+    a.generaFicheroPopularidad()
+    a.generaFicheroPeticionEsc()
+
+    for i in range(1,10):
+        a.generaFicheroLlegadas(sufix=str(i))
+        print 'Traza Generada...'
+        print ''
+        print 'Simulando...'
+
+def gen_traza(tamanyo, noticiaInicial, noticiaFinal):
+    a = Estadistica(tamanyo, noticiaInicial, noticiaFinal)
     mSesion     = a.generaFicheroSesion()
     mPeticion   = a.generaFicheroPeticion()
     mLlegadas   = a.generaFicheroLlegadas()
@@ -38,10 +53,10 @@ def gen_traza(tamanyo, noticiaInicial, numNoticiasTotales):
     f.close
     print 'Traza Generada'
 
-def simular(numUsuarios, duracion):
+def simular(numUsuarios, duracion, simulacion, sufijo):
     print 'Ejecutando Simulacion...'
     print ''
-    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO)
+    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO, sufijo)
     m.simular()
     print ''
     print 'Simulacion Finalizada!'
@@ -50,9 +65,10 @@ def main():
     len_parameter   = (len(sys.argv) >= 3)
     option          = False
     last_parameter  = False
+    sufijo_metricas = '1'
 
     if len_parameter:
-        option         = (sys.argv[1] in ('start', 'gen_log'))
+        option         = (sys.argv[1] in ('start', 'gen_log', 'auto'))
         last_parameter = is_param_int_or_float(sys.argv[2])
 
     if not (len_parameter and option and last_parameter):
@@ -60,11 +76,14 @@ def main():
     else:
         if sys.argv[1] == 'start':
             len_parameter = (len(sys.argv) == 4)
+            if len_parameter:
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[2]))
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[3]))
             if not len_parameter:
                 show_help()
 
-            simular(float(sys.argv[2]), int(sys.argv[3]))
-        else: #Generamos la traza
+            simular(float(sys.argv[2]), int(sys.argv[3]), sufijo_metricas)
+        elif sys.argv[1] == 'gen_log': #Generamos la traza
             len_parameter = (len(sys.argv) == 5)
             if len_parameter:
                 len_parameter = (len_parameter and is_param_int_or_float(sys.argv[3]))
@@ -73,6 +92,17 @@ def main():
                 show_help()
 
             gen_traza(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+        else:
+            len_parameter = (len(sys.argv) == 6)
+            if len_parameter:
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[2]))
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[3]))
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[4]))
+                len_parameter = (len_parameter and is_param_int_or_float(sys.argv[5]))
+            if not len_parameter:
+                show_help()
+
+            automode(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
 
 if __name__ == "__main__":
     main()

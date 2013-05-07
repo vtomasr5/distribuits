@@ -45,12 +45,15 @@ class Estadistica(object):
         f.close()
         return float(s[0]), float(s[1]), float(s[2])
 
-    def generaFicheroLlegadas(self):
-        path = self._obtain_path() + 'llegadas.txt'
+    def generaFicheroLlegadas(self, sufix='',mu=-1):
+        path = self._obtain_path() + 'llegadas_'+sufix+'.txt'
         self.llegadas = open(path,'w')
         media = 0
         for i in range(0, self.max):
-            valor = self.calculaTiempoLlegada()
+            if mu > 0:
+                valor = self.calculaTiempoLlegada(mu)
+            else:
+                valor = self.calculaTiempoLlegada()
             self.llegadas.write(str(valor)+"\n")
             media = media + valor
         self.llegadas.close()
@@ -127,11 +130,10 @@ class Estadistica(object):
             self.peticionEsc = open(path, 'r')
         return str(self.peticionEsc.readline())
 
-    def calculaTiempoLlegada(self):
+    def calculaTiempoLlegada(self, mu=2.245):
         """
             Tiempo entre peticiones diferentes
         """
-        mu = 1.5
         sigma = 1.133
         return rand.lognormal(mu, sigma)
 
@@ -148,7 +150,7 @@ class Estadistica(object):
         return a
 
     def calculaTiempoEntrePeticion(self):
-        mu = 2.245
+        mu = 1.789
         sigma = 2.366
 
         return rand.lognormal(mu, sigma)
