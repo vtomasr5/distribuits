@@ -38,6 +38,7 @@ class Master(object):
         self.muestraMediaSesion   = []
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
+        self.muestraTRespuesta     = []
 
     def _escribirClientAc(self,ac):
         self.ficheroClientes.write(str(ac) + "\n")
@@ -208,7 +209,9 @@ class Master(object):
 
         if self.regimenEstacionario:
             self._npeticions = self._npeticions + 1
-            self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
+            responseTime = self._obtain_client_response_time(evento.numCliente)
+            self.muestraTRespuesta.append(responseTime)
+            self._responseTime = self._responseTime + responseTime
         self._cola.put((temps, evento1))
         self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
 
@@ -232,7 +235,9 @@ class Master(object):
 
         if self.regimenEstacionario:
             self._npeticions   = self._npeticions + 1
-            self._responseTime = self._responseTime + self._obtain_client_response_time(evento.numCliente)
+            responseTime = self._obtain_client_response_time(evento.numCliente)
+            self.muestraTRespuesta.append(responseTime)
+            self._responseTime = self._responseTime + responseTime
 
         self.remove_client(evento.numCliente)
         self._alive_clients.remove(evento.numCliente)
@@ -292,32 +297,35 @@ class Master(object):
 
         if not error:
             self.kill_threads()
+
+        tRespuesta   = 0
+        stdRespuesta = 0
+        cvRespuesta  = 0
         if self.regimenEstacionario:
             self._end_metricas()
+            tRespuesta   = np.mean(self.muestraTRespuesta)
+            stdRespuesta = np.std(self.muestraTRespuesta)
+            cvRespuesta  = np.cov(self.muestraTRespuesta)
 
         meanLlegadas   = np.mean(self.muestraMediaLlegadas)
         meanPeticiones = np.mean(self.muestraMediaPeticion)
         meanSesion     = np.mean(self.muestraMediaSesion)
 
-        stdLlegadas = np.std(self.muestraMediaLlegadas)
-        stdPeticion = np.std(self.muestraMediaPeticion)
-        stdLlegadas = np.std(self.muestraMediaSesion)
 
-
-        print ''
-        print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
-        print ''
-        print "TIEMPO ENTRE LLEGADA: "
-        print "     Media Traza " + str(self.mediaLlegadas)
-        print "     Media Muestral "+ str(meanLlegadas) + " segundos"
-        print "     Desviacion Estandar Muestral " + str(stdLlegadas)
-        print "TIEMPO ENTRE PETICIONES:  "
-        print "     Media Traza " + str(self.mediaSesion)
-        print "     Media Muestral "+ str(meanPeticiones) + " segundos"
-        print "     Desviacion Estandar Muestral " + str(stdPeticion)
-        print "TIEMPO DURACION SESION:"
-        print "     Media Traza " + str(self.mediaPeticion)
-        print "     Media Muestral "+ str(meanSesion) + " segundos"
-        print "     Desviacion Estandar Muestral " + str(stdLlegadas)
         print ""
-        print "TRESP: "+ str(self._responseTime / self._npeticions) + " segundos"
+        print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
+        print ""
+        print "TIEMPO ENTRE LLEGADA:"
+        print "     Media Traza    " + str(self.mediaLlegadas)
+        print "     Media Muestral "+ str(meanLlegadas) + " segundos"
+        print "TIEMPO ENTRE PETICIONES:"
+        print "     Media Traza    " + str(self.mediaSesion)
+        print "     Media Muestral "+ str(meanPeticiones) + " segundos"
+        print "TIEMPO DURACION SESION:"
+        print "     Media Traza    " + str(self.mediaPeticion)
+        print "     Media Muestral "+ str(meanSesion) + " segundos"
+        print "TIEMPO DE RESPUESTA:"
+        print "     Media Muestral      "+ str(tRespuesta) + " segundos"
+        print "     Desviacion Estandar "+ str(stdRespuesta) + " segundos"
+        print "     Covarianza          "+ str(cvRespuesta) + " segundos"
+        print ""
