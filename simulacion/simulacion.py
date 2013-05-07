@@ -4,7 +4,7 @@ import ast
 from estadisticas.estadistica import Estadistica
 
 PASSWORD_WEB_METRICAS = '1234'
-TRANSITORIO           = 8
+TRANSITORIO           = 0
 
 def show_help():
     print 'python simulacionv2.py <Opcion> <Argumentos>'

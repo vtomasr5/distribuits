@@ -31,16 +31,18 @@ class Master(object):
         self.transitorio         = transitorio
         self.regimenEstacionario = False
         #Variables de la traza
-        self.mediaSesion     = 0
-        self.mediaPeticion   = 0
-        self.mediaLlegadas   = 0
+        self.mediaSesion         = 0
+        self.mediaPeticion       = 0
+        self.mediaLlegadas       = 0
+        self.lastAcumulateClient = 0
         #Variables muestrales
         self.muestraMediaSesion   = []
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
-        self.muestraTRespuesta     = []
+        self.muestraTRespuesta    = []
 
     def _escribirClientAc(self,ac):
+        self.lastAcumulateClient = ac
         self.ficheroClientes.write(str(ac) + "\n")
 
     def _build_message(self, operation, parameter):
@@ -305,7 +307,7 @@ class Master(object):
             self._end_metricas()
             tRespuesta   = np.mean(self.muestraTRespuesta)
             stdRespuesta = np.std(self.muestraTRespuesta)
-            cvRespuesta  = np.cov(self.muestraTRespuesta)
+            cvRespuesta  = stdRespuesta/tRespuesta
 
         meanLlegadas   = np.mean(self.muestraMediaLlegadas)
         meanPeticiones = np.mean(self.muestraMediaPeticion)
@@ -314,6 +316,7 @@ class Master(object):
 
         print ""
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
+        print "NUM MEDIO DE CLIENTES ACUMULADOS: " + str(self.lastAcumulateClient)
         print ""
         print "TIEMPO ENTRE LLEGADA:"
         print "     Media Traza    " + str(self.mediaLlegadas)
@@ -325,7 +328,7 @@ class Master(object):
         print "     Media Traza    " + str(self.mediaPeticion)
         print "     Media Muestral "+ str(meanSesion) + " segundos"
         print "TIEMPO DE RESPUESTA:"
-        print "     Media Muestral      "+ str(tRespuesta) + " segundos"
-        print "     Desviacion Estandar "+ str(stdRespuesta) + " segundos"
-        print "     Covarianza          "+ str(cvRespuesta) + " segundos"
+        print "     Media Muestral           "+ str(tRespuesta) + " segundos"
+        print "     Desviacion Estandar      "+ str(stdRespuesta) + " segundos"
+        print "     Coeficiente de Variacion "+ str(cvRespuesta) + " segundos"
         print ""
