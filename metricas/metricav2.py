@@ -3,9 +3,10 @@ from monitores.monitor import Monitor
 import sys
 import os
 
-RESOLUCION = 1 #Resolucion minima de Monitor
-OUTPUT_DIR = 'output'
-STOP_FILE  = 'exec.stop'
+RESOLUCION 	 = 1 #Resolucion minima de Monitor
+OUTPUT_DIR 	 = 'output'
+METRICAS_DIR = 'metricas'
+STOP_FILE  	 = 'exec.stop'
 
 
 def return_path():
@@ -14,18 +15,21 @@ def return_path():
 def return_path_salida(path):
 	return  path + '/' + OUTPUT_DIR + '/'
 
-def mkdir():
-	path = return_path()
+def return_path_metricas(path):
+	return  path + '/' + OUTPUT_DIR + '/' + METRICAS_DIR + '/'
+
+def mkdir(path, directory_name):
 	d = os.listdir(path)
-	if OUTPUT_DIR not in d:
-		os.mkdir(OUTPUT_DIR)
-	return  return_path_salida(path)
+	print path
+	print d
+	if directory_name not in d:
+		os.mkdir(path+directory_name)
 
 def shutdown_threads(threads):
 	for thread in threads:
 			thread.shutdown()
 
-def wait_for_keyboard(threads, monitores):
+def wait_for_keyboard(threads, monitores, sufix):
 	error = False
 	try:
 		path = return_path()
@@ -38,7 +42,7 @@ def wait_for_keyboard(threads, monitores):
 	print "Ejecucion Finalizada"
 	if not error:
 		shutdown_threads(threads)
-		make_csv_file(path, monitores)
+		make_csv_file(path, monitores, sufix)
 
 def get_min_lines(path, monitores):
 	min = sys.maxint  #9999999999999999
@@ -51,12 +55,18 @@ def get_min_lines(path, monitores):
 		f.close()
 	return min
 
-def make_csv_file(path, monitores):
-	min = get_min_lines(path, monitores)
-	cabecera = 'UTILIZACION;MEMORIA;BYTES ENVIADOS;BYTES RECIBIDOS;BYTES LEIDOS;BYTES ESCRITOS'
-	files = []
-	output_file = open(return_path_salida(path)+'metricas.csv','w')
+def make_csv_file(path, monitores, sufix):
+	min 	 	= get_min_lines(path, monitores)
+	cabecera 	= 'UTILIZACION;MEMORIA;BYTES ENVIADOS;BYTES RECIBIDOS;BYTES LEIDOS;BYTES ESCRITOS'
+	files 	 	= []
+	filename 	= 'metricas_'+str(sufix)+'.csv'
+
+	mkdir(return_path_salida(path), METRICAS_DIR)
+	output_path = return_path_metricas(path)
+
+	output_file = open(output_path+filename,'w')
 	output_file.write(cabecera+"\n")
+
 	for monitor in monitores:
 		f = open(return_path_salida(path)+monitor+'.txt','r')
 		f.seek(0)
@@ -75,7 +85,14 @@ def make_csv_file(path, monitores):
 	output_file.close()
 
 def main():
-	path 		= mkdir()
+	len_parameter   = (len(sys.argv) == 2)
+	if not len_parameter:
+		sys.exit(0)
+
+	sufix		= sys.argv[1]
+	path 		= return_path()
+	mkdir(path, OUTPUT_DIR)
+	path 		= return_path_salida(path)
 	threads 	= []
 	monitores 	= ('cpu_monitor', 'memory_monitor', 'network_monitor', 'disk_monitor')
 
@@ -87,7 +104,7 @@ def main():
 		threads.append(m)
 		m.start()
 
-	wait_for_keyboard(threads, monitores)
+	wait_for_keyboard(threads, monitores, sufix)
 
 if __name__ == "__main__":
     main()
