@@ -1,13 +1,9 @@
-Pràctica de distribuits 2012/13
+Extracción de Contenido
 ==============================
 
-Modelització de sistemes distribuits
+Modo de Uso:
 
-Autors:  
-	- Eduardo Andrés Gasser  
-	- Miquel Barceló   
-	- Benet Oliver  
-	- Vicenç Juan Tomàs Montserrat  
+python noticiasSQL.py
   
 Requeriments
 ==============================
