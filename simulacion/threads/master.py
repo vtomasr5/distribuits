@@ -314,6 +314,7 @@ class Master(object):
         meanPeticiones = np.mean(self.muestraMediaPeticion)
         meanSesion     = np.mean(self.muestraMediaSesion)
 
+        self.ficheroClientes.close()
 
         print ""
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)

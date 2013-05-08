@@ -67,7 +67,8 @@ class Client(threading.Thread):
         	else:
         		s.make_a_new('www.meneame.net/story.php?id='+str(d['url']))
         endTime = time() - timeStart
-        self.responseTime = endTime + self.responseTime
+        #self.responseTime = endTime + self.responseTime
+        self.responseTime = endTime
         #self._print("Salgo de request")
         return html
 

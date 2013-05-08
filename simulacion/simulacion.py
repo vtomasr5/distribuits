@@ -53,7 +53,7 @@ def gen_traza(tamanyo, noticiaInicial, noticiaFinal):
     f.close
     print 'Traza Generada'
 
-def simular(numUsuarios, duracion, simulacion, sufijo):
+def simular(numUsuarios, duracion, sufijo):
     print 'Ejecutando Simulacion...'
     print ''
     m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO, sufijo)
