@@ -1,9 +1,9 @@
 Extracción de Contenido
 ==============================
 
-Modo de Uso:
-
-python noticiasSQL.py
+Modo de Uso:  
+  
+python noticiasSQL.py  
   
 Requeriments
 ==============================

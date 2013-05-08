@@ -1,4 +1,4 @@
-Pràctica de distribuits 2012/13
+Pràctica de distribuits  
 ==============================
 
 Modelització de sistemes distribuits 2012-2013  
