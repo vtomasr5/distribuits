@@ -20,8 +20,6 @@ def return_path_metricas(path):
 
 def mkdir(path, directory_name):
 	d = os.listdir(path)
-	print path
-	print d
 	if directory_name not in d:
 		os.mkdir(path+directory_name)
 
