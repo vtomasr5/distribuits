@@ -15,6 +15,7 @@ class Estadistica(object):
         self.numNoticiaInicial = numNoticiaInicial
         self.numNoticias = totalNoticias
         self.probabilidades,self.noticias = [],[]
+        self.mu = ""
         if numNoticiaInicial > 0:
             self.probabilidades,self.noticias = self.initPopularidad(numNoticiaInicial, totalNoticias)
 
@@ -99,6 +100,13 @@ class Estadistica(object):
             self.peticionEsc.write(str(self.puedoEscribir())+"\n")
         self.peticionEsc.close()
         self.peticionEsc = ""
+
+    def obtenerMu(self):
+        path = self._obtain_path() + 'mu.txt'
+        if self.mu == "":
+            self.mu = open(path, 'r')
+        return float(self.mu.readline())
+
 
     def obtenerLlegada(self,sufix):
         path = self._obtain_path() + 'llegadas_' + sufix + '.txt'

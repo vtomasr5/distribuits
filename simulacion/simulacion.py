@@ -30,8 +30,14 @@ def automode(usuarios, duracion, noticiaInicial, noticiaFinal):
     a.generaFicheroPopularidad()
     a.generaFicheroPeticionEsc()
 
-    for i in range(1,10):
-        a.generaFicheroLlegadas(sufix=str(i))
+    mu = a.obtenerMu()
+    contadorMu = 0
+
+    while mu != "":
+        a.generaFicheroLlegadas(sufix=str(contadorMu),mu=mu)
+        simular(usuarios, duracion,str(contadorMu))
+        contadorMu = contadorMu + 1
+        mu = a.obtenerMu()
         print 'Traza Generada...'
         print ''
         print 'Simulando...'

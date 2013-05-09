@@ -123,21 +123,21 @@ class Master(object):
         """
         self._message_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))
 
-    def rutina_inicializacion(self):
+    def rutina_inicializacion(self,sufix =""):
         """
             Init Simulation
         """
         # Inicializamos todos los eventos
         tactual = self._tactual
         # while tactual < self._texec:
-        tiempoLlegada = self._estadistica.obtenerLlegada()  # Funcion estadistica de t.llegada
+        tiempoLlegada = self._estadistica.obtenerLlegada(sufix)  # Funcion estadistica de t.llegada
         self.muestraMediaLlegadas.append(tiempoLlegada)
         tactual = tiempoLlegada + tactual
         evento1 = Evento("LlegadaCliente", tactual, self._last_id)
         self._cola.put((tactual, evento1))
         self._last_id = self._last_id + 1
 
-    def rutina_llegadas(self, evento):
+    def rutina_llegadas(self, evento,sufix =""):
         """
             Routine arrivals
         """
@@ -156,7 +156,7 @@ class Master(object):
         print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
         self._escribirClientAc(self.clientsAc/(evento.tiempo-self.timeStart))
 
-        tiempoLlegada = self._estadistica.obtenerLlegada()  # Funcion estadistica de t.llegada
+        tiempoLlegada = self._estadistica.obtenerLlegada(sufix)  # Funcion estadistica de t.llegada
         self.muestraMediaLlegadas.append(tiempoLlegada)
         tactual = tiempoLlegada + tactual
         evento1 = Evento("LlegadaCliente", tactual, self._last_id)
@@ -265,7 +265,7 @@ class Master(object):
         """
         error   = False
         tactual = self._tactual
-        self.rutina_inicializacion()
+        self.rutina_inicializacion(self.sufijoMetricas)
         self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
         ejecutar = True
         self.timeStart = time()
@@ -288,7 +288,7 @@ class Master(object):
                 if ejecutar:
                     tactual = evento.tiempo
                     if evento.tipoEvento == "LlegadaCliente":
-                        self.rutina_llegadas(evento)
+                        self.rutina_llegadas(evento,self.sufijoMetricas)
                     elif evento.tipoEvento == "SalidaCliente":
                         self.rutina_salida(evento)
                     else:
