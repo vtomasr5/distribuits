@@ -9,7 +9,7 @@ TRANSITORIO           = 0
 def show_help():
     print 'python simulacion.py <Opcion> <Argumentos>'
     print '     Argumentos:'
-    print '         <Opcion>          start | gen_log'
+    print '         <Opcion>          start | gen_log | auto'
     print '     Opciones'
     print '         auto    <numero de usuarios> <duracion en minutos> <ID noticia Inicial> <noticias Totales>'
     print '         gen_log <numero de usuarios> <ID noticia Inicial> <ID noticia Final>'
