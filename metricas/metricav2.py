@@ -87,10 +87,12 @@ def make_csv_file(path, monitores, sufix):
 def main():
 	len_parameter   = (len(sys.argv) == 2)
 	if not len_parameter:
+		print "Faltan parametros"
 		sys.exit(0)
 
 	sufix		= sys.argv[1]
-	path 		= return_path()
+	path 		= return_path()+'/'
+	print path
 	mkdir(path, OUTPUT_DIR)
 	path 		= return_path_salida(path)
 	threads 	= []
