@@ -18,7 +18,7 @@ if (isset($_GET['pw'])) {
 			if (isset($_GET['nom'])) {
 				$nombre = $_GET['nom'];
 			} else {
-				$nombre = 'original'
+				$nombre = 'original';
 			}
 			$instruccion .= "/usr/bin/python ".RUTA.SCRIPT." ".$nombre;
 		} else { //Paramos la ejecución de los monitores
