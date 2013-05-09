@@ -316,6 +316,12 @@ class Master(object):
 
         self.ficheroClientes.close()
 
+        trespFichero = ""
+        trespFichero = open('tRespuesta', 'w')
+        for m in self.muestraTRespuesta:
+            trespFichero.write(str(m)+"\n")
+        trespFichero.close()
+
         print ""
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
         print "NUM MEDIO DE CLIENTES ACUMULADOS: " + str(self.lastAcumulateClient)

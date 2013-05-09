@@ -42,11 +42,11 @@ def automode(usuarios, duracion, noticiaInicial, noticiaFinal):
         print ''
         print 'Simulando...'
 
-def gen_traza(tamanyo, noticiaInicial, noticiaFinal):
+def gen_traza(tamanyo, noticiaInicial, noticiaFinal,sufix):
     a = Estadistica(tamanyo, noticiaInicial, noticiaFinal)
     mSesion     = a.generaFicheroSesion()
     mPeticion   = a.generaFicheroPeticion()
-    mLlegadas   = a.generaFicheroLlegadas()
+    mLlegadas   = a.generaFicheroLlegadas(str(sufix))
 
     a.generaFicheroPopularidad()
     a.generaFicheroPeticionEsc()
@@ -97,7 +97,7 @@ def main():
             if not len_parameter:
                 show_help()
 
-            gen_traza(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+            gen_traza(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]),sufijo_metricas)
         else:
             len_parameter = (len(sys.argv) == 6)
             if len_parameter:
