@@ -8,7 +8,7 @@
 */
 define("CLAVE" , "clave_ejecucion");
 define("RUTA"  , "/home/meneame/distribuits/metricas/");
-define("SCRIPT", "metricav2.py");
+define("SCRIPT", "metricav3.py");
 
 if (isset($_GET['pw'])) {
 	if ($_GET['pw'] == CLAVE) {
