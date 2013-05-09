@@ -52,3 +52,4 @@ simulacion/estadisticas/peticion.txt
 simulacion/estadisticas/popularidad.txt
 simulacion/estadisticas/sesion.txt
 metricas/output/*
+metricas/*.stop
