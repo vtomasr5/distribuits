@@ -100,8 +100,8 @@ class Estadistica(object):
         self.peticionEsc.close()
         self.peticionEsc = ""
 
-    def obtenerLlegada(self):
-        path = self._obtain_path() + 'llegadas.txt'
+    def obtenerLlegada(self,sufix):
+        path = self._obtain_path() + 'llegadas_' + sufix + '.txt'
         if self.llegadas == "":
             self.llegadas = open(path, 'r')
         return float(self.llegadas.readline())
