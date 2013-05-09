@@ -1,7 +1,8 @@
 # coding: utf-8
-from monitores.monitor import Monitor
+from monitores.monitorv2 import Monitor
 import sys
 import os
+from time import sleep
 
 RESOLUCION 	 = 1 #Resolucion minima de Monitor
 OUTPUT_DIR 	 = 'output'
@@ -27,19 +28,31 @@ def shutdown_threads(threads):
 	for thread in threads:
 			thread.shutdown()
 
-def wait_for_keyboard(threads, monitores, sufix):
+def wait_for_keyboard(threads, monitores, sufix, monitor):
 	error = False
 	try:
 		path = return_path()
 		d 	 = os.listdir(path)
+		cpuf = open(monitor.path+"cpu_monitor"+'.txt','w')
+		memf = open(monitor.path+"memory_monitor"+'.txt','w')
+		netf = open(monitor.path+"network_monitor"+'.txt','w')
+		disf = open(monitor.path+"disk_monitor"+'.txt','w')
 		while STOP_FILE not in d: #Ejecutamos hasta tener STOP_FILE
 			d = os.listdir(path)
+			monitor.cpu_monitor(cpuf)
+			monitor.memory_monitor(memf)
+			monitor.network_monitor(netf)
+			monitor.disk_monitor(disf)
+			sleep(RESOLUCION)
 	except KeyboardInterrupt:
 		error = True
 		shutdown_threads(threads)
 	print "Ejecucion Finalizada"
 	if not error:
-		shutdown_threads(threads)
+		cpuf.close()
+		memf.close()
+		netf.close()
+		disf.close()
 		make_csv_file(path, monitores, sufix)
 
 def get_min_lines(path, monitores):
@@ -90,7 +103,7 @@ def main():
 
 	sufix		= sys.argv[1]
 	path 		= return_path()+'/'
-	print path
+
 	mkdir(path, OUTPUT_DIR)
 	path 		= return_path_salida(path)
 	threads 	= []
@@ -99,12 +112,9 @@ def main():
 	if STOP_FILE in os.listdir(return_path()):
 		os.remove(return_path()+'/'+STOP_FILE)
 
-	for monitor in monitores:
-		m = Monitor(monitor, RESOLUCION, path)
-		threads.append(m)
-		m.start()
+	m = Monitor(path)
 
-	wait_for_keyboard(threads, monitores, sufix)
+	wait_for_keyboard(threads, monitores, sufix, m)
 
 if __name__ == "__main__":
     main()
