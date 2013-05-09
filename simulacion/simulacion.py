@@ -7,13 +7,15 @@ PASSWORD_WEB_METRICAS = '1234'
 TRANSITORIO           = 0
 
 def show_help():
-    print 'python simulacionv2.py <Opcion> <Argumentos>'
+    print 'python simulacion.py <Opcion> <Argumentos>'
     print '     Argumentos:'
-    print '         <Opcion>         : start | gen_log'
+    print '         <Opcion>          start | gen_log'
     print '     Opciones'
     print '         auto    <numero de usuarios> <duracion en minutos> <ID noticia Inicial> <noticias Totales>'
     print '         gen_log <numero de usuarios> <ID noticia Inicial> <ID noticia Final>'
     print '         start   <numero de usuarios> <duracion en minutos>'
+    print '     Ejemplo:'
+    print '         python simulacion.py auto 100000 45 2826 2932'
     sys.exit(0)
 
 def is_param_int_or_float(param):
