@@ -138,7 +138,7 @@ class Estadistica(object):
             self.peticionEsc = open(path, 'r')
         return str(self.peticionEsc.readline())
 
-    def calculaTiempoLlegada(self, mu=2.245):
+    def calculaTiempoLlegada(self, mu=-4): #2.245
         """
             Tiempo entre peticiones diferentes
         """

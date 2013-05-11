@@ -6,6 +6,7 @@ from evento import Evento
 import numpy as np
 from sistema import Sistema
 import urllib2
+from time import sleep
 
 class Master(object):
     def __init__(self, texec, numUsuario, url, password_metricas, transitorio, sufijo):
@@ -256,7 +257,16 @@ class Master(object):
         self._sistema.start()
 
     def _end_metricas(self):
-        urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas+'&stop=1').read()
+        close_metricas = False
+        while not close_metricas:
+            try:
+                urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas+'&stop=1').read()
+                close_metricas  = True
+            except urllib2.URLError:
+                sleep(1) #Esperamos 1 minuto a realizar la operacion ya que el servidor esta saturado
+                close_metricas = False
+            except:
+                close_metricas  = True
         self._sistema.shutdown()
 
     def simular(self):

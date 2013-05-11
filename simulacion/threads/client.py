@@ -3,6 +3,7 @@ import httplib
 import Queue
 from time import sleep, time
 from sesion import Sesion
+import sys
 
 
 class Client(threading.Thread):
@@ -59,13 +60,18 @@ class Client(threading.Thread):
         	   html = self._connection.getresponse()
             except httplib.BadStatusLine:
                 pass
+            except Exception, e: #Servidor Saturado
+                self._print("Unexpected error:" + str(e))
         else:# Es un comentario o una noticia
-        	s = Sesion('cajainas', 'miquel1234')
+            try:
+            	s = Sesion('cajainas', 'miquel1234')
 
-        	if action == 'Comentario':
-        		s.make_a_comment(d['url']) #noticia 2858
-        	else:
-        		s.make_a_new('www.meneame.net/story.php?id='+str(d['url']))
+            	if action == 'Comentario':
+            		s.make_a_comment(d['url']) #noticia 2858
+            	else:
+            		s.make_a_new('www.meneame.net/story.php?id='+str(d['url']))
+            except Exception, e: #Servidor Saturado
+                self._print("Mechanize error:" + str(e))
         endTime = time() - timeStart
         #self.responseTime = endTime + self.responseTime
         self.responseTime = endTime
