@@ -112,5 +112,6 @@ def main():
 
             automode(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
 
+    sys.exit(0) #Terminando con todos los threads creados
 if __name__ == "__main__":
     main()

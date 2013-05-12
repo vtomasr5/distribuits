@@ -42,6 +42,9 @@ class Master(object):
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
         self.muestraTRespuesta    = []
+        #Cluster de tiempo de respuesta para 
+        self.mediaTRcentroides    = [0.45, 8.7, 16.4, 32.2]
+        self.clusterTRespuesta    = [[], [], [], []]
 
     def _escribirClientAc(self,ac):
         self.lastAcumulateClient = ac
@@ -124,25 +127,38 @@ class Master(object):
         """
         self._message_to_client(threadID, self._build_message('setConsumptionTime', consumptionTime))
 
-    def rutina_inicializacion(self,sufix =""):
+    def rutina_inicializacion(self,sufix=""):
         """
             Init Simulation
         """
         # Inicializamos todos los eventos
-        tactual = self._tactual
-        # while tactual < self._texec:
+        tactual       = self._tactual
         tiempoLlegada = self._estadistica.obtenerLlegada(sufix)  # Funcion estadistica de t.llegada
+
         self.muestraMediaLlegadas.append(tiempoLlegada)
-        tactual = tiempoLlegada + tactual
-        evento1 = Evento("LlegadaCliente", tactual, self._last_id)
+
+        tactual       = tiempoLlegada + tactual
+        evento1       = Evento("LlegadaCliente", tactual, self._last_id)
+
         self._cola.put((tactual, evento1))
+
         self._last_id = self._last_id + 1
 
-    def rutina_llegadas(self, evento,sufix =""):
+    def insert_tRespuesta(self, tr):
+        last = 0
+        index = len(self.mediaTRcentroides)-1
+        for i,centroide in enumerate(self.mediaTRcentroides):
+            if tr >= last  and tr < centroide:
+                index = i
+                break
+
+        self.clusterTRespuesta[index].append(tr)
+
+    def rutina_llegadas(self, evento,sufix=""):
         """
             Routine arrivals
         """
-        print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str(evento.tiempo-self.timeStart)
+        print "El cliente : "+str(evento.numCliente) + " ha llegado en el tiempo " + str((evento.tiempo-self.timeStart)/60)
         self._sistema.numeroClientes = self._sistema.numeroClientes + 1
         ts = self._estadistica.obtenerSesion()
         self.muestraMediaSesion.append(ts)
@@ -182,7 +198,7 @@ class Master(object):
         """
             exit routine
         """
-        print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str(evento.tiempo-self.timeStart)
+        print "El cliente : "+str(evento.numCliente) + " vuelve a entrar en el tiempo " + str((evento.tiempo-self.timeStart)/60)
         self.clientsAc = self.clientsAc + self.nclients*(evento.tiempo - self.timeLastEvent)
 
         print "Nclientes: " + str(self.nclients) + " Nacumulat: " + str(self.clientsAc/(evento.tiempo-self.timeStart))
@@ -215,6 +231,7 @@ class Master(object):
             self._npeticions = self._npeticions + 1
             responseTime = self._obtain_client_response_time(evento.numCliente)
             self.muestraTRespuesta.append(responseTime)
+            self.insert_tRespuesta(responseTime)
             self._responseTime = self._responseTime + responseTime
         self._cola.put((temps, evento1))
         self.setConsumptionTime_client(evento.numCliente, newComsuptionTime)
@@ -223,7 +240,7 @@ class Master(object):
         """
             routine system exit
         """
-        print "El cliente : "+str(evento.numCliente) + " ha salido del sistema en el tiempo " + str(evento.tiempo-self.timeStart)
+        print "El cliente : "+str(evento.numCliente) + " ha salido del sistema en el tiempo " + str((evento.tiempo-self.timeStart)/60)
 
 
         self.clientsAc = self.clientsAc + self.nclients*(evento.tiempo - self.timeLastEvent)
@@ -241,6 +258,7 @@ class Master(object):
             self._npeticions   = self._npeticions + 1
             responseTime = self._obtain_client_response_time(evento.numCliente)
             self.muestraTRespuesta.append(responseTime)
+            self.insert_tRespuesta(responseTime)
             self._responseTime = self._responseTime + responseTime
 
         self.remove_client(evento.numCliente)
@@ -263,11 +281,37 @@ class Master(object):
                 urllib2.urlopen('http://130.206.134.123/exec_metrica.php?pw='+self.password_metricas+'&stop=1').read()
                 close_metricas  = True
             except urllib2.URLError:
-                sleep(1) #Esperamos 1 minuto a realizar la operacion ya que el servidor esta saturado
+                print "Servidor Colapsado. Esperando 30 segundos para finalizar las metricas"
+                sleep(0.5) #Esperamos 1 minuto a realizar la operacion ya que el servidor esta saturado
                 close_metricas = False
             except:
                 close_metricas  = True
         self._sistema.shutdown()
+
+    def _write_t_respuesta(self):
+        trespFichero = ""
+        trespFichero = open('tRespuesta.csv', 'w')
+        trespFichero.write("Tiempo_de_respuesta\n")
+        #Imprimimos el t.respuesta generico
+        for m in self.muestraTRespuesta:
+            trespFichero.write(str(m)+"\n")
+        trespFichero.close()
+
+        #Imprimimos los grupos de trespuesta en un fichero
+        trespFichero = open('clustertRespuesta.csv', 'w')
+        cabecera = ''
+        for centroide in self.mediaTRcentroides:
+            cabecera = cabecera + "Centroide " + str(centroide)+','
+        line = ''
+        for cluster in self.clusterTRespuesta:
+            if len(line) > 0:
+                line = line + str(np.mean(cluster))+','
+            else:
+                line = line + '0,'
+        trespFichero.write(cabecera[:-1]+'\n')
+        trespFichero.write(line[:-1]+'\n')
+        trespFichero.close()
+
 
     def simular(self):
         """
@@ -325,12 +369,7 @@ class Master(object):
         meanSesion     = np.mean(self.muestraMediaSesion)
 
         self.ficheroClientes.close()
-
-        trespFichero = ""
-        trespFichero = open('tRespuesta', 'w')
-        for m in self.muestraTRespuesta:
-            trespFichero.write(str(m)+"\n")
-        trespFichero.close()
+        self._write_t_respuesta()
 
         print ""
         print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)

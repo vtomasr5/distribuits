@@ -39,6 +39,7 @@ class Client(threading.Thread):
                 pass
             except KeyboardInterrupt:  # CTRL+C interrupt
                 return
+        sys.exit()
 
     def _open_connection(self):
         """
