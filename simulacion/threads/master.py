@@ -45,10 +45,14 @@ class Master(object):
         #Cluster de tiempo de respuesta para 
         self.mediaTRcentroides    = [0.45, 8.7, 16.4, 32.2]
         self.clusterTRespuesta    = [[], [], [], []]
+        self.ficheroTRRespuesta   = open('tr_paginas.csv', 'w')
 
     def _escribirClientAc(self,ac):
         self.lastAcumulateClient = ac
         self.ficheroClientes.write(str(ac) + "\n")
+
+    def _escribirTr(self, tr, pagina, operacion):
+        self.ficheroTRRespuesta.write(str(tr)+','+str(pagina[:-1])+','+str(operacion)+'\n')
 
     def _build_message(self, operation, parameter):
         return {'operation': operation, 'parameter': parameter}
@@ -62,6 +66,9 @@ class Master(object):
 
     def _obtain_client_response_time(self, threadID):
         client = self.get_client(threadID)
+        self._escribirTr(client['thread'].responseTime,
+                         client['thread'].lastPage,
+                         client['thread'].lastOperation)
         return client['thread'].responseTime
 
     def add_client(self, threadID, url, sesionTime, consumptionTime):
@@ -311,12 +318,14 @@ class Master(object):
         trespFichero.write(cabecera[:-1]+'\n')
         trespFichero.write(line[:-1]+'\n')
         trespFichero.close()
+        self.ficheroTRRespuesta.close()
 
 
     def simular(self):
         """
             Main method for run the simulation
         """
+        self.ficheroTRRespuesta.write('TR,PAGINA,OPERACION\n')
         error   = False
         tactual = self._tactual
         self.rutina_inicializacion(self.sufijoMetricas)

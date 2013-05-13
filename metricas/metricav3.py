@@ -68,7 +68,7 @@ def get_min_lines(path, monitores):
 
 def make_csv_file(path, monitores, sufix):
     min         = get_min_lines(path, monitores)
-    cabecera    = 'UTILIZACION;MEMORIA;BYTES ENVIADOS;BYTES RECIBIDOS;BYTES LEIDOS;BYTES ESCRITOS'
+    cabecera    = 'UTILIZACION,MEMORIA,BYTES ENVIADOS,BYTES RECIBIDOS,BYTES LEIDOS,BYTES ESCRITOS'
     files       = []
     filename    = 'metricas_'+str(sufix)+'.csv'
 
@@ -87,8 +87,8 @@ def make_csv_file(path, monitores, sufix):
         line_csv = ''
         for idx, monitor in enumerate(monitores):
             line     = files[idx].readline().split('\n')
-            line_csv = line_csv + str(line[0]) + ';'
-        output_file.write(line_csv[:-1]+"\n") #Quitamos el ; final
+            line_csv = line_csv + str(line[0]) + ','
+        output_file.write(line_csv[:-1]+"\n") #Quitamos la , final
 
     for f in files:
         f.close()

@@ -23,7 +23,7 @@ class Monitor():
 		sent = ps.network_io_counters()[0]
 		received = ps.network_io_counters()[1]
 		print("Network: Sent: " +str(sent)+ ", Received: " + str(received))
-		f.write(str(sent)+";"+str(received)+"\n")
+		f.write(str(sent)+","+str(received)+"\n")
 
 	def disk_monitor(self, f):
 		"""
@@ -32,7 +32,7 @@ class Monitor():
 		read = ps.disk_io_counters()[2]
 		write = ps.disk_io_counters()[3]
 		print("Disk Read: " +str(read)+ ", Write: " + str(write))
-		f.write(str(read)+";"+str(write)+"\n")
+		f.write(str(read)+","+str(write)+"\n")
 
 if __name__ == "__main__" and __package__ is None:
     __package__ = "monitores.monitor"

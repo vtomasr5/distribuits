@@ -20,6 +20,8 @@ class Client(threading.Thread):
         self.sesionTime      = sesionTime
         self.consumptionTime = consumptionTime
         self.responseTime    = 0
+        self.lastOperation   = ''
+        self.lastPage        = ''
         #Permited Operation
         self.operation        = {'shutdown': self._shutdown,
                                  'wait': self._wait,
@@ -51,9 +53,11 @@ class Client(threading.Thread):
         """
             Open path
         """
-        timeStart = time()
-        path 	= '/meneame/story.php?id='+str(d['url'])
-        action  = d['action']
+        timeStart          = time()
+        path 	           = '/meneame/story.php?id='+str(d['url'])
+        action             = d['action']
+        self.lastOperation = action
+        self.lastPage      = d['url']
         html = ''
         if action == 'No':
             try:
