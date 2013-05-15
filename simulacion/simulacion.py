@@ -54,8 +54,9 @@ def automode(usuarios, duracion, noticiaInicial, noticiaFinal):
         simular(usuarios, duracion,str(contadorMu), path)
         contadorMu = contadorMu + 1
         mu = a.obtenerMu()
-        print ''
-        sleep(1) #Dormimos 1 minuto entre simulacion y simulacion
+        if mu:
+            print 'Esperando 60 segundos para ejecutar la siguiente simulacion...'
+            sleep(60) #Sleep de 1 minuto entre simulacion y simulacion
 
 def gen_traza(tamanyo, noticiaInicial, noticiaFinal,sufix):
     a           = Estadistica(tamanyo, noticiaInicial, noticiaFinal)

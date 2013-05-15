@@ -24,7 +24,7 @@ class Master(object):
         self._infoTimeClient     = []
         self._alive_clients      = []
         self.password_metricas   = password_metricas
-        self._sistema            = Sistema(1, self._estadistica._obtain_path())
+        self._sistema            = Sistema(1, self._estadistica._obtain_path(), sufijo)
         self.nclients            = 0
         self.clientsAc           = 0
         self.timeLastEvent       = 0
@@ -298,7 +298,7 @@ class Master(object):
 
     def _write_t_respuesta(self):
         trespFichero = ""
-        trespFichero = open(self.path_estadisticas+'tRespuesta'+self.sufijoMetricas+'.csv', 'w')
+        trespFichero = open(self.path_estadisticas+'tRespuesta_'+self.sufijoMetricas+'.csv', 'w')
         trespFichero.write("Tiempo_de_respuesta\n")
         #Imprimimos el t.respuesta generico
         for m in self.muestraTRespuesta:
@@ -320,6 +320,30 @@ class Master(object):
         trespFichero.write(line[:-1]+'\n')
         trespFichero.close()
         self.ficheroTRRespuesta.close()
+
+    def _print_resultado_simulacion(self, meanLlegadas, meanPeticiones, meanSesion, tRespuesta, stdRespuesta, cvRespuesta):
+        tResultado = open(self.path_estadisticas+'resultado_simulacion_'+self.sufijoMetricas+'.csv', 'w')
+        s = ""
+        s = s + "NUM PETICIONES PROCESADAS: " + str(self._npeticions) + "\n"
+        s = s + "NUM MEDIO DE CLIENTES ACUMULADOS: " + str(self.lastAcumulateClient) + "\n"
+        s = s + "" + "\n"
+        s = s + "TIEMPO ENTRE LLEGADA:" + "\n"
+        s = s + "     Media Traza    " + str(self.mediaLlegadas) + "\n"
+        s = s + "     Media Muestral "+ str(meanLlegadas) + " segundos" + "\n"
+        s = s + "TIEMPO ENTRE PETICIONES:" + "\n"
+        s = s + "     Media Traza    " + str(self.mediaSesion) + "\n"
+        s = s + "     Media Muestral "+ str(meanPeticiones) + " segundos" + "\n"
+        s = s + "TIEMPO DURACION SESION:" + "\n"
+        s = s + "     Media Traza    " + str(self.mediaPeticion) + "\n"
+        s = s + "     Media Muestral "+ str(meanSesion) + " segundos" + "\n"
+        s = s + "TIEMPO DE RESPUESTA:" + "\n"
+        s = s + "     Media Muestral           "+ str(tRespuesta) + " segundos" + "\n"
+        s = s + "     Desviacion Estandar      "+ str(stdRespuesta) + " segundos" + "\n"
+        s = s + "     Coeficiente de Variacion "+ str(cvRespuesta) + " segundos" + "\n"
+        s = s + "" + "\n"
+        print s
+        tResultado.write(s)
+        tResultado.close()
 
 
     def simular(self):
@@ -381,21 +405,4 @@ class Master(object):
         self.ficheroClientes.close()
         self._write_t_respuesta()
 
-        print ""
-        print "NUM PETICIONES PROCESADAS: " + str(self._npeticions)
-        print "NUM MEDIO DE CLIENTES ACUMULADOS: " + str(self.lastAcumulateClient)
-        print ""
-        print "TIEMPO ENTRE LLEGADA:"
-        print "     Media Traza    " + str(self.mediaLlegadas)
-        print "     Media Muestral "+ str(meanLlegadas) + " segundos"
-        print "TIEMPO ENTRE PETICIONES:"
-        print "     Media Traza    " + str(self.mediaSesion)
-        print "     Media Muestral "+ str(meanPeticiones) + " segundos"
-        print "TIEMPO DURACION SESION:"
-        print "     Media Traza    " + str(self.mediaPeticion)
-        print "     Media Muestral "+ str(meanSesion) + " segundos"
-        print "TIEMPO DE RESPUESTA:"
-        print "     Media Muestral           "+ str(tRespuesta) + " segundos"
-        print "     Desviacion Estandar      "+ str(stdRespuesta) + " segundos"
-        print "     Coeficiente de Variacion "+ str(cvRespuesta) + " segundos"
-        print ""
+        self._print_resultado_simulacion(meanLlegadas, meanPeticiones, meanSesion, tRespuesta, stdRespuesta, cvRespuesta)
