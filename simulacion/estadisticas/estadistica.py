@@ -37,12 +37,16 @@ class Estadistica(object):
         return self.probabilidades,self.noticias
 
     def _obtain_path(self):
-        return os.path.realpath(os.path.dirname(sys.argv[0])) + '/estadisticas/'
+        path = os.path.realpath(os.path.dirname(sys.argv[0])) + '/estadisticas/'
+        d = os.listdir(path)
+        if 'output' not in d:
+            os.mkdir(path+'output')
+        return path + 'output/'
 
-    def obtenerMedias(self):
-        f = open(self._obtain_path()+"medias.csv", 'r')
+    def obtenerMedias(self, sufix=''):
+        f = open(self._obtain_path()+"medias_"+sufix+".csv", 'r')
         l = f.readlines()
-        s = l[1].split(';')
+        s = l[1].split(',')
         f.close()
         return float(s[0]), float(s[1]), float(s[2])
 
@@ -102,10 +106,15 @@ class Estadistica(object):
         self.peticionEsc = ""
 
     def obtenerMu(self):
-        path = self._obtain_path() + 'mu.txt'
+        path = self._obtain_path() + '../mu.txt'
         if self.mu == "":
             self.mu = open(path, 'r')
-        return float(self.mu.readline())
+
+        result = self.mu.readline()
+        if result:
+            return float(result)
+        else:
+            return ""
 
 
     def obtenerLlegada(self,sufix=""):

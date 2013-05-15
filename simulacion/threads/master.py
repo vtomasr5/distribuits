@@ -9,7 +9,8 @@ import urllib2
 from time import sleep
 
 class Master(object):
-    def __init__(self, texec, numUsuario, url, password_metricas, transitorio, sufijo):
+    def __init__(self, texec, numUsuario, url, password_metricas, transitorio, sufijo, path_estadisticas):
+        self.path_estadisticas   = path_estadisticas
         self._clients            = []
         self._last_id            = 1
         self._tactual            = time()
@@ -28,7 +29,7 @@ class Master(object):
         self.clientsAc           = 0
         self.timeLastEvent       = 0
         self.timeStart           = 0
-        self.ficheroClientes     = open('num_clientes_acumulado.txt', 'w')
+        self.ficheroClientes     = open(path_estadisticas+'num_clientes_acumulado_'+sufijo+'.txt', 'w')
         self.transitorio         = transitorio
         self.regimenEstacionario = False
         self.sufijoMetricas      = sufijo
@@ -42,10 +43,10 @@ class Master(object):
         self.muestraMediaPeticion = []
         self.muestraMediaLlegadas = []
         self.muestraTRespuesta    = []
-        #Cluster de tiempo de respuesta para 
+        #Cluster de tiempo de respuesta para
         self.mediaTRcentroides    = [0.45, 8.7, 16.4, 32.2]
         self.clusterTRespuesta    = [[], [], [], []]
-        self.ficheroTRRespuesta   = open('tr_paginas.csv', 'w')
+        self.ficheroTRRespuesta   = open(path_estadisticas+'tr_paginas_'+sufijo+'.csv', 'w')
 
     def _escribirClientAc(self,ac):
         self.lastAcumulateClient = ac
@@ -297,7 +298,7 @@ class Master(object):
 
     def _write_t_respuesta(self):
         trespFichero = ""
-        trespFichero = open('tRespuesta.csv', 'w')
+        trespFichero = open(self.path_estadisticas+'tRespuesta'+self.sufijoMetricas+'.csv', 'w')
         trespFichero.write("Tiempo_de_respuesta\n")
         #Imprimimos el t.respuesta generico
         for m in self.muestraTRespuesta:
@@ -305,7 +306,7 @@ class Master(object):
         trespFichero.close()
 
         #Imprimimos los grupos de trespuesta en un fichero
-        trespFichero = open('clustertRespuesta.csv', 'w')
+        trespFichero = open(self.path_estadisticas+'clustertRespuesta_'+self.sufijoMetricas+'.csv', 'w')
         cabecera = ''
         for centroide in self.mediaTRcentroides:
             cabecera = cabecera + "Centroide " + str(centroide)+','
@@ -329,7 +330,7 @@ class Master(object):
         error   = False
         tactual = self._tactual
         self.rutina_inicializacion(self.sufijoMetricas)
-        self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias()
+        self.mediaSesion,self.mediaPeticion,self.mediaLlegadas = self._estadistica.obtenerMedias(self.sufijoMetricas)
         ejecutar = True
         self.timeStart = time()
 

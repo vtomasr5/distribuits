@@ -2,6 +2,7 @@ from threads.master import Master
 import sys
 import ast
 from estadisticas.estadistica import Estadistica
+from time import sleep
 
 PASSWORD_WEB_METRICAS = '1234'
 TRANSITORIO           = 0
@@ -24,28 +25,40 @@ def is_param_int_or_float(param):
     except ValueError:
         return False
 
+def escribir_medias(path, mSesion, mPeticion, mLlegadas, sufix=''):
+    cabecera = "Media Tiempo entre Sesion,Media tiempo entre peticiones,Media tiempo entre llegadas\n"
+    f = open(path+"medias_"+sufix+".csv", 'w')
+    f.write(cabecera)
+    line = str(mSesion)+ "," + str(mPeticion)+ "," + str(mLlegadas)
+    f.write(line)
+    f.close
+
 def automode(usuarios, duracion, noticiaInicial, noticiaFinal):
-    a = Estadistica(usuarios, noticiaInicial, noticiaFinal)
+    a          = Estadistica(usuarios, noticiaInicial, noticiaFinal)
     print 'Generadando Traza ...'
-    a.generaFicheroSesion()
-    a.generaFicheroPeticion()
+    path       = a._obtain_path()
+    mSesion    = a.generaFicheroSesion()
+    mPeticion  = a.generaFicheroPeticion()
     a.generaFicheroPopularidad()
     a.generaFicheroPeticionEsc()
-
-    mu = a.obtenerMu()
+    print 'Traza Generada...'
+    mu         = a.obtenerMu()
     contadorMu = 0
 
     while mu != "":
-        a.generaFicheroLlegadas(sufix=str(contadorMu),mu=mu)
-        simular(usuarios, duracion,str(contadorMu))
+        print 'Generando Tiempo de Llegadas...'
+        mLlegadas = a.generaFicheroLlegadas(sufix=str(contadorMu),mu=mu)
+        escribir_medias(path, mSesion, mPeticion, mLlegadas, str(contadorMu))
+        print 'Tiempo de Llegadas Generado...'
+        print 'Simulando...'
+        simular(usuarios, duracion,str(contadorMu), path)
         contadorMu = contadorMu + 1
         mu = a.obtenerMu()
-        print 'Traza Generada...'
         print ''
-        print 'Simulando...'
+        sleep(1) #Dormimos 1 minuto entre simulacion y simulacion
 
 def gen_traza(tamanyo, noticiaInicial, noticiaFinal,sufix):
-    a = Estadistica(tamanyo, noticiaInicial, noticiaFinal)
+    a           = Estadistica(tamanyo, noticiaInicial, noticiaFinal)
     mSesion     = a.generaFicheroSesion()
     mPeticion   = a.generaFicheroPeticion()
     mLlegadas   = a.generaFicheroLlegadas(str(sufix))
@@ -53,18 +66,13 @@ def gen_traza(tamanyo, noticiaInicial, noticiaFinal,sufix):
     a.generaFicheroPopularidad()
     a.generaFicheroPeticionEsc()
     path = a._obtain_path()
-    cabecera = "Media Tiempo entre Sesion;Media tiempo entre peticiones;Media tiempo entre llegadas\n"
-    f = open(path+"medias.csv", 'w')
-    f.write(cabecera)
-    line = str(mSesion)+ ";" + str(mPeticion)+ ";" + str(mLlegadas)
-    f.write(line)
-    f.close
+    escribir_medias(path, mSesion, mPeticion, mLlegadas)
     print 'Traza Generada'
 
-def simular(numUsuarios, duracion, sufijo):
+def simular(numUsuarios, duracion, sufijo, path_estadisticas=''):
     print 'Ejecutando Simulacion...'
     print ''
-    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO, sufijo)
+    m = Master(duracion, numUsuarios, '130.206.134.123', PASSWORD_WEB_METRICAS, TRANSITORIO, sufijo, path_estadisticas)
     m.simular()
     print ''
     print 'Simulacion Finalizada!'
