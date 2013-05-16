@@ -6,11 +6,13 @@ import re
 
 class tratamiento_metricas(object):
 
-    def _obtain_path(self):
-        return os.path.realpath(os.path.dirname(sys.argv[0])) + '/Metricas/'
+    def __init__(self):
+        self.path = "/Metricas/"
 
-    def main(self):
-        pass
+    def _obtain_path(self):
+        return os.path.realpath(os.path.dirname(sys.argv[0])) + self.path
+
+
     def sort_nicely(self,l ): 
         convert = lambda text: int(text) if text.isdigit() else text 
         alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
@@ -34,15 +36,10 @@ class tratamiento_metricas(object):
         path = self._obtain_path()
         d = os.listdir(path)
         self.sort_nicely(d)
-        print d
-
 
         for item in d: 
             if item[-3:] == "csv":
-                s = item.split("_")
-                num = s[1][:-4]
-                print num
-                utilizacion,memoria,b_enviados,b_recibidos,b_leidos,b_escritos=self.csv(num)           
+                utilizacion,memoria,b_enviados,b_recibidos,b_leidos,b_escritos=self.csv(item)           
                 output_file.write(str(utilizacion)+","+str(memoria)+","+str(b_enviados)+","+str(b_recibidos)+","+str(b_leidos)+","+str(b_escritos)+"\n")
         
             
@@ -52,8 +49,8 @@ class tratamiento_metricas(object):
             sum = sum + l[i]
         return sum
 
-    def csv(self, num):
-        f = open(self._obtain_path()+"metricas_"+ str(num) + ".csv", 'r')
+    def csv(self, filename):
+        f = open(self._obtain_path()+filename, 'r')
         l = f.readlines()
         utilizacion = []
         memoria = []
